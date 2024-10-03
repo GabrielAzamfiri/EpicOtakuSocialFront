@@ -2,3 +2,6 @@ body {
   background: rgb(46, 63, 87);
   background: linear-gradient(90deg, rgb(16, 31, 53) 0%, rgb(3, 19, 43) 42%, rgb(15, 21, 29) 100%);
 }
+#navbar {
+  height: 60px;
+}

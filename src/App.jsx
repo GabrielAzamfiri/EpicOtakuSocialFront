@@ -4,21 +4,19 @@ import "./App.css";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import TopBar from "./components/TopBar";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 function App() {
   return (
     <Container fluid className="vh-100">
-      <Row>
-        <BrowserRouter>
-          <TopBar />
+      <BrowserRouter>
+        <TopBar />
 
-          <Routes>
-            <Route path="/auth/register" element={<Register />} />
-            <Route path="/auth/login" element={<Login />} />
-          </Routes>
-        </BrowserRouter>
-      </Row>
+        <Routes>
+          <Route path="/auth/register" element={<Register />} />
+          <Route path="/auth/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   );
 }

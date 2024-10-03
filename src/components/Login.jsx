@@ -60,31 +60,31 @@ const Login = () => {
   };
   return (
     <>
-      <Container fluid className="">
-        <Row className="justify-content-center ">
+      <Container fluid>
+        <Row className="justify-content-center  align-items-center" style={{ height: "calc(100vh - 60px)" }}>
           <Col xs={12} md={6}>
             <Form onSubmit={handleLogin}>
-              <h1 className="mb-5">LOGIN</h1>
+              <h1 className="mb-5 text-center">LOGIN</h1>
               <Row className="mb-4">
-                <Form.Group as={Col} md="6" controlId="validationCustom03">
+                <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
                   <Form.Control.Feedback type="invalid">Please provide a valid Email.</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationCustom04">
+                <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
                   <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
                 </Form.Group>
               </Row>
               <Row>
-                <p className="text-center ">
+                <Button as={Col} md="6" type="submit" variant="dark" className=" m-auto">
+                  ACCEDI
+                </Button>
+                <p className="text-center mt-3">
                   Non hai un account? <a href="/auth/register">Registrati</a>
                 </p>
               </Row>
-              <Button type="submit" variant="dark" className="px-5">
-                ACCEDI
-              </Button>
             </Form>
           </Col>
         </Row>
