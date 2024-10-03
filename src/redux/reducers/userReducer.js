@@ -1,7 +1,7 @@
 import { SET_TOKEN, SET_USER_INFO } from "../actions";
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
+  token: "",
   userInfo: {},
 };
 

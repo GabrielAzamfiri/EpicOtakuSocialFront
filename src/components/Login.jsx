@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { saveTokenAction, saveUserInfoAction } from "../redux/actions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleLogin = async e => {
     e.preventDefault();
@@ -22,8 +25,31 @@ const Login = () => {
       if (resp.ok) {
         const data = await resp.json();
         console.log(data);
+        dispatch(saveTokenAction(data.AccessToken));
         localStorage.setItem("accessToken", data.AccessToken);
         alert("Login effettuato con successo.");
+
+        try {
+          const resp = await fetch(`http://localhost:3001/utenti/me`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${data.AccessToken}`,
+            },
+          });
+
+          if (resp.ok) {
+            const me = await resp.json();
+
+            dispatch(saveUserInfoAction(me));
+            console.log(me);
+          } else {
+            alert("Save user info failed!");
+          }
+        } catch (error) {
+          console.error("Errore: ", error);
+          alert("Save user info failed!");
+        }
       } else {
         alert("Login fallito.");
       }
@@ -33,30 +59,37 @@ const Login = () => {
     }
   };
   return (
-    <div>
-      <div className="contFormTot">
-        <Form onSubmit={handleLogin}>
-          <h1 className="h1Login">EFFETTUA IL LOGIN</h1>
-          <Form.Group className="mb-3 emailForm " controlId="exampleForm.ControlInput1">
-            <Form.Label className="emailSign">Email</Form.Label>
-            <Form.Control type="email" placeholder="Inserisci la tua email" className="formText" value={email} onChange={e => setEmail(e.target.value)} />
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3 pwForm d-flex" controlId="formPlaintextPassword">
-            <Form.Label column sm="4" className="pwSign">
-              Password
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control type="password" placeholder="Inserisci la tua email" className="formText" value={password} onChange={e => setPassword(e.target.value)} />
-            </Col>
-          </Form.Group>
-          <div className="ContBtn">
-            <Button type="submit" className="btnlogin">
-              ACCEDI
-            </Button>
-          </div>
-        </Form>
-      </div>
-    </div>
+    <>
+      <Container fluid className="">
+        <Row className="justify-content-center ">
+          <Col xs={12} md={6}>
+            <Form onSubmit={handleLogin}>
+              <h1 className="mb-5">LOGIN</h1>
+              <Row className="mb-4">
+                <Form.Group as={Col} md="6" controlId="validationCustom03">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
+                  <Form.Control.Feedback type="invalid">Please provide a valid Email.</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="6" controlId="validationCustom04">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
+                  <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row>
+                <p className="text-center ">
+                  Non hai un account? <a href="/auth/register">Registrati</a>
+                </p>
+              </Row>
+              <Button type="submit" variant="dark" className="px-5">
+                ACCEDI
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 export default Login;

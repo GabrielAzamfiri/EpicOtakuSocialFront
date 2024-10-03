@@ -2,8 +2,8 @@
 export const SET_TOKEN = "SET_TOKEN";
 export const SET_USER_INFO = "SET_USER_INFO";
 
-//export const showInfoProfileAction = () => ({ type: SHOW_INFO_PROFILE, payload: "" });
-//export const selectProfileAction = profile => ({ type: SELECTED_PROFILE, payload: profile });
+export const saveTokenAction = token => ({ type: SET_TOKEN, payload: token });
+export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 
 //
 //export const myProfileAction = () => {
