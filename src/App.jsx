@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import TopBar from "./components/TopBar";
 import { Container } from "react-bootstrap";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <TopBar />
 
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
         </Routes>
