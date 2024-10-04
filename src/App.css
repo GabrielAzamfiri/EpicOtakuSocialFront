@@ -5,7 +5,17 @@ body {
 #navbar {
   height: 60px;
 }
-.custom-col {
+/* .custom-col {
   flex: 0 0 20%;
-  max-width: 20%;
+  max-width: 48%;
+} */
+#homeAnimeList {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1500px) {
+  #homeAnimeList {
+    width: 800px;
+  }
 }
