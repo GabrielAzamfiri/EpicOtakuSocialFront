@@ -75,15 +75,15 @@ const Home = () => {
 
   return (
     <>
-      <Container fluid>
+      <Container>
         {anime && (
-          <Row className="gap-3">
-            <Col xl={8}>
-              <h1 className="mb-4">Anime</h1>
-              <Row id="homeAnimeList" className="justify-content-center">
+          <Row className="gap-2">
+            <Col lg={8}>
+              <h2 className="mb-4">Anime</h2>
+              <Row id="homeAnimeList" className="justify-content-center ">
                 {anime.map((anime, index) => (
-                  <Col xxl={2} xs={6} md={4} lg={3} key={index} className="mb-4 custom-col ">
-                    <Card.Img variant="top" src={anime.images.jpg.large_image_url} style={{ height: "220px", width: "150px", objectFit: "cover" }} />
+                  <Col key={index} className="mb-4 p-0  text-center">
+                    <Card.Img src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
                   </Col>
                 ))}
               </Row>
@@ -131,29 +131,29 @@ const Home = () => {
                 </Col>
               </Row>
             </Col>
-            <Col className="d-none d-xl-block">
-              <h1 className="mb-4">Latest Releases</h1>
-              <Row style={{ maxHeight: "1400px", overflowY: "scroll", padding: "10px" }}>
-                {newAnime.map((anime, index) => (
-                  <Row key={index} className="align-items-center ">
-                    <Col className="mb-4 ">
-                      <Card.Img variant="top" src={anime.images.jpg.large_image_url} style={{ height: "160px", objectFit: "cover" }} />
-                    </Col>
-                    <Col md={8} className="mb-4 ">
-                      <h5 className="text-truncate" style={{ width: "280px" }}>
-                        {anime.title}
-                      </h5>
-                      <p className="mb-0 mt-2">Year: {anime.aired.string}</p>
-                      <p>
-                        Genres:{" "}
-                        {anime.genres.map((genre, index) => (
-                          <span key={index}> - {genre.name}</span>
-                        ))}
-                      </p>
-                    </Col>
-                  </Row>
-                ))}
-              </Row>
+            <Col className="d-none d-lg-block">
+              <Container fluid>
+                <h2 className="mb-4 ">Latest Releases</h2>
+                <Row style={{ maxHeight: "1200px", overflowY: "scroll" }}>
+                  {newAnime.map((anime, index) => (
+                    <Row key={index} className="">
+                      <img src={anime.images.jpg.large_image_url} className="mb-2" style={{ width: "100px", height: "120px", objectFit: "cover" }} />
+
+                      <Col className="">
+                        <h6 className="asideTitle my-0 ">{anime.title}</h6>
+                        <p className="mb-0 fs-7">Aired: {anime.aired.string}</p>
+
+                        <p className="fs-7">
+                          Genres:{" "}
+                          {anime.genres.map((genre, index) => (
+                            <span key={index}> - {genre.name}</span>
+                          ))}
+                        </p>
+                      </Col>
+                    </Row>
+                  ))}
+                </Row>
+              </Container>
             </Col>
           </Row>
         )}
