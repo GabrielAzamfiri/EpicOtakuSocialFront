@@ -13,6 +13,37 @@ body {
 .asideTitle {
   text-wrap: wrap;
 }
+.truncate-2-lines {
+  display: -webkit-box; /* Imposta un contenitore flessibile */
+  -webkit-box-orient: vertical; /* Imposta l'orientamento verticale */
+  overflow: hidden;
+  text-overflow: ellipsis; /* come text-truncate */
+  -webkit-line-clamp: 2; /* Imposta il limite a 2 righe */
+}
+.animePoster {
+  transition: opacity 0.3s ease;
+}
+
+.animeContainer:hover .animePoster {
+  opacity: 0.3;
+}
+.animeContainer:hover .animeTitle {
+  display: block;
+}
+.animeContainer {
+  position: relative;
+  cursor: pointer;
+}
+.animeTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
 @media screen and (max-width: 1200px) {
   #homeAnimeList {
     width: 600px;
@@ -37,11 +68,4 @@ body {
   .mainContainer {
     max-width: 100%;
   }
-}
-.truncate-2-lines {
-  display: -webkit-box; /* Imposta un contenitore flessibile */
-  -webkit-box-orient: vertical; /* Imposta l'orientamento verticale */
-  overflow: hidden;
-  text-overflow: ellipsis; /* come text-truncate */
-  -webkit-line-clamp: 2; /* Imposta il limite a 2 righe */
 }

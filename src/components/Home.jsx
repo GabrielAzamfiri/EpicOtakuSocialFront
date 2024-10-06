@@ -82,9 +82,10 @@ const Home = () => {
               <h2 className="mb-4">Anime</h2>
               <Row id="homeAnimeList" className="justify-content-center ">
                 {anime.map((anime, index) => (
-                  <Col key={index} className="mb-4 p-0  text-center">
-                    <Card.Img src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
-                    <h6 className="d-md-none truncate-2-lines mt-2">{anime.title}</h6>
+                  <Col key={index} className="mb-4 p-0  text-center animeContainer z-2">
+                    <Card.Img className="animePoster" src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                    <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
+                    <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
                   </Col>
                 ))}
               </Row>
