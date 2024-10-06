@@ -50,6 +50,7 @@ const Home = () => {
       alert("Errore durante la Fetch anime!");
     }
   };
+
   useEffect(() => {
     fetchGetAnime();
     fetchGetAnimeAsidebar();
@@ -80,9 +81,9 @@ const Home = () => {
           <Row className="">
             <Col xs={12} lg={8}>
               <h2 className="mb-4">Anime</h2>
-              <Row id="homeAnimeList" className="justify-content-center ">
+              <Row id="homeAnimeList" className=" ">
                 {anime.map((anime, index) => (
-                  <Col key={index} className="mb-4 p-0  text-center animeContainer z-2">
+                  <Col key={index} className="mb-3 p-0  text-center animeContainer">
                     <Card.Img className="animePoster" src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
                     <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
                     <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
@@ -122,13 +123,13 @@ const Home = () => {
             <Col xs={12} lg={4}>
               <Container fluid>
                 <h2 className="mb-4 ">Latest Releases</h2>
-                <Row style={{ maxHeight: "1200px", overflowY: "scroll" }}>
+                <Row id="asideScrollBar" style={{ maxHeight: "1200px", overflowY: "scroll" }}>
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="">
-                      <img src={anime.images.jpg.large_image_url} className="mb-2" style={{ width: "100px", height: "120px", objectFit: "cover" }} />
+                      <img src={anime.images.jpg.large_image_url} className="mb-2 pointer" style={{ width: "100px", height: "120px", objectFit: "cover" }} />
 
                       <Col className="">
-                        <h6 className="asideTitle my-0 ">{anime.title}</h6>
+                        <h6 className="asideTitle my-0 pointer">{anime.title}</h6>
                         <p className="mb-0 fs-7">Aired: {anime.aired.string}</p>
 
                         <p className="fs-7">

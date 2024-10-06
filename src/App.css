@@ -2,17 +2,44 @@ body {
   background: rgb(46, 63, 87);
   background: linear-gradient(90deg, rgb(0, 20, 49) 0%, rgb(0, 10, 26) 42%, rgb(0, 0, 0) 100%);
 }
+.pointer {
+  cursor: pointer;
+}
 #navbar {
   height: 60px;
 }
 
-#homeAnimeList {
-  width: 760px;
-  margin: 0 auto;
+/************* scrollbar******************** */
+/* Larghezza della scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
+
+/* pezzo che si muove della scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #2a2828;
+  border-radius: 6px;
+}
+
+/* Colore quando hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #454444;
+}
+
+/*background della scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #171616;
+}
+
 .asideTitle {
   text-wrap: wrap;
 }
+
+#asideScrollBar {
+  max-height: 1200px;
+  overflow-y: scroll;
+}
+
 .truncate-2-lines {
   display: -webkit-box; /* Imposta un contenitore flessibile */
   -webkit-box-orient: vertical; /* Imposta l'orientamento verticale */
@@ -44,9 +71,21 @@ body {
   transition: opacity 0.3s ease;
 }
 
+#homeAnimeList {
+  width: 760px;
+}
+
 @media screen and (max-width: 1200px) {
   #homeAnimeList {
     width: 600px;
+  }
+}
+@media screen and (max-width: 991px) {
+  #homeAnimeList {
+    margin: 0 auto;
+  }
+  h2 {
+    text-align: center;
   }
 }
 @media screen and (max-width: 640px) {

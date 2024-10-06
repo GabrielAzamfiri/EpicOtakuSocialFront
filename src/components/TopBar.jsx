@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { inputSearchAction } from "../redux/actions";
 
 const TopBar = () => {
-  const [value, setValue] = useState("");
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+  const search = useSelector(state => state.input.input); //TODO: ON SUBMIT -> OTHER PAGE WITH SEARCHED INFO
 
   const handleSearch = e => {
     e.preventDefault();
-    console.log("Search value:", value);
+    dispatch(inputSearchAction(input));
   };
+
   return (
     <Navbar expand="lg" id="navbar " variant="dark">
       <Container fluid>
@@ -32,9 +37,9 @@ const TopBar = () => {
           <Form onSubmit={handleSearch} className="d-flex ">
             <Form.Control
               onChange={e => {
-                setValue(e.target.value);
+                setInput(e.target.value);
               }}
-              value={value}
+              value={input}
               width={500}
               type="search"
               placeholder="Search"
