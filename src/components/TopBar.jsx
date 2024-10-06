@@ -13,7 +13,7 @@ const TopBar = () => {
     console.log("Search value:", value);
   };
   return (
-    <Navbar expand="lg" id="navbar">
+    <Navbar expand="lg" id="navbar " variant="dark">
       <Container fluid>
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

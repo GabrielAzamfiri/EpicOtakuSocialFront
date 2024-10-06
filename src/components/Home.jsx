@@ -9,7 +9,7 @@ const Home = () => {
   const [nrPage, setNrPage] = useState(1);
   const [pageOffset, setPageOffset] = useState(0);
   const totalPages = 1098;
-  const pagesToShow = 10;
+  const pagesToShow = 6;
 
   const today = new Date();
   const lastMonth = new Date(today);
@@ -75,33 +75,20 @@ const Home = () => {
 
   return (
     <>
-      <Container>
+      <Container className="mainContainer">
         {anime && (
-          <Row className="gap-2">
-            <Col lg={8}>
+          <Row className="">
+            <Col xs={12} lg={8}>
               <h2 className="mb-4">Anime</h2>
               <Row id="homeAnimeList" className="justify-content-center ">
                 {anime.map((anime, index) => (
                   <Col key={index} className="mb-4 p-0  text-center">
                     <Card.Img src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                    <h6 className="d-md-none truncate-2-lines mt-2">{anime.title}</h6>
                   </Col>
                 ))}
               </Row>
 
-              {/* {anime.map((anime1, index) => {
-                if (index % 5 === 0) {
-                  return (
-                    <Row key={index}>
-                      {anime.slice(index, index + 5).map((colanime, colIndex) => (
-                        <Col xxl key={colIndex} className="text-center mb-4 custom-col" >
-                          <Card.Img variant="top" src={colanime.images.jpg.large_image_url} style={{ height: "220px", width: "150px", objectFit: "cover" }} />
-                        </Col>
-                      ))}
-                    </Row>
-                  );
-                }
-                return null; 
-              })} */}
               <Row className="justify-content-center mb-5">
                 <Col xs="auto">
                   <Button
@@ -131,7 +118,7 @@ const Home = () => {
                 </Col>
               </Row>
             </Col>
-            <Col className="d-none d-lg-block">
+            <Col xs={12} lg={4}>
               <Container fluid>
                 <h2 className="mb-4 ">Latest Releases</h2>
                 <Row style={{ maxHeight: "1200px", overflowY: "scroll" }}>
