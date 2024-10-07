@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = async e => {
     e.preventDefault();
-    console.log("handleLogin partito");
+
     const utente = { email, password };
 
     try {
@@ -25,7 +25,7 @@ const Login = () => {
 
       if (resp.ok) {
         const data = await resp.json();
-        console.log(data);
+
         dispatch(saveTokenAction(data.AccessToken));
         alert("Login effettuato con successo.");
 
@@ -42,7 +42,7 @@ const Login = () => {
             const me = await resp.json();
 
             dispatch(saveUserInfoAction(me));
-            console.log(me);
+
             navigate("/");
           } else {
             alert("Save user info failed!");
@@ -78,9 +78,14 @@ const Login = () => {
                   <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
                 </Form.Group>
               </Row>
-              <Button type="submit" variant="dark" className=" m-auto">
-                ACCEDI
-              </Button>
+              <div className="text-center">
+                <Button type="submit" variant="dark" className="px-5">
+                  LOG IN
+                </Button>
+              </div>
+              <p className="text-center mt-3">
+                Do not have an account? <a href="/auth/register">SIGN IN</a>
+              </p>
             </Form>
           </Col>
         </Row>

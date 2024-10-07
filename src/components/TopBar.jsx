@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { saveInputSearchAction } from "../redux/actions";
+import { logoutAction, saveInputSearchAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
@@ -50,14 +50,22 @@ const TopBar = () => {
             />
           </Form>
           <Nav className="me-3">
-            <Nav.Link href="#profile">
-              <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
-            </Nav.Link>
-            <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Logout</NavDropdown.Item>
-            </NavDropdown>
+            {utente ? (
+              <>
+                <Nav.Link href="#profile">
+                  <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
+                </Nav.Link>
+                <NavDropdown title="Account" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => dispatch(logoutAction())} href="#">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <Nav.Link href="/auth/login">Login</Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

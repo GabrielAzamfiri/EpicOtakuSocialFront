@@ -4,11 +4,13 @@ export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_INPUT = "SET_INPUT";
 export const SET_INPUT_NAME = "SET_INPUT_NAME";
 export const ANIME_CLICK = "ANIME_CLICK";
+export const LOGOUT = "LOGOUT";
 
 export const saveTokenAction = token => ({ type: SET_TOKEN, payload: token });
 export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 export const saveInputSearchAction = inputSearch => ({ type: SET_INPUT_NAME, payload: inputSearch });
 export const saveAnimeClickedAction = anime => ({ type: ANIME_CLICK, payload: anime });
+export const logoutAction = () => ({ type: LOGOUT, payload: null });
 
 export const inputSearchAction = (input, nrPage) => {
   return async dispatch => {
