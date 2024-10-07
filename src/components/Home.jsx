@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { saveAnimeClickedAction } from "../redux/actions";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [anime, setAnime] = useState([]);
   const [newAnime, setNewAnime] = useState([]);
 
@@ -83,7 +88,14 @@ const Home = () => {
               <h2 className="mb-4">Anime</h2>
               <Row id="homeAnimeList" className=" ">
                 {anime.map((anime, index) => (
-                  <Col key={index} className="mb-3 p-0  text-center animeContainer">
+                  <Col
+                    onClick={() => {
+                      dispatch(saveAnimeClickedAction(anime));
+                      navigate("/anime/" + anime.title);
+                    }}
+                    key={index}
+                    className="mb-3 p-0  text-center animeContainer"
+                  >
                     <Card.Img className="animePoster" src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
                     <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
                     <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>

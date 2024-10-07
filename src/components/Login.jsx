@@ -2,15 +2,16 @@ import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveTokenAction, saveUserInfoAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleLogin = async e => {
     e.preventDefault();
-
+    console.log("handleLogin partito");
     const utente = { email, password };
 
     try {
@@ -26,7 +27,6 @@ const Login = () => {
         const data = await resp.json();
         console.log(data);
         dispatch(saveTokenAction(data.AccessToken));
-        localStorage.setItem("accessToken", data.AccessToken);
         alert("Login effettuato con successo.");
 
         try {
@@ -43,6 +43,7 @@ const Login = () => {
 
             dispatch(saveUserInfoAction(me));
             console.log(me);
+            navigate("/");
           } else {
             alert("Save user info failed!");
           }
@@ -63,7 +64,7 @@ const Login = () => {
       <Container fluid>
         <Row className="justify-content-center  align-items-center" style={{ height: "calc(100vh - 60px)" }}>
           <Col xs={12} md={6}>
-            <Form onSubmit={handleLogin}>
+            <Form onSubmit={e => handleLogin(e)}>
               <h1 className="mb-5 text-center">LOGIN</h1>
               <Row className="mb-4">
                 <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
@@ -77,14 +78,9 @@ const Login = () => {
                   <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
                 </Form.Group>
               </Row>
-              <Row>
-                <Button as={Col} md="6" type="submit" variant="dark" className=" m-auto">
-                  ACCEDI
-                </Button>
-                <p className="text-center mt-3">
-                  Non hai un account? <a href="/auth/register">Registrati</a>
-                </p>
-              </Row>
+              <Button type="submit" variant="dark" className=" m-auto">
+                ACCEDI
+              </Button>
             </Form>
           </Col>
         </Row>

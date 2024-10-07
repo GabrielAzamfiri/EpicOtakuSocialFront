@@ -1,7 +1,8 @@
-import { SET_INPUT } from "../actions";
+import { SET_INPUT, SET_INPUT_NAME } from "../actions";
 
 const initialState = {
   input: {},
+  name: localStorage.getItem("inputSearch") || "",
 };
 
 const inputReducer = (state = initialState, action) => {
@@ -11,7 +12,11 @@ const inputReducer = (state = initialState, action) => {
         ...state,
         input: action.payload,
       };
-
+    case SET_INPUT_NAME:
+      return {
+        ...state,
+        name: action.payload,
+      };
     default:
       return state;
   }

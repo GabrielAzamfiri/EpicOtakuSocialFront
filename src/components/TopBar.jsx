@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { useState } from "react";
+import { Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { inputSearchAction } from "../redux/actions";
+import { saveInputSearchAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
-  const search = useSelector(state => state.input.input); //TODO: ON SUBMIT -> OTHER PAGE WITH SEARCHED INFO
-
+  const navigate = useNavigate();
   const handleSearch = e => {
     e.preventDefault();
-    dispatch(inputSearchAction(input));
+    dispatch(saveInputSearchAction(input));
+    localStorage.setItem("inputSearch", input);
+    navigate("/" + input);
   };
+
+  const utente = useSelector(state => state.user.userInfo);
 
   return (
     <Navbar expand="lg" id="navbar " variant="dark">
@@ -23,9 +27,9 @@ const TopBar = () => {
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Top Anime</Nav.Link>
+          <Nav>
+            <Nav.Link href="/">Home</Nav.Link>
+
             <NavDropdown title="Genres" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Adventure</NavDropdown.Item>
@@ -34,22 +38,27 @@ const TopBar = () => {
               <NavDropdown.Item href="#action/3.4">Kids</NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form onSubmit={handleSearch} className="d-flex ">
+          <Form onSubmit={handleSearch} className=" m-auto w-50 ">
             <Form.Control
               onChange={e => {
                 setInput(e.target.value);
               }}
               value={input}
-              width={500}
               type="search"
               placeholder="Search"
-              className="me-2 "
               aria-label="Search"
             />
-            <Button type="submit" variant="dark">
-              Search
-            </Button>
           </Form>
+          <Nav className="me-3">
+            <Nav.Link href="#profile">
+              <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
+            </Nav.Link>
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Logout</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
