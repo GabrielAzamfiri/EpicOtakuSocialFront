@@ -46,7 +46,12 @@ const Home = () => {
 
   const fetchGetAnimeAsidebar = async () => {
     try {
-      const resp = await fetch(`https://api.jikan.moe/v4/anime?start_date=${formattedDate}&end_date=${formattedDateToday}`, {});
+      const resp = await fetch(`http://localhost:3001/anime?start_date=${formattedDate}&end_date=${formattedDateToday}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
 
       if (resp.ok) {
         const data = await resp.json();
@@ -63,7 +68,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchGetAnime();
-    // fetchGetAnimeAsidebar();
+    fetchGetAnimeAsidebar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nrPage]);
 

@@ -15,7 +15,12 @@ export const logoutAction = () => ({ type: LOGOUT, payload: null });
 export const inputSearchAction = (input, nrPage) => {
   return async dispatch => {
     try {
-      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${input}&page=${nrPage}`, {});
+      const response = await fetch(`http://localhost:3001/anime?q=${input}&nrPage=${nrPage}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       if (response.ok) {
         let data = await response.json();
 

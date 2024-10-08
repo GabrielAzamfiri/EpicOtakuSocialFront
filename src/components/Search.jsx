@@ -6,7 +6,7 @@ import { inputSearchAction, saveAnimeClickedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Search = () => {
-  const inputSearch = useSelector(state => state.input.name); //TODO: ON SUBMIT -> OTHER PAGE WITH SEARCHED INFO
+  const inputSearch = useSelector(state => state.input.name);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
