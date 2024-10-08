@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { saveTokenAction, saveUserInfoAction } from "../redux/actions";
+import { saveUserInfoAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -25,8 +25,8 @@ const Login = () => {
 
       if (resp.ok) {
         const data = await resp.json();
+        localStorage.setItem("accessToken", data.AccessToken);
 
-        dispatch(saveTokenAction(data.AccessToken));
         alert("Login effettuato con successo.");
 
         try {
