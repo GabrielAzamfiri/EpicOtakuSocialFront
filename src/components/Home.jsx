@@ -138,10 +138,26 @@ const Home = () => {
                 <Row id="asideScrollBar" style={{ maxHeight: "1200px", overflowY: "scroll" }}>
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="">
-                      <img src={anime.images.jpg.large_image_url} className="mb-2 pointer" style={{ width: "100px", height: "120px", objectFit: "cover" }} />
+                      <img
+                        onClick={() => {
+                          dispatch(saveAnimeClickedAction(anime));
+                          navigate("/anime/" + anime.title);
+                        }}
+                        src={anime.images.jpg.large_image_url}
+                        className="mb-2 pointer"
+                        style={{ width: "100px", height: "120px", objectFit: "cover" }}
+                      />
 
                       <Col className="">
-                        <h6 className="asideTitle my-0 pointer">{anime.title}</h6>
+                        <h6
+                          onClick={() => {
+                            dispatch(saveAnimeClickedAction(anime));
+                            navigate("/anime/" + anime.title);
+                          }}
+                          className="asideTitle my-0 pointer"
+                        >
+                          {anime.title}
+                        </h6>
                         <p className="mb-0 fs-7">Aired: {anime.aired.string}</p>
 
                         <p className="fs-7">

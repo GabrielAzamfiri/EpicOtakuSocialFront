@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { inputSearchAction } from "../redux/actions";
+import { inputSearchAction, saveAnimeClickedAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const inputSearch = useSelector(state => state.input.name); //TODO: ON SUBMIT -> OTHER PAGE WITH SEARCHED INFO
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [nrPage, setNrPage] = useState(1);
   const [pageOffset, setPageOffset] = useState(0);
@@ -44,7 +46,14 @@ const Search = () => {
             <h2 className="mb-4">{inputSearch}</h2>
             <Row className=" ">
               {inputResponse.data.map((anime, index) => (
-                <Col key={index} className="mb-3 p-0  text-center animeContainer">
+                <Col
+                  onClick={() => {
+                    dispatch(saveAnimeClickedAction(anime));
+                    navigate("/anime/" + anime.title);
+                  }}
+                  key={index}
+                  className="mb-3 p-0  text-center animeContainer"
+                >
                   <Card.Img className="animePoster" src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 
                   <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
