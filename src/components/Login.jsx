@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { saveUserInfoAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async e => {
@@ -28,29 +25,8 @@ const Login = () => {
       if (resp.ok) {
         const data = await resp.json();
         localStorage.setItem("accessToken", data.AccessToken);
-        try {
-          const resp = await fetch(`http://localhost:3001/utenti/me`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${data.AccessToken}`,
-            },
-          });
-
-          if (resp.ok) {
-            const me = await resp.json();
-
-            dispatch(saveUserInfoAction(me));
-            toast("Welcome back " + me.nome + "!");
-
-            navigate("/");
-          } else {
-            alert("Save user info failed!");
-          }
-        } catch (error) {
-          console.error("Errore: ", error);
-          alert("Save user info failed!");
-        }
+        toast.success("Welcome back 😎!");
+        navigate("/");
       } else {
         alert("Login fallito.");
       }

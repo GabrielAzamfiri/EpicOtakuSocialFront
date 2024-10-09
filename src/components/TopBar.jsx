@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutAction, saveInputSearchAction } from "../redux/actions";
+import { useDispatch } from "react-redux";
+import { logoutAction, saveInputSearchAction, saveUserInfoAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const TopBar = () => {
   const [input, setInput] = useState("");
+  const [utente, setUtente] = useState({});
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSearch = e => {
@@ -19,8 +21,41 @@ const TopBar = () => {
     navigate("/" + input);
   };
 
-  const utente = useSelector(state => state.user.userInfo);
+  const handleLogin = async () => {
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
+      if (resp.ok) {
+        const me = await resp.json();
+
+        dispatch(saveUserInfoAction(me));
+        setUtente(me);
+      } else {
+        localStorage.removeItem("accessToken");
+
+        setUtente({});
+        toast.warn("Login expired ⚠️. Please log in again 😊");
+      }
+    } catch (error) {
+      console.error("Errore: ", error);
+      alert("Save user info failed!");
+    }
+  };
+
+  const token = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (token) {
+      handleLogin();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
   return (
     <Navbar expand="lg" id="navbar " variant="dark">
       <Container fluid>
@@ -28,7 +63,7 @@ const TopBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
 
             <NavDropdown title="Genres" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -50,7 +85,7 @@ const TopBar = () => {
             />
           </Form>
           <Nav className="me-3">
-            {utente ? (
+            {token ? (
               <>
                 <Nav.Link href="#profile">
                   <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
@@ -61,7 +96,7 @@ const TopBar = () => {
                   <NavDropdown.Item
                     onClick={() => {
                       dispatch(logoutAction());
-                      localStorage.clear("accessToken");
+                      localStorage.removeItem("accessToken");
                     }}
                     href="#"
                   >
