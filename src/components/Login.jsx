@@ -3,12 +3,14 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveUserInfoAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogin = async e => {
     e.preventDefault();
 
@@ -26,9 +28,6 @@ const Login = () => {
       if (resp.ok) {
         const data = await resp.json();
         localStorage.setItem("accessToken", data.AccessToken);
-
-        alert("Login effettuato con successo.");
-
         try {
           const resp = await fetch(`http://localhost:3001/utenti/me`, {
             method: "GET",
@@ -42,6 +41,7 @@ const Login = () => {
             const me = await resp.json();
 
             dispatch(saveUserInfoAction(me));
+            toast("Welcome back " + me.nome + "!");
 
             navigate("/");
           } else {

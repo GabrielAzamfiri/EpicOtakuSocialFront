@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveAnimeClickedAction } from "../redux/actions";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Home = () => {
   useEffect(() => {
     fetchGetAnime();
     fetchGetAnimeAsidebar();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nrPage]);
 

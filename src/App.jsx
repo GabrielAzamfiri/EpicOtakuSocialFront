@@ -8,22 +8,28 @@ import { Container } from "react-bootstrap";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Anime from "./components/Anime";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <Container fluid className="vh-100">
-      <BrowserRouter>
-        <TopBar />
+    <>
+      <Container fluid className="vh-100">
+        <BrowserRouter>
+          <TopBar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/:search" element={<Search />} />
-          <Route path="/anime/:anime" element={<Anime />} />
-        </Routes>
-      </BrowserRouter>
-    </Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth/register" element={<Register />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/:search" element={<Search />} />
+            <Route path="/anime/:anime" element={<Anime />} />
+          </Routes>
+        </BrowserRouter>
+      </Container>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+      {/* Same as */}
+    </>
   );
 }
 

@@ -58,7 +58,13 @@ const TopBar = () => {
                 <NavDropdown title="Account" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => dispatch(logoutAction())} href="#">
+                  <NavDropdown.Item
+                    onClick={() => {
+                      dispatch(logoutAction());
+                      localStorage.clear("accessToken");
+                    }}
+                    href="#"
+                  >
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
