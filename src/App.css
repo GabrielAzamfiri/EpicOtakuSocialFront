@@ -9,6 +9,21 @@ body {
   height: 60px;
 }
 
+.pencilImg {
+  transform: translate(-100%, -100%);
+  position: absolute;
+  top: 100%;
+
+  opacity: 0;
+}
+
+#profileImg:hover {
+  scale: 1.05;
+}
+#profileImg:hover .pencilImg {
+  opacity: 1;
+}
+
 /************* scrollbar******************** */
 /* Larghezza della scrollbar */
 ::-webkit-scrollbar {
@@ -36,7 +51,7 @@ body {
 }
 
 #asideScrollBar {
-  max-height: 1200px;
+  max-height: 1180px;
   overflow-y: scroll;
 }
 

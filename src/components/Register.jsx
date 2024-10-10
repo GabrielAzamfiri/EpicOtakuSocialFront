@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
@@ -38,21 +39,21 @@ const Register = () => {
       if (resp.ok) {
         const data = await resp.json();
         console.log(data);
-        alert("Utente registrato con successo.");
+        toast.success("Sign In successfully completed 👌. Please login");
         navigate("/auth/login");
       } else {
-        alert("Registrazione fallita.");
+        toast.warn("Error during Sign In! ⚠️ Please try again...");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Errore durante la registrazione");
+      toast.warn("Error during Sign In");
     }
   };
 
   return (
     <Container fluid className="d-flex justify-content-center align-items-center " style={{ height: "calc(100vh - 60px)" }}>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <h1 className="mb-5 text-center">REGISTER</h1>
+        <h1 className="mb-5 text-center">SIGN IN</h1>
 
         <Row className="mb-3 ">
           <Form.Group as={Col} md="6" controlId="validationCustom01">

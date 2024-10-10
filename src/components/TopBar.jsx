@@ -45,7 +45,7 @@ const TopBar = () => {
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Save user info failed!");
+      toast.warn("Save user info failed!");
     }
   };
 
@@ -90,7 +90,7 @@ const TopBar = () => {
             {token ? (
               <>
                 <Nav.Link href="#profile">
-                  <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
+                  <img src={utente.avatar} alt="avatar" className="rounded" style={{ height: "30px", width: "30px", objectFit: "cover" }} />
                 </Nav.Link>
                 <NavDropdown title="Account" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

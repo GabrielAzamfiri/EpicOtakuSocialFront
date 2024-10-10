@@ -28,11 +28,11 @@ const Login = () => {
         toast.success("Welcome back 😎!");
         navigate("/");
       } else {
-        alert("Login fallito.");
+        toast.warn("Login failed! ⚠️ Please try again...");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Errore durante il login");
+      toast.warn("Error during login");
     }
   };
   return (

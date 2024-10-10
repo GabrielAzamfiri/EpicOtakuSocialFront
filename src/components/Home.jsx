@@ -3,8 +3,9 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveAnimeClickedAction, saveUserInfoAction } from "../redux/actions";
+import { saveAnimeClickedAction } from "../redux/actions";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,11 +37,11 @@ const Home = () => {
         console.log(data);
         setAnime(data.data);
       } else {
-        alert("Fetch anime no good!");
+        toast.warn("Error during Fetch anime! ⚠️ Please reload");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Errore durante la Fetch anime!");
+      toast.warn("Error during Fetch anime! ⚠️ server error!");
     }
   };
 
@@ -58,11 +59,11 @@ const Home = () => {
         console.log(data);
         setNewAnime(data.data);
       } else {
-        alert("Fetch anime no good!");
+        toast.warn("Error during Fetch anime! ⚠️ Please reload!");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Errore durante la Fetch anime!");
+      toast.warn("Error during Fetch anime! ⚠️ server error!");
     }
   };
 
@@ -146,7 +147,7 @@ const Home = () => {
             <Col xs={12} lg={4}>
               <Container fluid>
                 <h2 className="mb-4 ">Latest Releases</h2>
-                <Row id="asideScrollBar" style={{ maxHeight: "1200px", overflowY: "scroll" }}>
+                <Row id="asideScrollBar">
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="">
                       <img

@@ -1,21 +1,76 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Image, Modal } from "react-bootstrap";
-import { Pencil } from "react-bootstrap-icons";
+import { Button, Card, Col, Container, Form, Image, Modal, Nav, Row } from "react-bootstrap";
+import { Pencil, Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfileAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import ModalSelectImg from "./ModalSelectImg";
+import Comment from "./Comment";
+import Post from "./Post";
 
 const MyProfile = () => {
-  const [show, setShow] = useState(false);
-  const me = useSelector(state => state.user.userInfo);
-
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [listPosts, setListPosts] = useState([]);
+  const [listComments, setListComments] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const me = useSelector(state => state.user.userInfo);
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showP, setShowP] = useState(true);
+  const [showC, setShowC] = useState(false);
+  const [showA, setShowA] = useState(false);
 
+  const showPosts = async () => {
+    setShowP(true);
+    setShowA(false);
+    setShowC(false);
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setListPosts(data);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching posts! ��");
+    }
+  };
+  const showComments = async () => {
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me/commenti`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setListComments(data);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching comments! ��");
+    }
+    setShowC(true);
+    setShowP(false);
+    setShowA(false);
+  };
+  const showAnime = () => {
+    setShowA(true);
+    setShowP(false);
+    setShowC(false);
+  };
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("accessToken");
@@ -36,18 +91,42 @@ const MyProfile = () => {
       });
 
       if (resp.ok) {
-        const data = await resp.json();
-        console.log(data);
         dispatch(getMyProfileAction());
-
-        alert("Edit profile successfully completed 👌");
+        toast.success("Edit profile successfully completed 👌");
         handleClose();
       } else {
-        alert("Edit profile failed! Please try again...");
+        toast.warn("Edit profile failed! ⚠️ Please try again...");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      alert("Error during Edit profile");
+      toast.warn("Error during Edit profile");
+    }
+  };
+  const handleDeleteProfile = async () => {
+    // Chiedi conferma all'utente
+    const confirmed = window.confirm("Are you sure you want to delete your profile? This action cannot be undone.");
+
+    if (!confirmed) {
+      return; // Se l'utente non conferma, non fare nulla
+    }
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        toast.success("Delete profile successfully completed 👌");
+        localStorage.removeItem("accessToken");
+        navigate("/");
+      } else {
+        toast.warn("Delete profile failed! ⚠️ Please try again...");
+      }
+    } catch (error) {
+      console.error("Errore: ", error);
+      toast.warn("Error during delete profile ❌");
     }
   };
 
@@ -62,25 +141,84 @@ const MyProfile = () => {
 
   return (
     <>
-      <Container>
-        {me ? (
-          <div className="d-flex align-items-center">
-            <Image rounded src={me.avatar} alt="User profile picture" style={{ height: "80px", width: "80px", objectFit: "cover" }} />
-            <div className="ms-3">
-              <h4>
-                {me.nome} {me.cognome}
-                <Button variant="transparent" className="rounded" onClick={handleShow}>
-                  <Pencil />
+      {me ? (
+        <Container>
+          <Row className="align-items-end mb-4 ">
+            <Col xs={3} id="profileImg" className="position-relative  mt-5">
+              <Image roundedCircle src={me.avatar} alt="User profile picture" style={{ height: "250px", width: "250px", objectFit: "cover" }} />
+              <ModalSelectImg />
+            </Col>
+            <Col className="ms-3 ps-0">
+              <h1>
+                {me.nome} {me.cognome}{" "}
+                <Button rounded variant="transparent" onClick={handleShow}>
+                  <Pencil className="fs-5 " />
                 </Button>
-              </h4>
+              </h1>
               <div>
                 <p className="m-0">User: {me.username}</p>
                 <p>{me.email}</p>
               </div>
-            </div>
-          </div>
-        ) : null}
-      </Container>
+            </Col>
+          </Row>
+
+          <Row>
+            <Card className="bg-transparent">
+              <Card.Header>
+                <Nav variant="tabs" defaultActiveKey="#first">
+                  <Nav.Item>
+                    <Nav.Link href="#Posts" onClick={showPosts}>
+                      Posts
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link href="#Comments" onClick={showComments}>
+                      Comments
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link href="#Anime" onClick={showAnime}>
+                      Anime
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Card.Header>
+              <Card.Body className={showP ? "" : "d-none"}>
+                {listPosts.length > 0 ? (
+                  <>
+                    <Card.Title>List of personal Posts</Card.Title>
+                    {listPosts.map((post, index) => (
+                      <Post key={index} post={post} />
+                    ))}
+                  </>
+                ) : (
+                  <p>No posts</p>
+                )}
+              </Card.Body>
+              <Card.Body className={showC ? "" : "d-none"}>
+                {listComments.length > 0 ? (
+                  <>
+                    <Card.Title>List of personal Comments</Card.Title>
+                    {listComments.map((comment, index) => (
+                      <Comment key={index} comment={comment} />
+                    ))}
+                  </>
+                ) : (
+                  <p>No posts</p>
+                )}
+              </Card.Body>
+              <Card.Body className={showA ? "" : "d-none"}>
+                <Card.Title>List of Favorite Anime</Card.Title>
+                <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+              </Card.Body>
+            </Card>
+          </Row>
+        </Container>
+      ) : (
+        navigate("/")
+      )}
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit profile</Modal.Title>
@@ -108,6 +246,9 @@ const MyProfile = () => {
               <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
             <Modal.Footer>
+              <Button variant="danger" className="me-auto " onClick={() => handleDeleteProfile()}>
+                <Trash className="fs-5" />
+              </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
