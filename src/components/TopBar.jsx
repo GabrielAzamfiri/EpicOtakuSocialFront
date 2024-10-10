@@ -54,7 +54,6 @@ const TopBar = () => {
     if (token) {
       handleLogin();
     }
-    console.log(token);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);

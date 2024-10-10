@@ -136,7 +136,9 @@ const MyProfile = () => {
       setCognome(me.cognome);
       setUsername(me.username);
       setEmail(me.email);
+      showPosts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
 
   return (
@@ -151,7 +153,7 @@ const MyProfile = () => {
             <Col className="ms-3 ps-0">
               <h1>
                 {me.nome} {me.cognome}{" "}
-                <Button rounded variant="transparent" onClick={handleShow}>
+                <Button variant="transparent" onClick={handleShow}>
                   <Pencil className="fs-5 " />
                 </Button>
               </h1>

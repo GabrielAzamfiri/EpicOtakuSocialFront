@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Col, Form, Image, Row } from "react-bootstrap";
+import { Col, Form, Image, Row, Button } from "react-bootstrap";
 import { CameraFill, Pencil } from "react-bootstrap-icons";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 
