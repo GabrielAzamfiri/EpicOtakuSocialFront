@@ -1,7 +1,7 @@
 import { LOGOUT, SET_USER_INFO } from "../actions";
 
 const initialState = {
-  userInfo: {},
+  userInfo: null,
 };
 
 const userReducer = (state = initialState, action) => {

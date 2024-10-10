@@ -10,6 +10,7 @@ import Search from "./components/Search";
 import Anime from "./components/Anime";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import MyProfile from "./components/MyProfile";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/:search" element={<Search />} />
             <Route path="/anime/:anime" element={<Anime />} />
+            <Route path="/profile" element={<MyProfile />} />
           </Routes>
         </BrowserRouter>
       </Container>

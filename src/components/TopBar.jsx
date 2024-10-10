@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const TopBar = () => {
   const [input, setInput] = useState("");
   const [utente, setUtente] = useState({});
+  // const [token, setToken] = useState(localStorage.getItem("accessToken"));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const TopBar = () => {
         setUtente(me);
       } else {
         localStorage.removeItem("accessToken");
-
+        // setToken(localStorage.getItem("accessToken"));
         setUtente({});
         toast.warn("Login expired ⚠️. Please log in again 😊");
       }
@@ -48,12 +49,13 @@ const TopBar = () => {
     }
   };
 
-  const token = localStorage.getItem("accessToken");
-
+  let token = localStorage.getItem("accessToken");
   useEffect(() => {
     if (token) {
       handleLogin();
     }
+    console.log(token);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
   return (
@@ -91,12 +93,13 @@ const TopBar = () => {
                   <img src={utente.avatar} alt="avatar" className="rounded" width={30} />
                 </Nav.Link>
                 <NavDropdown title="Account" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => {
                       dispatch(logoutAction());
                       localStorage.removeItem("accessToken");
+                      setUtente(null);
                     }}
                     href="#"
                   >

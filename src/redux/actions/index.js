@@ -32,3 +32,24 @@ export const inputSearchAction = (input, nrPage) => {
     }
   };
 };
+export const getMyProfileAction = () => {
+  return async dispatch => {
+    try {
+      const response = await fetch(`http://localhost:3001/utenti/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (response.ok) {
+        let data = await response.json();
+
+        dispatch({ type: SET_USER_INFO, payload: data });
+      } else {
+        throw new Error("Errore nel reperimento dei dati 😥");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

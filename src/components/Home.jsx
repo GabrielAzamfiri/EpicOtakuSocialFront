@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveAnimeClickedAction, saveUserInfoAction } from "../redux/actions";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
