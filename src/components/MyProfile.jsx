@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Image, Modal, Nav, Row } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProfileAction } from "../redux/actions";
+import { getMyProfileAction, saveAnimeClickedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ModalSelectImg from "./ModalSelectImg";
@@ -18,6 +18,7 @@ const MyProfile = () => {
 
   const [listPosts, setListPosts] = useState([]);
   const [listComments, setListComments] = useState([]);
+  const [listAnime, setListAnime] = useState([]);
 
   const [show, setShow] = useState(false);
   const me = useSelector(state => state.user.userInfo);
@@ -66,11 +67,26 @@ const MyProfile = () => {
     setShowP(false);
     setShowA(false);
   };
-  const showAnime = () => {
+  const showAnime = async () => {
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me/anime`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setListAnime(data);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching Anime! ��");
+    }
     setShowA(true);
     setShowP(false);
     setShowC(false);
   };
+
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("accessToken");
@@ -206,13 +222,33 @@ const MyProfile = () => {
                     ))}
                   </>
                 ) : (
-                  <p>No posts</p>
+                  <p>No comments</p>
                 )}
               </Card.Body>
               <Card.Body className={showA ? "" : "d-none"}>
-                <Card.Title>List of Favorite Anime</Card.Title>
-                <Card.Text>With supporting text below as a natural lead-in to additional content.</Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                {listAnime.length > 0 ? (
+                  <>
+                    <Card.Title>List of Favorite Anime</Card.Title>
+                    <Row>
+                      {listAnime.map((anime, index) => (
+                        <Col
+                          onClick={() => {
+                            dispatch(saveAnimeClickedAction(anime.idAnime));
+                            navigate("/anime/" + anime.title);
+                          }}
+                          key={index}
+                          className="mb-3 p-0  text-center animeContainer"
+                        >
+                          <Card.Img className="animePoster" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                          <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
+                          <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
+                        </Col>
+                      ))}
+                    </Row>
+                  </>
+                ) : (
+                  <p>No comments</p>
+                )}
               </Card.Body>
             </Card>
           </Row>

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const Anime = () => {
   const dispatch = useDispatch();
+
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
 
@@ -52,7 +53,7 @@ const Anime = () => {
       });
       if (resp.ok) {
         getMyAnimeFavorite();
-        toast.success("Anime successfully added to favorite ✅");
+        toast.success("Added to favorite ✅", { autoClose: 1000 });
       } else {
         toast.warn("Something went wrong! ⚠️ Please try again...");
       }
@@ -72,7 +73,7 @@ const Anime = () => {
       });
       if (resp.ok) {
         getMyAnimeFavorite();
-        toast.success("Anime successfully removed from favorite ✅");
+        toast.success("Removed from favorite ✅", { autoClose: 1000 });
       } else {
         toast.warn("Something went wrong! ⚠️ Please try again...");
       }
@@ -83,7 +84,6 @@ const Anime = () => {
     setListFavoritAnime(listFavoritAnime.filter(i => i.mal_id !== anime.mal_id));
     dispatch(removeFromFavoritesAction(anime));
   };
-
   useEffect(() => {
     getMyAnimeFavorite();
   }, []);
@@ -92,28 +92,28 @@ const Anime = () => {
       {selectedAnime && (
         <>
           <Row>
-            <img src={selectedAnime.images.jpg.large_image_url} alt={selectedAnime.title} style={{ width: "200px" }} />
+            <img src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px" }} />
             <Col>
               <h1 className="me-3">
-                {selectedAnime.title}
-                {listFavoritAnime.map(anime => anime.idAnime).includes(selectedAnime.mal_id) ? (
-                  <Button className="ms-4" variant="transparent" onClick={() => removeFormListFavoritAnime(selectedAnime)}>
+                {selectedAnime.data.title}
+                {listFavoritAnime.map(anime => anime.idAnime).includes(selectedAnime.data.mal_id) ? (
+                  <Button className="ms-4" variant="transparent" onClick={() => removeFormListFavoritAnime(selectedAnime.data)}>
                     <HeartFill className="fs-3" fill="red" />
                   </Button>
                 ) : (
-                  <Button className="ms-4" variant="transparent" onClick={() => addToListFavoritAnime(selectedAnime)}>
+                  <Button className="ms-4" variant="transparent" onClick={() => addToListFavoritAnime(selectedAnime.data)}>
                     <Heart className="fs-3" />
                   </Button>
                 )}
               </h1>
 
-              <p className="fs-7">{selectedAnime.synopsis}</p>
+              <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
 
           <h5 className="mt-3">Genres:</h5>
           <ul>
-            {selectedAnime.genres.map(genre => (
+            {selectedAnime.data.genres.map(genre => (
               <li className="fs-7" key={genre.mal_id}>
                 {genre.name}
               </li>
@@ -121,22 +121,22 @@ const Anime = () => {
           </ul>
 
           <h5 className="mt-3">Stats:</h5>
-          <p className="fs-7 m-0">Score: {selectedAnime.score}</p>
-          <p className="fs-7 m-0">Ranked: {selectedAnime.rank}</p>
-          <p className="fs-7 m-0">Popularity: {selectedAnime.popularity}</p>
-          <p className="fs-7 m-0">Favorites: {selectedAnime.favorites}</p>
+          <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
+          <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
+          <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity}</p>
+          <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites}</p>
 
           <h5 className="mt-3">Alternative Titles:</h5>
-          <p className="fs-7 m-0">Title english: {selectedAnime.title_english}</p>
-          <p className="fs-7 m-0">Title japanese: {selectedAnime.title_japanese}</p>
+          <p className="fs-7 m-0">Title english: {selectedAnime.data.title_english}</p>
+          <p className="fs-7 m-0">Title japanese: {selectedAnime.data.title_japanese}</p>
 
           <h5 className="mt-3">Episodes:</h5>
-          <p className="fs-7 m-0">Episodes: {selectedAnime.episodes}</p>
-          <p className="fs-7 m-0">Aired: {selectedAnime.aired.string}</p>
-          <p className="fs-7 m-0">Duration: {selectedAnime.duration}</p>
-          <p className="fs-7 m-0">Source: {selectedAnime.source}</p>
-          <p className="fs-7 m-0">Rating: {selectedAnime.rating}</p>
-          <p className="fs-7 m-0">Status: {selectedAnime.status}</p>
+          <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
+          <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
+          <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
+          <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
+          <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
+          <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
         </>
       )}
     </Container>

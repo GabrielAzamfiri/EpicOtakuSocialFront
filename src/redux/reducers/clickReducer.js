@@ -1,7 +1,7 @@
 import { ANIME_CLICK } from "../actions";
 
 const initialState = {
-  animeClicked: {},
+  animeClicked: null,
 };
 
 const clickReducer = (state = initialState, action) => {

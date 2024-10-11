@@ -37,8 +37,6 @@ const Register = () => {
       });
 
       if (resp.ok) {
-        const data = await resp.json();
-        console.log(data);
         toast.success("Sign In successfully completed 👌. Please login");
         navigate("/auth/login");
       } else {

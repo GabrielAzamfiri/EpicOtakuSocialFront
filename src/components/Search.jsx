@@ -48,7 +48,7 @@ const Search = () => {
               {inputResponse.data.map((anime, index) => (
                 <Col
                   onClick={() => {
-                    dispatch(saveAnimeClickedAction(anime));
+                    dispatch(saveAnimeClickedAction(anime.mal_id));
                     navigate("/anime/" + anime.title);
                   }}
                   key={index}

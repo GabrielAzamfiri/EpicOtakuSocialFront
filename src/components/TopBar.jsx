@@ -88,12 +88,12 @@ const TopBar = () => {
           <Nav className="me-3">
             {token ? (
               <>
-                <Nav.Link href="#profile">
-                  <img src={utente.avatar} alt="avatar" className="rounded" style={{ height: "30px", width: "30px", objectFit: "cover" }} />
+                <Nav.Link href="/profile">
+                  <img src={utente.avatar} alt="avatar" className="rounded " style={{ height: "30px", width: "30px", objectFit: "cover" }} />
+                  <span className="ms-2">{utente.nome}</span>
                 </Nav.Link>
-                <NavDropdown title="Account" id="basic-nav-dropdown">
+                <NavDropdown title="" id="basic-nav-dropdown" align="end">
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => {
                       dispatch(logoutAction());

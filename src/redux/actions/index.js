@@ -10,10 +10,30 @@ export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
 
 export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 export const saveInputSearchAction = inputSearch => ({ type: SET_INPUT_NAME, payload: inputSearch });
-export const saveAnimeClickedAction = anime => ({ type: ANIME_CLICK, payload: anime });
 export const logoutAction = () => ({ type: LOGOUT, payload: null });
 export const addToFavoritesAction = anime => ({ type: ADD_TO_FAVORITES, payload: anime });
 export const removeFromFavoritesAction = anime => ({ type: REMOVE_FROM_FAVORITES, payload: anime });
+
+export const saveAnimeClickedAction = animeId => {
+  return async dispatch => {
+    try {
+      const response = await fetch(`http://localhost:3001/anime/${animeId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (response.ok) {
+        let data = await response.json();
+
+        dispatch({ type: ANIME_CLICK, payload: data });
+      } else {
+        throw new Error("Errore nel reperimento dei dati 😥");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export const inputSearchAction = (input, nrPage) => {
   return async dispatch => {

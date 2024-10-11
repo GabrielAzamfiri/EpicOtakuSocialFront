@@ -34,7 +34,6 @@ const Home = () => {
 
       if (resp.ok) {
         const data = await resp.json();
-        console.log(data);
         setAnime(data.data);
       } else {
         toast.warn("Error during Fetch anime! ⚠️ Please reload");
@@ -56,7 +55,6 @@ const Home = () => {
 
       if (resp.ok) {
         const data = await resp.json();
-        console.log(data);
         setNewAnime(data.data);
       } else {
         toast.warn("Error during Fetch anime! ⚠️ Please reload!");
@@ -102,7 +100,7 @@ const Home = () => {
                 {anime.map((anime, index) => (
                   <Col
                     onClick={() => {
-                      dispatch(saveAnimeClickedAction(anime));
+                      dispatch(saveAnimeClickedAction(anime.mal_id));
                       navigate("/anime/" + anime.title);
                     }}
                     key={index}
@@ -152,7 +150,7 @@ const Home = () => {
                     <Row key={index} className="">
                       <img
                         onClick={() => {
-                          dispatch(saveAnimeClickedAction(anime));
+                          dispatch(saveAnimeClickedAction(anime.mal_id));
                           navigate("/anime/" + anime.title);
                         }}
                         src={anime.images.jpg.large_image_url}

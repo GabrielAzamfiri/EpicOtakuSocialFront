@@ -2,17 +2,19 @@ import { useState } from "react";
 import { Col, Form, Image, Row, Button } from "react-bootstrap";
 import { CameraFill, Pencil } from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { getMyProfileAction } from "../redux/actions";
 
 function ModalSelectImg() {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const formData = new FormData();
   const onFileChange = e => {
-    console.log(e.target.files[0]);
     if (e.target && e.target.files[0]) {
       formData.append("avatar", e.target.files[0]);
     }
@@ -28,13 +30,14 @@ function ModalSelectImg() {
     })
       .then(resp => {
         if (resp.ok) {
-          alert(`Immagine caricata con successo!`);
+          toast.success("Immagine caricata con successo! ✅");
+          dispatch(getMyProfileAction());
         } else {
           throw new Error("Errore nel reperimento dei dati");
         }
       })
       .catch(Error => {
-        console.log(Error);
+        console.error(Error);
       });
   };
 
@@ -66,7 +69,7 @@ function ModalSelectImg() {
         <Modal.Footer className="d-flex justify-content-between">
           <Form onSubmit={e => handleSubmit(e)}>
             <Form.Group className="d-inline-block me-5" controlId="exampleForm.endDate">
-              <Form.Label className="d-flex flex-column align-items-center">
+              <Form.Label className="pointer d-flex flex-column align-items-center">
                 <CameraFill className="fs-4" />
                 <p>Change Photo</p>
               </Form.Label>

@@ -18,7 +18,7 @@ body {
 }
 
 #profileImg:hover {
-  scale: 1.05;
+  scale: 1.02;
 }
 #profileImg:hover .pencilImg {
   opacity: 1;
