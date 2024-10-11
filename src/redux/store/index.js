@@ -5,18 +5,20 @@ import clickReducer from "../reducers/clickReducer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import addRemoveFavoriteReducer from "../reducers/addRemoveFavoriteAnimeReducer";
 
 // Configura redux-persist
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["input", "animeClick"],
+  whitelist: ["input", "animeClick", "favoritAnime"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
   input: inputReducer,
   animeClick: clickReducer,
+  favoritAnime: addRemoveFavoriteReducer,
 });
 
 // Applica redux-persist al rootReducer

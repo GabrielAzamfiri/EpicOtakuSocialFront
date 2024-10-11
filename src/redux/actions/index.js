@@ -5,11 +5,15 @@ export const SET_INPUT = "SET_INPUT";
 export const SET_INPUT_NAME = "SET_INPUT_NAME";
 export const ANIME_CLICK = "ANIME_CLICK";
 export const LOGOUT = "LOGOUT";
+export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
+export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
 
 export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 export const saveInputSearchAction = inputSearch => ({ type: SET_INPUT_NAME, payload: inputSearch });
 export const saveAnimeClickedAction = anime => ({ type: ANIME_CLICK, payload: anime });
 export const logoutAction = () => ({ type: LOGOUT, payload: null });
+export const addToFavoritesAction = anime => ({ type: ADD_TO_FAVORITES, payload: anime });
+export const removeFromFavoritesAction = anime => ({ type: REMOVE_FROM_FAVORITES, payload: anime });
 
 export const inputSearchAction = (input, nrPage) => {
   return async dispatch => {
