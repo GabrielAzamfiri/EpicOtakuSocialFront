@@ -161,7 +161,7 @@ const Home = () => {
                       <Col className="">
                         <h6
                           onClick={() => {
-                            dispatch(saveAnimeClickedAction(anime));
+                            dispatch(saveAnimeClickedAction(anime.mal_id));
                             navigate("/anime/" + anime.title);
                           }}
                           className="asideTitle my-0 pointer"

@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromFavoritesAction } from "../redux/actions";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
+import ModalCreatePost from "./ModalCreatePost";
+import { useNavigate } from "react-router-dom";
 
 const Anime = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
@@ -84,6 +87,8 @@ const Anime = () => {
     setListFavoritAnime(listFavoritAnime.filter(i => i.mal_id !== anime.mal_id));
     dispatch(removeFromFavoritesAction(anime));
   };
+  const profile = useSelector(state => state.user.userInfo);
+
   useEffect(() => {
     getMyAnimeFavorite();
   }, []);
@@ -110,33 +115,56 @@ const Anime = () => {
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
+          <Row className="mt-3">
+            <Col xs={3}>
+              <h3 className="">Info</h3>
 
-          <h5 className="mt-3">Genres:</h5>
-          <ul>
-            {selectedAnime.data.genres.map(genre => (
-              <li className="fs-7" key={genre.mal_id}>
-                {genre.name}
-              </li>
-            ))}
-          </ul>
+              <h5 className="mt-3">Alternative Titles:</h5>
+              <p className="fs-7 m-0">
+                Title english: <b>{selectedAnime.data.title_english}</b>{" "}
+              </p>
+              <p className="fs-7 m-0">
+                Title japanese: <b>{selectedAnime.data.title_japanese}</b>{" "}
+              </p>
 
-          <h5 className="mt-3">Stats:</h5>
-          <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
-          <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
-          <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity}</p>
-          <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites}</p>
+              <h5 className="mt-3">Genres:</h5>
+              {selectedAnime.data.genres.map(genre => (
+                <p className="m-0 fs-7 " key={genre.mal_id}>
+                  {" "}
+                  - {genre.name}
+                </p>
+              ))}
 
-          <h5 className="mt-3">Alternative Titles:</h5>
-          <p className="fs-7 m-0">Title english: {selectedAnime.data.title_english}</p>
-          <p className="fs-7 m-0">Title japanese: {selectedAnime.data.title_japanese}</p>
+              <h5 className="mt-3">Stats:</h5>
+              <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
+              <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
+              <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity} 🔝</p>
+              <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites} 💓</p>
 
-          <h5 className="mt-3">Episodes:</h5>
-          <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
-          <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
-          <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
-          <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
-          <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
-          <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
+              <h5 className="mt-3">Episodes:</h5>
+              <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
+              <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
+              <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
+              <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
+              <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
+              <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
+            </Col>
+            <Col xs={6}>
+              {profile && (
+                <>
+                  <h3 className="text-center">Posts & Comments</h3>
+                  <div className="d-flex  align-items-end">
+                    <img src={profile.avatar} alt="User Avatar" className="pointer rounded me-3" style={{ width: "40px", height: "40px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
+
+                    <ModalCreatePost />
+                  </div>
+                </>
+              )}
+            </Col>
+            <Col xs={3}>
+              <h3 className="text-center">Anime simili</h3>
+            </Col>
+          </Row>
         </>
       )}
     </Container>
