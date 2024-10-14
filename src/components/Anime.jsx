@@ -3,10 +3,11 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromFavoritesAction } from "../redux/actions";
-import { Heart, HeartFill } from "react-bootstrap-icons";
+import { HandThumbsDownFill, HandThumbsUpFill, Heart, HeartFill, Trash } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 import ModalCreatePost from "./ModalCreatePost";
 import { useNavigate } from "react-router-dom";
+import ModalPostComments from "./ModalPostComments";
 
 const Anime = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Anime = () => {
 
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
+  const [listAnimePosts, setListAnimePosts] = useState([]);
 
   const getMyAnimeFavorite = async () => {
     try {
@@ -31,7 +33,26 @@ const Anime = () => {
       }
     } catch (error) {
       console.error("Errore: ", error);
-      toast.warn("Error during add Anime Favorite fetch❌");
+      toast.warn("Error during get Anime Favorite fetch❌");
+    }
+  };
+  const getAnimePosts = async () => {
+    try {
+      const resp = await fetch(`http://localhost:3001/posts`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setListAnimePosts(data.content);
+      } else {
+        console.error("getAnimePosts fetch error");
+      }
+    } catch (error) {
+      console.error("Errore: ", error);
+      toast.warn("Error during get Anime Posts fetch❌");
     }
   };
 
@@ -87,11 +108,38 @@ const Anime = () => {
     setListFavoritAnime(listFavoritAnime.filter(i => i.mal_id !== anime.mal_id));
     dispatch(removeFromFavoritesAction(anime));
   };
+  const deletePost = async postId => {
+    // Chiedi conferma all'utente
+    const confirmed = window.confirm("Are you sure you want to delete your comment? This action cannot be undone.");
+    if (!confirmed) {
+      return; // Se l'utente non conferma, non fare nulla
+    }
+    try {
+      const resp = await fetch(`http://localhost:3001/utenti/me/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        getAnimePosts();
+        toast.success("Post deleted succesfuly ✅", { autoClose: 1000 });
+      } else {
+        toast.warn("Something went wrong! ⚠️ Please try again...");
+      }
+    } catch (error) {
+      console.error("Errore: ", error);
+      toast.warn("Error during remove Anime Favorite fetch❌");
+    }
+  };
   const profile = useSelector(state => state.user.userInfo);
 
   useEffect(() => {
     getMyAnimeFavorite();
+    getAnimePosts();
   }, []);
+
   return (
     <Container fluid>
       {selectedAnime && (
@@ -156,13 +204,43 @@ const Anime = () => {
                   <div className="d-flex  align-items-end">
                     <img src={profile.avatar} alt="User Avatar" className="pointer rounded me-3" style={{ width: "40px", height: "40px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
 
-                    <ModalCreatePost />
+                    <ModalCreatePost getAnimePosts={getAnimePosts} />
+                  </div>
+                  <div className="mt-3">
+                    {listAnimePosts
+                      .filter(post => post.animeId === selectedAnime.data.mal_id)
+                      .map(post => (
+                        <div key={post.id}>
+                          <p className="fs-7 text-muted mb-0 ">Posted by: {post.autore.username}</p>
+                          <div className="mb-3 border rounded p-2  ">
+                            <p className="fs-6">{post.text}</p>
+                            <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
+                            <hr />
+                            <div className="d-flex justify-content-start">
+                              <Button variant="transparent" className="d-flex">
+                                <HandThumbsUpFill className="fs-5 me-2" />
+                                {post.numeroDislike}
+                              </Button>
+                              <Button variant="transparent" className="d-flex">
+                                <HandThumbsDownFill className="fs-5 me-2" />
+                                {post.numeroLike}
+                              </Button>
+                              <ModalPostComments postId={post.id} />
+                              {post.autore.id === profile.id && (
+                                <Button variant="danger" className="ms-auto " onClick={() => deletePost(post.id)}>
+                                  <Trash className="fs-5" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </>
               )}
             </Col>
             <Col xs={3}>
-              <h3 className="text-center">Anime simili</h3>
+              <h3 className="text-center">Similar Anime</h3>
             </Col>
           </Row>
         </>

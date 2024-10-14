@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalCreatePost = () => {
+const ModalCreatePost = ({ getAnimePosts }) => {
   // const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [textPost, setTextPost] = useState("");
@@ -34,9 +34,10 @@ const ModalCreatePost = () => {
         },
       });
       if (resp.ok) {
-        console.log("Post created successfully");
+        toast.success("Post created successfully 👌");
+        getAnimePosts();
       } else {
-        console.error("Something went wrong happened");
+        console.error("Something went wrong");
       }
     } catch (error) {
       console.error("Errore: ", error);
@@ -53,8 +54,8 @@ const ModalCreatePost = () => {
 
   return (
     <>
-      <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border opacity-75 ">
-        Crea un post
+      <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border  ">
+        Create a post
       </Button>
 
       <Modal show={show} onHide={handleClose} size="lg">
@@ -63,11 +64,12 @@ const ModalCreatePost = () => {
             <img src={profile.avatar} alt="profile image" className="rounded-circle my-3 " style={{ width: "100px", height: "100px", objectFit: "cover" }} />
             <div>
               <h4>
-                {profile.name} {profile.surname} <CaretDownFill />
+                {profile.nome} {profile.cognome} <CaretDownFill />
               </h4>
               <p className="fs-6 opacity-75">
                 Publish: Anyone <EyeFill className="ms-2" />
               </p>
+              <p className="fs-6 opacity-75">Create your own post!</p>
             </div>
           </Modal.Title>
         </Modal.Header>

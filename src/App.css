@@ -24,6 +24,13 @@ body {
   opacity: 1;
 }
 
+.commenti {
+  background-color: #161f1e;
+}
+.postModal {
+  background-color: #161f1e;
+}
+
 /************* scrollbar******************** */
 /* Larghezza della scrollbar */
 ::-webkit-scrollbar {
