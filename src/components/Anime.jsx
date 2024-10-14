@@ -227,9 +227,12 @@ const Anime = () => {
                               </Button>
                               <ModalPostComments postId={post.id} />
                               {post.autore.id === profile.id && (
-                                <Button variant="danger" className="ms-auto " onClick={() => deletePost(post.id)}>
-                                  <Trash className="fs-5" />
-                                </Button>
+                                <div className="ms-auto">
+                                  <Button variant="danger" className="me-1" onClick={() => deletePost(post.id)}>
+                                    <Trash className="fs-5" />
+                                  </Button>
+                                  <Button variant="primary">Edit</Button>
+                                </div>
                               )}
                             </div>
                           </div>

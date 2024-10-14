@@ -37,7 +37,7 @@ const ModalCreatePost = ({ getAnimePosts }) => {
         toast.success("Post created successfully 👌");
         getAnimePosts();
       } else {
-        console.error("Something went wrong");
+        toast.warn("Something went wrong");
       }
     } catch (error) {
       console.error("Errore: ", error);
