@@ -40,7 +40,7 @@ const ModalPostComments = ({ postId }) => {
   useEffect(() => {
     getPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
+  }, []);
   return (
     post && (
       <>
@@ -51,7 +51,7 @@ const ModalPostComments = ({ postId }) => {
 
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Image rounded src={profile.avatar} alt="User profile picture " style={{ height: "60px", width: "60px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
+            <Image rounded src={post.autore.avatar} alt="User profile picture " style={{ height: "60px", width: "60px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
             <div className="ms-3">
               <Modal.Title>
                 {post.autore.nome} {post.autore.cognome}
@@ -95,9 +95,9 @@ const ModalPostComments = ({ postId }) => {
           <Modal.Footer className="d-flex justify-content-start">
             <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
             <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
-            <ModalCreateComment post={post} />
+            <ModalCreateComment post={post} getPost={getPost} />
           </Modal.Footer>
-          {post && post.commentiPrincipali.map(comment => <Comment key={comment.id} post={post} comment={comment} />)}
+          {post && post.commentiPrincipali.map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} />)}
         </Modal>
       </>
     )

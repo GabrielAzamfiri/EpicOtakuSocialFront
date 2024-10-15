@@ -1,10 +1,10 @@
 import { Button, NavDropdown } from "react-bootstrap";
-import { Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
+import { ChatLeftDotsFill, Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import ModalCreateComment from "./ModalCreateComment";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const Comment = ({ post, comment }) => {
+const Comment = ({ post, comment, getPost }) => {
   const deleteComment = async commentId => {
     // Chiedi conferma all'utente
     const confirmed = window.confirm("Are you sure you want to delete your comment? This action cannot be undone.");
@@ -21,6 +21,7 @@ const Comment = ({ post, comment }) => {
       });
       if (resp.ok) {
         toast.success("Comment deleted successfuly! 👍");
+        getPost();
       } else {
         console.error("deleteComment fetch error");
       }
@@ -64,7 +65,14 @@ const Comment = ({ post, comment }) => {
               <HandThumbsDownFill className="fs-5 me-2" />
               {comment.numeroDislike}
             </Button>
-            <ModalCreateComment post={post} commentoPadre={comment} />
+            {post ? (
+              <ModalCreateComment post={post} commentoPadre={comment} getPost={getPost} />
+            ) : (
+              <Button variant="transparent" className="d-flex">
+                <ChatLeftDotsFill className="fs-5 me-2" />
+                {comment.sottoCommenti.length}
+              </Button>
+            )}
 
             {comment.autoreCommento.id === profile.id && (
               <div className="ms-auto">
@@ -75,7 +83,7 @@ const Comment = ({ post, comment }) => {
               </div>
             )}
           </div>
-          {comment.sottoCommenti.length > 0 && comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} />)}
+          {comment.sottoCommenti.length > 0 && comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} />)}
         </div>
       </div>
     </>

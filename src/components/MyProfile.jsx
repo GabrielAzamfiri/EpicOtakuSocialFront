@@ -180,77 +180,80 @@ const MyProfile = () => {
             </Col>
           </Row>
 
-          <Row className="sezione rounded p-3 ">
-            <Card className="bg-dark">
-              <Card.Header>
-                <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
-                  <Nav.Item>
-                    <Nav.Link href="#Posts" onClick={showPosts}>
-                      Posts
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link href="#Comments" onClick={showComments}>
-                      Comments
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link href="#Anime" onClick={showAnime}>
-                      Anime
-                    </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Card.Header>
-              <Card.Body className={showP ? "" : "d-none"}>
-                {listPosts.length > 0 ? (
-                  <>
-                    <Card.Title>List of personal Posts</Card.Title>
-                    {listPosts.map((post, index) => (
-                      <Post key={index} post={post} />
-                    ))}
-                  </>
-                ) : (
-                  <p>No posts</p>
-                )}
-              </Card.Body>
-              <Card.Body className={showC ? "" : "d-none"}>
-                {listComments.length > 0 ? (
-                  <>
-                    <Card.Title>List of personal Comments</Card.Title>
-                    {listComments.map((comment, index) => (
-                      <Comment key={index} comment={comment} />
-                    ))}
-                  </>
-                ) : (
-                  <p>No comments</p>
-                )}
-              </Card.Body>
-              <Card.Body className={showA ? "" : "d-none"}>
-                {listAnime.length > 0 ? (
-                  <>
-                    <Card.Title>List of Favorite Anime</Card.Title>
-                    <Row>
-                      {listAnime.map((anime, index) => (
-                        <Col
-                          onClick={() => {
-                            dispatch(saveAnimeClickedAction(anime.idAnime));
-                            navigate("/anime/" + anime.title);
-                          }}
-                          key={index}
-                          className="mb-3 p-0  text-center animeContainer"
-                        >
-                          <Card.Img className="animePoster" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
-                          <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
-                          <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
-                        </Col>
+          <Row className="sezione rounded p-3 gap-3">
+            <Col xs={8} className="p-0">
+              <Card className="bg-dark rounded">
+                <Card.Header>
+                  <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
+                    <Nav.Item>
+                      <Nav.Link href="#Posts" onClick={showPosts}>
+                        Posts
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href="#Comments" onClick={showComments}>
+                        Comments
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href="#Anime" onClick={showAnime}>
+                        Anime
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Card.Header>
+                <Card.Body className={showP ? "" : "d-none"}>
+                  {listPosts.length > 0 ? (
+                    <>
+                      <Card.Title>List of personal Posts</Card.Title>
+                      {listPosts.map((post, index) => (
+                        <Post key={index} post={post} />
                       ))}
-                    </Row>
-                  </>
-                ) : (
-                  <p>No comments</p>
-                )}
-              </Card.Body>
-            </Card>
+                    </>
+                  ) : (
+                    <p>No posts</p>
+                  )}
+                </Card.Body>
+                <Card.Body className={showC ? "" : "d-none"}>
+                  {listComments.length > 0 ? (
+                    <>
+                      <Card.Title>List of personal Comments</Card.Title>
+                      {listComments.map((comment, index) => (
+                        <Comment key={index} comment={comment} />
+                      ))}
+                    </>
+                  ) : (
+                    <p>No comments</p>
+                  )}
+                </Card.Body>
+                <Card.Body className={showA ? "" : "d-none"}>
+                  {listAnime.length > 0 ? (
+                    <>
+                      <Card.Title>List of Favorite Anime</Card.Title>
+                      <Row>
+                        {listAnime.map((anime, index) => (
+                          <Col
+                            onClick={() => {
+                              dispatch(saveAnimeClickedAction(anime.idAnime));
+                              navigate("/anime/" + anime.title);
+                            }}
+                            key={index}
+                            className="mb-3 p-0  text-center animeContainer"
+                          >
+                            <Card.Img className="animePoster" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                            <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
+                            <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
+                          </Col>
+                        ))}
+                      </Row>
+                    </>
+                  ) : (
+                    <p>No comments</p>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col className="bg-dark rounded border"></Col>
           </Row>
         </Container>
       ) : (

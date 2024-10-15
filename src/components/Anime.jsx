@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromFavoritesAction } from "../redux/actions";
+import { useSelector } from "react-redux";
 import { HandThumbsDownFill, HandThumbsUpFill, Heart, HeartFill, Trash } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 import ModalCreatePost from "./ModalCreatePost";
@@ -10,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import ModalPostComments from "./ModalPostComments";
 
 const Anime = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
@@ -38,7 +36,7 @@ const Anime = () => {
   };
   const getAnimePosts = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/posts`, {
+      const resp = await fetch(`http://localhost:3001/posts/anime/${selectedAnime.data.mal_id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -46,7 +44,7 @@ const Anime = () => {
       });
       if (resp.ok) {
         const data = await resp.json();
-        setListAnimePosts(data.content);
+        setListAnimePosts(data);
       } else {
         console.error("getAnimePosts fetch error");
       }
@@ -105,8 +103,6 @@ const Anime = () => {
       console.error("Errore: ", error);
       toast.warn("Error during remove Anime Favorite fetch❌");
     }
-    setListFavoritAnime(listFavoritAnime.filter(i => i.mal_id !== anime.mal_id));
-    dispatch(removeFromFavoritesAction(anime));
   };
   const deletePost = async postId => {
     // Chiedi conferma all'utente
@@ -136,9 +132,12 @@ const Anime = () => {
   const profile = useSelector(state => state.user.userInfo);
 
   useEffect(() => {
-    getMyAnimeFavorite();
-    getAnimePosts();
-  }, []);
+    if (selectedAnime) {
+      getMyAnimeFavorite();
+      getAnimePosts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAnime]);
 
   return (
     <Container fluid>
@@ -161,6 +160,16 @@ const Anime = () => {
               </h1>
 
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
+              <iframe
+                width="560"
+                height="315"
+                src={selectedAnime.data.trailer.embed_url}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
             </Col>
           </Row>
           <Row className="mt-3 gap-3">
@@ -212,9 +221,8 @@ const Anime = () => {
                     <ModalCreatePost getAnimePosts={getAnimePosts} />
                   </div>
                   <div className="mt-3">
-                    {listAnimePosts
-                      .filter(post => post.animeId === selectedAnime.data.mal_id)
-                      .map(post => (
+                    {listAnimePosts &&
+                      listAnimePosts.map(post => (
                         <div key={post.id}>
                           <p className="fs-7 text-muted mb-0 ">Posted by: {post.autore.username}</p>
                           <div className="mb-3 border rounded p-2 bg-dark ">

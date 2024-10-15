@@ -6,10 +6,10 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalCreateComment = ({ post, commentoPadre }) => {
-  // const dispatch = useDispatch();
+const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
   const [show, setShow] = useState(false);
   const [textComment, setTextComment] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,8 +19,9 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
       commento: textComment,
       elementoCommentato: post.id,
     };
-    console.log(comment);
+
     try {
+      setLoading(true);
       let url;
       if (commentoPadre) {
         url = `http://localhost:3001/commenti/${commentoPadre.id}/crea`;
@@ -29,7 +30,6 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
       }
       const resp = await fetch(url, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -37,7 +37,7 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
         body: JSON.stringify(comment),
       });
       if (resp.ok) {
-        // const data = await resp.json();
+        getPost();
         toast.success("Comment created successfully 👌");
       } else {
         console.error("Something went wrong! ");
@@ -45,14 +45,21 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
     } catch (error) {
       console.error("Errore: ", error);
       toast.warn("Error during Post Creation ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   const profile = useSelector(state => state.user.userInfo);
-  const handleSubmit = e => {
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    createComment();
-    handleClose();
+    if (!loading) {
+      // Verifica che non sia già in corso un invio
+      await createComment();
+      setTextComment("");
+      handleClose();
+    }
   };
 
   return (
@@ -89,8 +96,13 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
               <Form.Control onChange={e => setTextComment(e.target.value)} value={textComment} as="textarea" rows={5} placeholder="Text" />
             </Form.Group>
             <Modal.Footer className="d-flex mt-4 justify-content-between">
-              <Button variant="primary" className="rounded  px-4  fw-bold ms-auto" type="submit">
-                Send
+              <Button
+                variant="primary"
+                className="rounded  px-4  fw-bold ms-auto"
+                type="submit"
+                disabled={loading} // Disabilita il pulsante durante il caricamento
+              >
+                {loading ? "Sending..." : "Send"}
               </Button>
             </Modal.Footer>
           </Form>
