@@ -54,7 +54,7 @@ const ModalCreatePost = ({ getAnimePosts }) => {
 
   return (
     <>
-      <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border  ">
+      <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border bg-dark ">
         Create a post
       </Button>
 

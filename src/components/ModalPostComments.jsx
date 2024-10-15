@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Image, Row, Button, NavDropdown } from "react-bootstrap";
-import { ChatLeftDotsFill, Gear, HandThumbsDownFill, HandThumbsUpFill, Trash } from "react-bootstrap-icons";
+import { Image, Row, Button } from "react-bootstrap";
+import { ChatLeftDotsFill, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { inputSearchAction, saveAnimeClickedAction } from "../redux/actions";
@@ -39,26 +39,31 @@ const Search = () => {
   const totalPages = inputResponse.pagination && inputResponse.pagination.last_visible_page;
 
   return (
-    <Container className="mainContainer">
+    <Container fluid>
       {inputResponse.data && (
-        <Row>
+        <Row className="sezione p-2 rounded">
           <Col xs={12}>
-            <h2 className="mb-4">{inputSearch}</h2>
-            <Row className=" ">
+            <h2 className="mb-4 text-center">{inputSearch}</h2>
+            <Row className=" justify-content-center">
               {inputResponse.data.map((anime, index) => (
-                <Col
-                  onClick={() => {
-                    dispatch(saveAnimeClickedAction(anime.mal_id));
-                    navigate("/anime/" + anime.title);
-                  }}
-                  key={index}
-                  className="mb-3 p-0  text-center animeContainer"
-                >
-                  <Card.Img className="animePoster" src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                <>
+                  <Col
+                    xs={5}
+                    onClick={() => {
+                      dispatch(saveAnimeClickedAction(anime.mal_id));
+                      navigate("/anime/" + anime.title);
+                    }}
+                    key={index}
+                    className="pointer m-3 p-2 d-flex text-center bg-dark border rounded"
+                  >
+                    <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 
-                  <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
-                  <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
-                </Col>
+                    <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
+                      <h4 className="text-start truncate-2-lines">{anime.title}</h4>
+                      <p className=" fs-7 text-start">{anime.synopsis}</p>
+                    </div>
+                  </Col>
+                </>
               ))}
             </Row>
 

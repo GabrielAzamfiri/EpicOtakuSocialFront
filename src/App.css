@@ -1,12 +1,17 @@
 body {
-  background: rgb(46, 63, 87);
-  background: linear-gradient(90deg, rgb(0, 20, 49) 0%, rgb(0, 10, 26) 42%, rgb(0, 0, 0) 100%);
+  background: rgb(#1f1f1f);
+  /* background: linear-gradient(90deg, rgb(25, 26, 25) 0%, rgb(12, 12, 12) 42%, rgb(0, 0, 0) 100%); */
 }
+
 .pointer {
   cursor: pointer;
 }
 #navbar {
   height: 60px;
+}
+
+.sezione {
+  background-color: #131212;
 }
 
 .pencilImg {
@@ -25,10 +30,10 @@ body {
 }
 
 .commenti {
-  background-color: #161f1e;
+  background-color: #131212;
 }
 .postModal {
-  background-color: #161f1e;
+  background-color: #131212;
 }
 
 /************* scrollbar******************** */

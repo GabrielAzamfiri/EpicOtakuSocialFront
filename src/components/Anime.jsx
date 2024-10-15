@@ -144,7 +144,7 @@ const Anime = () => {
     <Container fluid>
       {selectedAnime && (
         <>
-          <Row>
+          <Row className=" py-2 rounded sezione">
             <img src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px" }} />
             <Col>
               <h1 className="me-3">
@@ -163,45 +163,50 @@ const Anime = () => {
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
-          <Row className="mt-3">
-            <Col xs={3}>
+          <Row className="mt-3 gap-3">
+            <Col xs={3} className=" py-2 rounded sezione">
               <h3 className="">Info</h3>
 
-              <h5 className="mt-3">Alternative Titles:</h5>
-              <p className="fs-7 m-0">
-                Title english: <b>{selectedAnime.data.title_english}</b>{" "}
-              </p>
-              <p className="fs-7 m-0">
-                Title japanese: <b>{selectedAnime.data.title_japanese}</b>{" "}
-              </p>
-
-              <h5 className="mt-3">Genres:</h5>
-              {selectedAnime.data.genres.map(genre => (
-                <p className="m-0 fs-7 " key={genre.mal_id}>
-                  {" "}
-                  - {genre.name}
+              <div className="bg-dark p-2 mt-3 border rounded">
+                <h5>Alternative Titles:</h5>
+                <p className="fs-7 m-0">
+                  Title english: <b>{selectedAnime.data.title_english}</b>{" "}
                 </p>
-              ))}
-
-              <h5 className="mt-3">Stats:</h5>
-              <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
-              <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
-              <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity} 🔝</p>
-              <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites} 💓</p>
-
-              <h5 className="mt-3">Episodes:</h5>
-              <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
-              <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
-              <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
-              <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
-              <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
-              <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
+                <p className="fs-7 m-0">
+                  Title japanese: <b>{selectedAnime.data.title_japanese}</b>{" "}
+                </p>
+              </div>
+              <div className="bg-dark p-2 mt-3 border rounded">
+                <h5>Genres:</h5>
+                {selectedAnime.data.genres.map(genre => (
+                  <p className="m-0 fs-7 " key={genre.mal_id}>
+                    {" "}
+                    - {genre.name}
+                  </p>
+                ))}
+              </div>
+              <div className="bg-dark p-2 mt-3 border rounded">
+                <h5>Stats:</h5>
+                <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
+                <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
+                <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity} 🔝</p>
+                <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites} 💓</p>
+              </div>
+              <div className="bg-dark p-2 mt-3 border rounded">
+                <h5>Episodes:</h5>
+                <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
+                <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
+                <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
+                <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
+                <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
+                <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
+              </div>
             </Col>
-            <Col xs={6}>
+            <Col className=" py-2 rounded sezione">
               {profile && (
                 <>
                   <h3 className="text-center">Posts & Comments</h3>
-                  <div className="d-flex  align-items-end">
+                  <div className="d-flex  align-items-end  ">
                     <img src={profile.avatar} alt="User Avatar" className="pointer rounded me-3" style={{ width: "40px", height: "40px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
 
                     <ModalCreatePost getAnimePosts={getAnimePosts} />
@@ -212,7 +217,7 @@ const Anime = () => {
                       .map(post => (
                         <div key={post.id}>
                           <p className="fs-7 text-muted mb-0 ">Posted by: {post.autore.username}</p>
-                          <div className="mb-3 border rounded p-2  ">
+                          <div className="mb-3 border rounded p-2 bg-dark ">
                             <p className="fs-6">{post.text}</p>
                             <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
                             <hr />
@@ -242,7 +247,7 @@ const Anime = () => {
                 </>
               )}
             </Col>
-            <Col xs={3}>
+            <Col xs={3} className=" py-2 rounded sezione">
               <h3 className="text-center">Similar Anime</h3>
             </Col>
           </Row>

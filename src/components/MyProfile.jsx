@@ -160,9 +160,9 @@ const MyProfile = () => {
   return (
     <>
       {me ? (
-        <Container>
-          <Row className="align-items-end mb-4 ">
-            <Col xs={3} id="profileImg" className="position-relative  mt-5">
+        <Container fluid>
+          <Row className="align-items-end mb-4 sezione rounded p-3 ">
+            <Col xs={3} id="profileImg" className="position-relative  ">
               <Image roundedCircle src={me.avatar} alt="User profile picture" style={{ height: "250px", width: "250px", objectFit: "cover" }} />
               <ModalSelectImg />
             </Col>
@@ -180,10 +180,10 @@ const MyProfile = () => {
             </Col>
           </Row>
 
-          <Row>
-            <Card className="bg-transparent">
+          <Row className="sezione rounded p-3 ">
+            <Card className="bg-dark">
               <Card.Header>
-                <Nav variant="tabs" defaultActiveKey="#first">
+                <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
                   <Nav.Item>
                     <Nav.Link href="#Posts" onClick={showPosts}>
                       Posts

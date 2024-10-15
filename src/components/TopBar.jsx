@@ -58,7 +58,7 @@ const TopBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
   return (
-    <Navbar expand="lg" id="navbar " variant="dark">
+    <Navbar expand="lg" id="navbar " variant="dark" className=" py-2 rounded sezione mt-2 mb-3">
       <Container fluid>
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

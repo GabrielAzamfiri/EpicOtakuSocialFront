@@ -91,12 +91,12 @@ const Home = () => {
 
   return (
     <>
-      <Container className="mainContainer">
+      <Container fluid>
         {anime && (
-          <Row className="">
-            <Col xs={12} lg={8}>
+          <Row className="sezione p-2  rounded ">
+            <Col xs={12} lg={8} className="d-flex flex-column align-items-center">
               <h2 className="mb-4">Anime</h2>
-              <Row id="homeAnimeList" className=" ">
+              <Row id="homeAnimeList">
                 {anime.map((anime, index) => (
                   <Col
                     onClick={() => {
@@ -147,18 +147,18 @@ const Home = () => {
                 <h2 className="mb-4 ">Latest Releases</h2>
                 <Row id="asideScrollBar">
                   {newAnime.map((anime, index) => (
-                    <Row key={index} className="">
+                    <Row key={index} className="mb-3 ">
                       <img
                         onClick={() => {
                           dispatch(saveAnimeClickedAction(anime.mal_id));
                           navigate("/anime/" + anime.title);
                         }}
                         src={anime.images.jpg.large_image_url}
-                        className="mb-2 pointer"
+                        className=" pointer"
                         style={{ width: "100px", height: "120px", objectFit: "cover" }}
                       />
 
-                      <Col className="">
+                      <Col className="bg-dark p-2 border rounded">
                         <h6
                           onClick={() => {
                             dispatch(saveAnimeClickedAction(anime.mal_id));

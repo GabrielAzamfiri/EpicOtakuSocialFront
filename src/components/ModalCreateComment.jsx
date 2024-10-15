@@ -63,7 +63,7 @@ const ModalCreateComment = ({ post, commentoPadre }) => {
           {commentoPadre.sottoCommenti.length}
         </Button>
       ) : (
-        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border opacity-75 ">
+        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 sezione rounded border opacity-75 ">
           Create a comment
         </Button>
       )}

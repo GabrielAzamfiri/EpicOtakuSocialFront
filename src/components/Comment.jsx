@@ -1,5 +1,5 @@
 import { Button, NavDropdown } from "react-bootstrap";
-import { Gear, HandThumbsDownFill, HandThumbsUpFill, Trash } from "react-bootstrap-icons";
+import { Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import ModalCreateComment from "./ModalCreateComment";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
