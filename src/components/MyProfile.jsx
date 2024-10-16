@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, Image, Modal, Nav, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Modal, Nav, Row } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfileAction, saveAnimeClickedAction } from "../redux/actions";
@@ -162,9 +162,8 @@ const MyProfile = () => {
       {me ? (
         <Container fluid>
           <Row className="align-items-end mb-4 sezione rounded p-3 ">
-            <Col xs={3} id="profileImg" className="position-relative  ">
-              <Image roundedCircle src={me.avatar} alt="User profile picture" style={{ height: "250px", width: "250px", objectFit: "cover" }} />
-              <ModalSelectImg />
+            <Col xs={3} className="  ">
+              <ModalSelectImg me={me} />
             </Col>
             <Col className="ms-3 ps-0">
               <h1>

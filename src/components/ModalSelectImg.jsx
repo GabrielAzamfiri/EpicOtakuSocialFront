@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Col, Form, Image, Row, Button } from "react-bootstrap";
-import { CameraFill, Pencil } from "react-bootstrap-icons";
+import { CameraFill } from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getMyProfileAction } from "../redux/actions";
 
-function ModalSelectImg() {
+function ModalSelectImg({ me }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
@@ -50,7 +50,7 @@ function ModalSelectImg() {
   return (
     <>
       <Button className="pencilImg" variant="transparent" onClick={handleShow}>
-        <Pencil className="fs-5" />
+        <Image id="profileImg" className="pointer position-relative" roundedCircle src={me.avatar} alt="User profile picture" style={{ height: "250px", width: "250px", objectFit: "cover" }} />
       </Button>
 
       <Modal show={show} onHide={handleClose} size="lg">

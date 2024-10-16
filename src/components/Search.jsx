@@ -46,24 +46,22 @@ const Search = () => {
             <h2 className="mb-4 text-center">{inputSearch}</h2>
             <Row className=" justify-content-center">
               {inputResponse.data.map((anime, index) => (
-                <>
-                  <Col
-                    xs={5}
-                    onClick={() => {
-                      dispatch(saveAnimeClickedAction(anime.mal_id));
-                      navigate("/anime/" + anime.title);
-                    }}
-                    key={index}
-                    className="pointer m-3 p-2 d-flex text-center bg-dark border rounded"
-                  >
-                    <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                <Col
+                  xs={5}
+                  onClick={() => {
+                    dispatch(saveAnimeClickedAction(anime.mal_id));
+                    navigate("/anime/" + anime.title);
+                  }}
+                  key={index}
+                  className="pointer m-3 p-2 d-flex text-center bg-dark border rounded"
+                >
+                  <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 
-                    <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
-                      <h4 className="text-start truncate-2-lines">{anime.title}</h4>
-                      <p className=" fs-7 text-start">{anime.synopsis}</p>
-                    </div>
-                  </Col>
-                </>
+                  <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
+                    <h4 className="text-start truncate-2-lines">{anime.title}</h4>
+                    <p className=" fs-7 text-start">{anime.synopsis}</p>
+                  </div>
+                </Col>
               ))}
             </Row>
 

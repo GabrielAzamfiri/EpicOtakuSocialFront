@@ -8,6 +8,7 @@ import ModalCreatePost from "./ModalCreatePost";
 import { useNavigate } from "react-router-dom";
 import ModalPostComments from "./ModalPostComments";
 import VideoPlayer from "./VideoPlayer";
+import SimilarAnime from "./SimilarAnime";
 
 const Anime = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const Anime = () => {
       toast.warn("Error during get Anime Favorite fetch❌");
     }
   };
+
   const getAnimePosts = async () => {
     try {
       const resp = await fetch(`http://localhost:3001/posts/anime/${selectedAnime.data.mal_id}`, {
@@ -167,36 +169,34 @@ const Anime = () => {
                 </p>
               </div>
 
-              <Button variant="success mt-5 w-50" className="episodeBTN">
+              {listFavoritAnime.map(anime => anime.idAnime).includes(selectedAnime.data.mal_id) ? (
+                <Button className="" variant="transparent" onClick={() => removeFormListFavoritAnime(selectedAnime.data)}>
+                  <HeartFill className="fs-3" fill="red" />
+                </Button>
+              ) : (
+                <Button className="" variant="transparent" onClick={() => addToListFavoritAnime(selectedAnime.data)}>
+                  <Heart className="fs-3" />
+                </Button>
+              )}
+              <Button variant="success mt-3 w-50" className="episodeBTN">
                 Start from EP-1
               </Button>
             </Col>
 
-            <Col className="d-flex justify-content-center  p-0">
+            <Col className="d-flex justify-content-center p-0">
               <VideoPlayer videoUrl={selectedAnime.data.trailer.embed_url} />
             </Col>
           </Row>
           <Row className="rounded sezione p-2">
             <img className="" src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px", objectFit: "contain" }} />
-            <Col>
-              <h1 className="me-3">
-                {selectedAnime.data.title}
-                {listFavoritAnime.map(anime => anime.idAnime).includes(selectedAnime.data.mal_id) ? (
-                  <Button className="ms-4" variant="transparent" onClick={() => removeFormListFavoritAnime(selectedAnime.data)}>
-                    <HeartFill className="fs-3" fill="red" />
-                  </Button>
-                ) : (
-                  <Button className="ms-4" variant="transparent" onClick={() => addToListFavoritAnime(selectedAnime.data)}>
-                    <Heart className="fs-3" />
-                  </Button>
-                )}
-              </h1>
+            <Col className="d-flex flex-column justify-content-center">
+              <h2 className="me-3">{selectedAnime.data.title}</h2>
 
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
           <Row className="mt-3 gap-3">
-            <Col xs={3} className=" py-2 rounded sezione">
+            <Col xs={2} className=" py-2 rounded sezione">
               <h3 className="">Info</h3>
 
               <div className="bg-dark p-2 mt-3 border rounded">
@@ -279,7 +279,7 @@ const Anime = () => {
               )}
             </Col>
             <Col xs={3} className=" py-2 rounded sezione">
-              <h3 className="text-center">Similar Anime</h3>
+              <SimilarAnime />
             </Col>
           </Row>
         </>
