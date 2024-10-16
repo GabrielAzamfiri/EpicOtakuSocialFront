@@ -143,8 +143,39 @@ const Anime = () => {
     <Container fluid>
       {selectedAnime && (
         <>
-          <Row className=" py-2 rounded sezione">
-            <img src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px" }} />
+          <Row className="sezione mb-3 rounded p-2">
+            <Col className=" d-flex flex-column justify-content-center align-items-center p-0">
+              <h1 className="">{selectedAnime.data.title}</h1>
+              <div className="mt-3 text-center">
+                <p className=" mb-1">
+                  <b>Type:</b> {selectedAnime.data.type}
+                </p>
+                <p className=" mb-1">
+                  <b>Status:</b> {selectedAnime.data.status}
+                </p>
+                <p className=" mb-1">
+                  <b>Score:</b> {selectedAnime.data.score} / 10
+                </p>
+              </div>
+
+              <Button variant="success mt-5 w-50 ">Start from EP-1</Button>
+            </Col>
+            <Col className="d-flex justify-content-end  p-0">
+              <iframe
+                className="border rounded"
+                width="500px"
+                height="280px"
+                src={selectedAnime.data.trailer.embed_url}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" //autoplay
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </Col>
+          </Row>
+          <Row className="rounded sezione p-2">
+            <img className="" src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px", objectFit: "contain" }} />
             <Col>
               <h1 className="me-3">
                 {selectedAnime.data.title}
@@ -160,16 +191,6 @@ const Anime = () => {
               </h1>
 
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
-              <iframe
-                width="560"
-                height="315"
-                src={selectedAnime.data.trailer.embed_url}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
             </Col>
           </Row>
           <Row className="mt-3 gap-3">
