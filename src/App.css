@@ -101,17 +101,29 @@ body {
 #homeAnimeList {
   width: 760px;
 }
+.episodeBTN {
+  background-color: #28a745;
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  transition: "transform 0.3s";
+}
 
-.iframeAnime {
-  position: relative;
+.episodeBTN:hover {
+  scale: 1.02;
 }
-.titleAnime {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
+
+iframe {
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9); /* Ombra */
+  transition: transform 0.3s ease-in-out;
 }
+
+iframe:hover {
+  transform: scale(1.02); /* Ingrandimento su hover */
+}
+
 @media screen and (max-width: 1200px) {
   #homeAnimeList {
     width: 600px;

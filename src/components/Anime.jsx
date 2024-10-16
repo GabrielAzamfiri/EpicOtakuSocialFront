@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ModalCreatePost from "./ModalCreatePost";
 import { useNavigate } from "react-router-dom";
 import ModalPostComments from "./ModalPostComments";
+import VideoPlayer from "./VideoPlayer";
 
 const Anime = () => {
   const navigate = useNavigate();
@@ -144,34 +145,35 @@ const Anime = () => {
       {selectedAnime && (
         <>
           <Row className="sezione mb-3 rounded p-2">
-            <Col className=" d-flex flex-column justify-content-center align-items-center p-0">
-              <h1 className="">{selectedAnime.data.title}</h1>
-              <div className="mt-3 text-center">
-                <p className=" mb-1">
+            <Col className="d-flex flex-column justify-content-center align-items-center p-0">
+              <h1
+                className="fw-bold"
+                style={{
+                  color: "white",
+                }}
+              >
+                {selectedAnime.data.title}
+              </h1>
+
+              <div className="mt-3 text-center" style={{ color: "#cccccc" }}>
+                <p className="mb-1">
                   <b>Type:</b> {selectedAnime.data.type}
                 </p>
-                <p className=" mb-1">
+                <p className="mb-1">
                   <b>Status:</b> {selectedAnime.data.status}
                 </p>
-                <p className=" mb-1">
+                <p className="mb-1">
                   <b>Score:</b> {selectedAnime.data.score} / 10
                 </p>
               </div>
 
-              <Button variant="success mt-5 w-50 ">Start from EP-1</Button>
+              <Button variant="success mt-5 w-50" className="episodeBTN">
+                Start from EP-1
+              </Button>
             </Col>
-            <Col className="d-flex justify-content-end  p-0">
-              <iframe
-                className="border rounded"
-                width="500px"
-                height="280px"
-                src={selectedAnime.data.trailer.embed_url}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" //autoplay
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
+
+            <Col className="d-flex justify-content-center  p-0">
+              <VideoPlayer videoUrl={selectedAnime.data.trailer.embed_url} />
             </Col>
           </Row>
           <Row className="rounded sezione p-2">
