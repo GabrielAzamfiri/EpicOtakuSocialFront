@@ -13,7 +13,10 @@ const ModalPostComments = ({ postId }) => {
   const [post, setPost] = useState(null);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    getPost();
+    setShow(true);
+  };
   const navigate = useNavigate();
 
   const getPost = async () => {

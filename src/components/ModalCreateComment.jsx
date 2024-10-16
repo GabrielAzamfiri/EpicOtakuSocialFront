@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
   const [show, setShow] = useState(false);
   const [textComment, setTextComment] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,7 +20,6 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
     };
 
     try {
-      setLoading(true);
       let url;
       if (commentoPadre) {
         url = `http://localhost:3001/commenti/${commentoPadre.id}/crea`;
@@ -45,8 +43,6 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
     } catch (error) {
       console.error("Errore: ", error);
       toast.warn("Error during Post Creation ❌");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -54,12 +50,10 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!loading) {
-      // Verifica che non sia già in corso un invio
-      await createComment();
-      setTextComment("");
-      handleClose();
-    }
+
+    await createComment();
+    setTextComment("");
+    handleClose();
   };
 
   return (
@@ -70,7 +64,7 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
           {commentoPadre.sottoCommenti.length}
         </Button>
       ) : (
-        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 sezione rounded border opacity-75 ">
+        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 sezione rounded border opacity-75 shadowScale">
           Create a comment
         </Button>
       )}
@@ -96,13 +90,8 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
               <Form.Control onChange={e => setTextComment(e.target.value)} value={textComment} as="textarea" rows={5} placeholder="Text" />
             </Form.Group>
             <Modal.Footer className="d-flex mt-4 justify-content-between">
-              <Button
-                variant="primary"
-                className="rounded  px-4  fw-bold ms-auto"
-                type="submit"
-                disabled={loading} // Disabilita il pulsante durante il caricamento
-              >
-                {loading ? "Sending..." : "Send"}
+              <Button variant="primary" className="rounded  px-4  fw-bold ms-auto" type="submit">
+                Send
               </Button>
             </Modal.Footer>
           </Form>

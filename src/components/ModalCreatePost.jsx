@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, NavDropdown } from "react-bootstrap";
 import { CameraFill, CaretDownFill, Clock, EyeFill } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalCreatePost = ({ getAnimePosts }) => {
-  // const dispatch = useDispatch();
+const ModalCreatePost = ({ text, post, file, getAnimePosts }) => {
   const [show, setShow] = useState(false);
-  const [textPost, setTextPost] = useState("");
+  const [textPost, setTextPost] = useState(text ? text : "");
+  const [selectedFile, setSelectedFile] = useState(file ? file : null);
+
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
+  const profile = useSelector(state => state.user.userInfo);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,23 +20,39 @@ const ModalCreatePost = ({ getAnimePosts }) => {
   const formData = new FormData();
 
   const onFileChange = e => {
-    console.log(e.target.files[0]);
     if (e.target && e.target.files[0]) {
-      formData.append("avatar", e.target.files[0]);
+      setSelectedFile(e.target.files[0]);
     }
-    formData.append("message", textPost);
   };
+
   const createPost = async () => {
+    let url;
+    let method;
+
+    if (text && file) {
+      url = `http://localhost:3001/utenti/me/posts/${post.id}`;
+      method = "PUT";
+    } else {
+      url = `http://localhost:3001/posts/${selectedAnime.data.mal_id}/crea`;
+      method = "POST";
+    }
+
+    formData.append("message", textPost);
+    if (selectedFile) {
+      formData.append("avatar", selectedFile);
+    }
+
     try {
-      const resp = await fetch(`http://localhost:3001/posts/${selectedAnime.data.mal_id}/crea`, {
-        method: "POST",
+      const resp = await fetch(url, {
+        method: method,
         body: formData,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
+
       if (resp.ok) {
-        toast.success("Post created successfully 👌");
+        toast.success("Post created/updated successfully 👌");
         getAnimePosts();
       } else {
         toast.warn("Something went wrong");
@@ -45,7 +63,6 @@ const ModalCreatePost = ({ getAnimePosts }) => {
     }
   };
 
-  const profile = useSelector(state => state.user.userInfo);
   const handleSubmit = e => {
     e.preventDefault();
     createPost();
@@ -54,14 +71,18 @@ const ModalCreatePost = ({ getAnimePosts }) => {
 
   return (
     <>
-      <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border bg-dark ">
-        Create a post
-      </Button>
+      {text ? (
+        <NavDropdown.Item onClick={handleShow}>Edit</NavDropdown.Item>
+      ) : (
+        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border bg-dark shadowScale">
+          Create a post
+        </Button>
+      )}
 
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title className="d-flex align-items-center gap-3">
-            <img src={profile.avatar} alt="profile image" className="rounded-circle my-3 " style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+            <img src={profile.avatar} alt="profile image" className="rounded-circle my-3" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
             <div>
               <h4>
                 {profile.nome} {profile.cognome} <CaretDownFill />
@@ -87,7 +108,7 @@ const ModalCreatePost = ({ getAnimePosts }) => {
                 <Form.Control className="d-none" onChange={e => onFileChange(e)} name="profile" type="file" />
               </Form.Group>
               <Clock className="fs-4 ms-auto me-3" />
-              <Button variant="primary" className="rounded-pill me-2 px-4  fw-bold " type="submit">
+              <Button variant="primary" className="rounded-pill me-2 px-4  fw-bold" type="submit">
                 Send
               </Button>
             </Modal.Footer>

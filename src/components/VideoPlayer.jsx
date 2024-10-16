@@ -1,6 +1,6 @@
 function VideoPlayer({ videoUrl }) {
   return (
-    <div>
+    <div className="d-flex align-items-center justify-content-center">
       {videoUrl ? (
         <iframe
           className="border rounded"

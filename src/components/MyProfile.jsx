@@ -247,7 +247,7 @@ const MyProfile = () => {
                       </Row>
                     </>
                   ) : (
-                    <p>No comments</p>
+                    <p>No Favorite Anime</p>
                   )}
                 </Card.Body>
               </Card>

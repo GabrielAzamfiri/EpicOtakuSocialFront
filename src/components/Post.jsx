@@ -1,8 +1,10 @@
-import { Button } from "react-bootstrap";
-import { HandThumbsDownFill, HandThumbsUpFill, Trash } from "react-bootstrap-icons";
+import { Button, NavDropdown } from "react-bootstrap";
+import { Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import ModalPostComments from "./ModalPostComments";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import ModalCreatePost from "./ModalCreatePost";
+import { useEffect } from "react";
 
 const Post = ({ post, getAnimePosts }) => {
   const deletePost = async postId => {
@@ -30,13 +32,18 @@ const Post = ({ post, getAnimePosts }) => {
       toast.warn("Error during remove Anime Favorite fetch❌");
     }
   };
+
   const profile = useSelector(state => state.user.userInfo);
 
+  useEffect(() => {
+    getAnimePosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
-      <div key={post.id}>
+      <div className="p-1">
         <p className="fs-7 text-muted mb-0 ">Posted by: {post.autore.username}</p>
-        <div className="mb-3 border rounded p-2 bg-dark ">
+        <div className="mb-3 border rounded p-2 bg-dark shadowScale">
           <p className="fs-6">{post.text}</p>
           <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
           <hr />
@@ -52,10 +59,11 @@ const Post = ({ post, getAnimePosts }) => {
             <ModalPostComments postId={post.id} />
             {post.autore.id === profile.id && (
               <div className="ms-auto">
-                <Button variant="danger" className="me-1" onClick={() => deletePost(post.id)}>
-                  <Trash className="fs-5" />
-                </Button>
-                <Button variant="primary">Edit</Button>
+                <NavDropdown title={<Gear className="fs-5" />} id="basic-nav-dropdown" align="end">
+                  <ModalCreatePost text={post.text} post={post} file={post.file} getAnimePosts={getAnimePosts} />
+
+                  <NavDropdown.Item onClick={() => deletePost(post.id)}>Delete</NavDropdown.Item>
+                </NavDropdown>
               </div>
             )}
           </div>

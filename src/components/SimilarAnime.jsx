@@ -53,7 +53,7 @@ const SimilarAnime = () => {
                 navigate("/anime/" + anime.title);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="pointer d-flex  bg-dark border rounded p-2 mb-3"
+              className="pointer d-flex  bg-dark border rounded p-2 mb-3 shadowScale"
             >
               <Image src={anime.images.jpg.large_image_url} style={{ width: "100px", objectFit: "contain" }} />
 
