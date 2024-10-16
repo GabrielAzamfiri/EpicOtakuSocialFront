@@ -125,7 +125,7 @@ const Anime = () => {
           <Row className="sezione mb-3 rounded p-2">
             <Col className="d-flex flex-column justify-content-center align-items-center p-0">
               <h1
-                className="fw-bold"
+                className="fw-bold truncate-2-lines"
                 style={{
                   color: "white",
                 }}
@@ -219,7 +219,7 @@ const Anime = () => {
 
                     <ModalCreatePost getAnimePosts={getAnimePosts} />
                   </div>
-                  <div className="mt-3">{listAnimePosts && listAnimePosts.map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}</div>
+                  <div className="mt-3">{listAnimePosts && listAnimePosts.reverse().map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}</div>
                 </>
               )}
             </Col>

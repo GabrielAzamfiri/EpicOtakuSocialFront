@@ -87,6 +87,7 @@ const Home = () => {
 
   const handlePageClick = pageNumber => {
     setNrPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -144,8 +145,8 @@ const Home = () => {
             </Col>
             <Col xs={12} lg={4}>
               <Container fluid>
-                <h2 className="mb-4 ">Latest Releases</h2>
                 <Row id="asideScrollBar">
+                  <h2 className="mb-4 ">Latest Releases</h2>
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="mb-3 ">
                       <img
@@ -154,11 +155,11 @@ const Home = () => {
                           navigate("/anime/" + anime.title);
                         }}
                         src={anime.images.jpg.large_image_url}
-                        className=" pointer"
+                        className=" pointer "
                         style={{ width: "100px", height: "120px", objectFit: "cover" }}
                       />
 
-                      <Col className="bg-dark p-2 border rounded">
+                      <Col className="bg-dark p-2 border rounded shadowScale">
                         <h6
                           onClick={() => {
                             dispatch(saveAnimeClickedAction(anime.mal_id));
