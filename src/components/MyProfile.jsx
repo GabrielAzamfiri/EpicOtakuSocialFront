@@ -22,6 +22,8 @@ const MyProfile = () => {
 
   const [show, setShow] = useState(false);
   const me = useSelector(state => state.user.userInfo);
+  const utente = useSelector(state => state.user.userSelected);
+  const showUtente = utente ? utente : me;
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,9 +36,9 @@ const MyProfile = () => {
     setShowA(false);
     setShowC(false);
     try {
-      const resp = await fetch(`http://localhost:3001/utenti/me/posts`, {
+      const resp = await fetch(`http://localhost:3001/utenti/${showUtente?.id}/posts`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
       if (resp.ok) {
@@ -50,9 +52,9 @@ const MyProfile = () => {
   };
   const showComments = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/utenti/me/commenti`, {
+      const resp = await fetch(`http://localhost:3001/utenti/${showUtente?.id}/comments`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
       if (resp.ok) {
@@ -69,9 +71,9 @@ const MyProfile = () => {
   };
   const showAnime = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/utenti/me/anime`, {
+      const resp = await fetch(`http://localhost:3001/utenti/${showUtente?.id}/favoriteAnime`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
       if (resp.ok) {
@@ -89,8 +91,6 @@ const MyProfile = () => {
 
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("accessToken");
-
   const handleSubmit = async event => {
     event.preventDefault();
 
@@ -101,7 +101,7 @@ const MyProfile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify(utente),
       });
@@ -159,22 +159,24 @@ const MyProfile = () => {
 
   return (
     <>
-      {me ? (
+      {showUtente ? (
         <Container fluid>
           <Row className="align-items-end mb-4 sezione rounded p-3 ">
             <Col xs={3} className="  ">
-              <ModalSelectImg me={me} />
+              <ModalSelectImg me={me} showUtente={showUtente} />
             </Col>
             <Col className="ms-3 ps-0">
               <h1>
-                {me.nome} {me.cognome}{" "}
-                <Button variant="transparent" onClick={handleShow}>
-                  <Pencil className="fs-5 " />
-                </Button>
+                {showUtente.nome} {showUtente.cognome}{" "}
+                {showUtente.id === me.id && (
+                  <Button variant="transparent" onClick={handleShow}>
+                    <Pencil className="fs-5 " />
+                  </Button>
+                )}
               </h1>
               <div>
-                <p className="m-0">User: {me.username}</p>
-                <p>{me.email}</p>
+                <p className="m-0">User: {showUtente.username}</p>
+                <p>{showUtente.email}</p>
               </div>
             </Col>
           </Row>
@@ -201,30 +203,39 @@ const MyProfile = () => {
                     </Nav.Item>
                   </Nav>
                 </Card.Header>
+                {/* *********************** List of personal Posts ******************************** */}
+
                 <Card.Body className={showP ? "" : "d-none"}>
                   {listPosts.length > 0 ? (
                     <>
                       <Card.Title>List of personal Posts</Card.Title>
-                      {listPosts.reverse().map((post, index) => (
-                        <Post key={index} post={post} getAnimePosts={showPosts} />
-                      ))}
+                      {listPosts
+                        .sort((a, b) => new Date(b.ora) - new Date(a.ora))
+                        .map((post, index) => (
+                          <Post key={index} post={post} getAnimePosts={showPosts} />
+                        ))}
                     </>
                   ) : (
                     <p>No posts</p>
                   )}
                 </Card.Body>
+                {/* *********************** List of personal Comments ******************************** */}
+
                 <Card.Body className={showC ? "" : "d-none"}>
                   {listComments.length > 0 ? (
                     <>
                       <Card.Title>List of personal Comments</Card.Title>
-                      {listComments.reverse().map((comment, index) => (
-                        <Comment key={index} comment={comment} showComments={showComments} />
-                      ))}
+                      {listComments
+                        .sort((a, b) => new Date(b.ora) - new Date(a.ora))
+                        .map((comment, index) => (
+                          <Comment key={index} comment={comment} showComments={showComments} />
+                        ))}
                     </>
                   ) : (
                     <p>No comments</p>
                   )}
                 </Card.Body>
+                {/* *********************** List of Favorite Anime******************************** */}
                 <Card.Body className={showA ? "" : "d-none"}>
                   {listAnime.length > 0 ? (
                     <>
@@ -254,51 +265,50 @@ const MyProfile = () => {
             </Col>
             <Col className="bg-dark rounded border"></Col>
           </Row>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group as={Col} md="7" controlId="validationCustom01" className="mb-3 m-auto">
+                  <Form.Label>First name</Form.Label>
+                  <Form.Control required type="text" placeholder="First name" value={nome} onChange={e => setNome(e.target.value)} />
+                </Form.Group>
+                <Form.Group as={Col} md="7" controlId="validationCustom02" className="mb-3 m-auto">
+                  <Form.Label>Last name</Form.Label>
+                  <Form.Control required type="text" placeholder="Last name" value={cognome} onChange={e => setCognome(e.target.value)} />
+                </Form.Group>
+                <Form.Group as={Col} md="7" controlId="validationCustomUsername" className="mb-3 m-auto">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control type="text" placeholder="Username" aria-describedby="inputGroupPrepend" required value={username} onChange={e => setUsername(e.target.value)} />
+                </Form.Group>
+                <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
+                </Form.Group>
+                <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
+                </Form.Group>
+                <Modal.Footer>
+                  <Button variant="danger" className="me-auto " onClick={() => handleDeleteProfile()}>
+                    <Trash className="fs-5" />
+                  </Button>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" type="submit">
+                    Save Changes
+                  </Button>
+                </Modal.Footer>
+              </Form>
+            </Modal.Body>
+          </Modal>
         </Container>
       ) : (
         navigate("/")
       )}
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group as={Col} md="7" controlId="validationCustom01" className="mb-3 m-auto">
-              <Form.Label>First name</Form.Label>
-              <Form.Control required type="text" placeholder="First name" value={nome} onChange={e => setNome(e.target.value)} />
-            </Form.Group>
-            <Form.Group as={Col} md="7" controlId="validationCustom02" className="mb-3 m-auto">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control required type="text" placeholder="Last name" value={cognome} onChange={e => setCognome(e.target.value)} />
-            </Form.Group>
-            <Form.Group as={Col} md="7" controlId="validationCustomUsername" className="mb-3 m-auto">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="text" placeholder="Username" aria-describedby="inputGroupPrepend" required value={username} onChange={e => setUsername(e.target.value)} />
-            </Form.Group>
-            <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
-            </Form.Group>
-            <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
-            </Form.Group>
-            <Modal.Footer>
-              <Button variant="danger" className="me-auto " onClick={() => handleDeleteProfile()}>
-                <Trash className="fs-5" />
-              </Button>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" type="submit">
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
-      </Modal>
     </>
   );
 };

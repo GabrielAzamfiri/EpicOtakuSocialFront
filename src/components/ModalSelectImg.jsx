@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getMyProfileAction } from "../redux/actions";
 
-function ModalSelectImg({ me }) {
+function ModalSelectImg({ me, showUtente }) {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
@@ -19,7 +19,11 @@ function ModalSelectImg({ me }) {
       formData.append("avatar", e.target.files[0]);
     }
   };
-
+  const handleClick = () => {
+    if (showUtente.id === me.id) {
+      handleShow();
+    }
+  };
   const myImageAction = () => {
     fetch(`http://localhost:3001/utenti/me/avatar`, {
       method: "POST",
@@ -49,8 +53,15 @@ function ModalSelectImg({ me }) {
   };
   return (
     <>
-      <Button className="pencilImg" variant="transparent" onClick={handleShow}>
-        <Image id="profileImg" className="pointer position-relative" roundedCircle src={me.avatar} alt="User profile picture" style={{ height: "250px", width: "250px", objectFit: "cover" }} />
+      <Button className="pencilImg" variant="transparent" onClick={handleClick}>
+        <Image
+          id="profileImg"
+          className="pointer position-relative"
+          roundedCircle
+          src={showUtente ? showUtente.avatar : me.avatar}
+          alt="User profile picture"
+          style={{ height: "250px", width: "250px", objectFit: "cover" }}
+        />
       </Button>
 
       <Modal show={show} onHide={handleClose} size="lg">

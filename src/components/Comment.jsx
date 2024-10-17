@@ -1,14 +1,17 @@
 import { Button, Form, Modal, NavDropdown } from "react-bootstrap";
 import { CaretDownFill, ChatLeftDotsFill, EyeFill, Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import ModalCreateComment from "./ModalCreateComment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { getUserSelectedAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ post, comment, getPost, showComments }) => {
   const [text, setText] = useState(comment.text);
   const [show, setShow] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -77,8 +80,27 @@ const Comment = ({ post, comment, getPost, showComments }) => {
     <>
       <div className="p-3 " key={comment.id}>
         <div className="d-flex align-items-end mb-2">
-          <img src={comment.autoreCommento.avatar} alt="avatar" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
-          <span className="fs-7 text-muted ms-2 mb-0 ">Posted by: {comment.autoreCommento.username}</span>
+          <img
+            src={comment.autoreCommento.avatar}
+            alt="avatar"
+            style={{ width: "30px", height: "30px", objectFit: "cover" }}
+            className="pointer"
+            onClick={() => {
+              dispatch(getUserSelectedAction(comment.autoreCommento.id)), navigate("/profile");
+            }}
+          />
+          <span className="fs-7 text-muted ms-2 mb-0 ">
+            Posted by:{" "}
+            <a
+              onClick={() => {
+                dispatch(getUserSelectedAction(comment.autoreCommento.id)), navigate("/profile");
+              }}
+              className="pointer color-primary text-decoration-none fw-bold"
+            >
+              {" "}
+              {comment.autoreCommento.username}{" "}
+            </a>
+          </span>
 
           <span className="fs-8 text-muted ms-2 mb-0 ">
             {" "}

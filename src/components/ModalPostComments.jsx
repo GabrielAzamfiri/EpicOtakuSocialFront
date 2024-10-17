@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { Image, Row, Button } from "react-bootstrap";
 import { ChatLeftDotsFill, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ModalCreateComment from "./ModalCreateComment";
 import { toast } from "react-toastify";
 import Comment from "./Comment";
+import { getUserSelectedAction } from "../redux/actions";
 
 const ModalPostComments = ({ postId }) => {
   const [show, setShow] = useState(false);
@@ -18,7 +19,7 @@ const ModalPostComments = ({ postId }) => {
     setShow(true);
   };
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const getPost = async () => {
     try {
       const resp = await fetch(`http://localhost:3001/posts/${postId}`, {
@@ -54,9 +55,23 @@ const ModalPostComments = ({ postId }) => {
 
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Image rounded src={post.autore.avatar} alt="User profile picture " style={{ height: "60px", width: "60px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
+            <Image
+              className="pointer"
+              rounded
+              src={post.autore.avatar}
+              alt="User profile picture "
+              style={{ height: "60px", width: "60px", objectFit: "cover" }}
+              onClick={() => {
+                dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
+              }}
+            />
             <div className="ms-3">
-              <Modal.Title>
+              <Modal.Title
+                className="pointer"
+                onClick={() => {
+                  dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
+                }}
+              >
                 {post.autore.nome} {post.autore.cognome}
               </Modal.Title>
               <p className="fs-7 text-muted mb-0 ">
@@ -102,7 +117,7 @@ const ModalPostComments = ({ postId }) => {
               <ModalCreateComment post={post} getPost={getPost} />
             </Modal.Footer>
           )}
-          {post && post.commentiPrincipali.map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} />)}
+          {post && post.commentiPrincipali.sort((a, b) => new Date(b.ora) - new Date(a.ora)).map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} />)}
         </Modal>
       </>
     )

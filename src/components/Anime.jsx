@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 import ModalCreatePost from "./ModalCreatePost";
@@ -12,7 +12,7 @@ import Post from "./Post";
 
 const Anime = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
   const [listAnimePosts, setListAnimePosts] = useState([]);
@@ -221,7 +221,9 @@ const Anime = () => {
                   </div>
                 </>
               )}
-              <div className="mt-3">{listAnimePosts && listAnimePosts.reverse().map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}</div>
+              <div className="mt-3">
+                {listAnimePosts && listAnimePosts.sort((a, b) => new Date(b.ora) - new Date(a.ora)).map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}
+              </div>
             </Col>
             <Col xs={3} className=" py-2 rounded sezione">
               <SimilarAnime />

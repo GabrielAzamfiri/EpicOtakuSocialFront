@@ -2,11 +2,15 @@ import { Button, NavDropdown } from "react-bootstrap";
 import { Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import ModalPostComments from "./ModalPostComments";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalCreatePost from "./ModalCreatePost";
 import { useEffect } from "react";
+import { getUserSelectedAction } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, getAnimePosts }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const deletePost = async postId => {
     // Chiedi conferma all'utente
     const confirmed = window.confirm("Are you sure you want to delete your comment? This action cannot be undone.");
@@ -42,7 +46,30 @@ const Post = ({ post, getAnimePosts }) => {
   return (
     <>
       <div className="p-1">
-        <p className="fs-7 text-muted mb-0 ">Posted by: {post.autore.username}</p>
+        <div className="d-flex fs-7 text-muted mb-0 ">
+          <span>
+            Posted by:{" "}
+            <a
+              onClick={() => {
+                dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
+              }}
+              className="pointer color-primary text-decoration-none fw-bold"
+            >
+              {" "}
+              {post.autore.username}{" "}
+            </a>
+          </span>
+
+          <span className="ms-auto ">
+            {new Date(post.ora).toLocaleDateString("en-CA", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
+        </div>
         <div className="mb-3 border rounded p-2 bg-dark shadowScale">
           <p className="fs-6">{post.text}</p>
           <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />

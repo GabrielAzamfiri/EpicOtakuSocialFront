@@ -1,7 +1,8 @@
-import { LOGOUT, SET_USER_INFO } from "../actions";
+import { LOGOUT, SET_USER_INFO, SET_USER_SELECTED } from "../actions";
 
 const initialState = {
   userInfo: null,
+  userSelected: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
+      };
+    case SET_USER_SELECTED:
+      return {
+        ...state,
+        userSelected: action.payload,
       };
 
     case LOGOUT:

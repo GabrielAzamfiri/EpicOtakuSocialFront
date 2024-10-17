@@ -7,6 +7,7 @@ export const ANIME_CLICK = "ANIME_CLICK";
 export const LOGOUT = "LOGOUT";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
+export const SET_USER_SELECTED = "SET_USER_SELECTED";
 
 export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 export const saveInputSearchAction = inputSearch => ({ type: SET_INPUT_NAME, payload: inputSearch });
@@ -69,6 +70,27 @@ export const getMyProfileAction = () => {
         let data = await response.json();
 
         dispatch({ type: SET_USER_INFO, payload: data });
+      } else {
+        throw new Error("Errore nel reperimento dei dati 😥");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const getUserSelectedAction = userId => {
+  return async dispatch => {
+    try {
+      const response = await fetch(`http://localhost:3001/utenti/${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (response.ok) {
+        let data = await response.json();
+
+        dispatch({ type: SET_USER_SELECTED, payload: data });
       } else {
         throw new Error("Errore nel reperimento dei dati 😥");
       }
