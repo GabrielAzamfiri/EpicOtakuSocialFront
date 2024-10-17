@@ -23,10 +23,14 @@ const MyProfile = () => {
   const [show, setShow] = useState(false);
   const me = useSelector(state => state.user.userInfo);
   const utente = useSelector(state => state.user.userSelected);
+
   const showUtente = utente ? utente : me;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const [showP, setShowP] = useState(true);
   const [showC, setShowC] = useState(false);
   const [showA, setShowA] = useState(false);
@@ -89,8 +93,6 @@ const MyProfile = () => {
     setShowC(false);
   };
 
-  const dispatch = useDispatch();
-
   const handleSubmit = async event => {
     event.preventDefault();
 
@@ -145,6 +147,12 @@ const MyProfile = () => {
       toast.warn("Error during delete profile ❌");
     }
   };
+  useEffect(() => {
+    if (showUtente) {
+      showPosts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showUtente]);
 
   useEffect(() => {
     if (me) {
@@ -228,7 +236,7 @@ const MyProfile = () => {
                       {listComments
                         .sort((a, b) => new Date(b.ora) - new Date(a.ora))
                         .map((comment, index) => (
-                          <Comment key={index} comment={comment} showComments={showComments} />
+                          <Comment key={index} comment={comment} showComments={showComments} handleClose={handleClose} />
                         ))}
                     </>
                   ) : (

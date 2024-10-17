@@ -7,12 +7,12 @@ import { useState } from "react";
 import { getUserSelectedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
-const Comment = ({ post, comment, getPost, showComments }) => {
+const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
   const [text, setText] = useState(comment.text);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClose = () => setShow(false);
+  const handleCloseComment = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const deleteComment = async commentId => {
@@ -31,7 +31,7 @@ const Comment = ({ post, comment, getPost, showComments }) => {
       });
       if (resp.ok) {
         toast.success("Comment deleted successfuly! 👍");
-        getPost ? getPost() : getComments();
+        getPost ? getPost() : showComments();
       } else {
         console.error("deleteComment fetch error");
       }
@@ -71,7 +71,7 @@ const Comment = ({ post, comment, getPost, showComments }) => {
 
     await editComment(comment.id);
 
-    handleClose();
+    handleCloseComment();
   };
 
   const profile = useSelector(state => state.user.userInfo);
@@ -86,14 +86,20 @@ const Comment = ({ post, comment, getPost, showComments }) => {
             style={{ width: "30px", height: "30px", objectFit: "cover" }}
             className="pointer"
             onClick={() => {
-              dispatch(getUserSelectedAction(comment.autoreCommento.id)), navigate("/profile");
+              dispatch(getUserSelectedAction(comment.autoreCommento.id));
+              handleClose();
+              navigate("/profile");
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           />
           <span className="fs-7 text-muted ms-2 mb-0 ">
             Posted by:{" "}
             <a
               onClick={() => {
-                dispatch(getUserSelectedAction(comment.autoreCommento.id)), navigate("/profile");
+                dispatch(getUserSelectedAction(comment.autoreCommento.id));
+                handleClose();
+                navigate("/profile");
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="pointer color-primary text-decoration-none fw-bold"
             >
@@ -146,12 +152,12 @@ const Comment = ({ post, comment, getPost, showComments }) => {
             )}
           </div>
           {comment.sottoCommenti.length > 0 &&
-            comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} showComments={showComments} />)}
+            comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} showComments={showComments} handleClose={handleClose} />)}
         </div>
       </div>
 
       {profile && (
-        <Modal show={show} onHide={handleClose} size="lg" className="">
+        <Modal show={show} onHide={handleCloseComment} size="lg" className="">
           <Modal.Header closeButton>
             <Modal.Title className="d-flex align-items-center gap-3">
               <img src={profile.avatar} alt="profile image" className="rounded my-3 " style={{ width: "100px", height: "100px", objectFit: "cover" }} />

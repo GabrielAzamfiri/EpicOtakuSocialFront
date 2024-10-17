@@ -62,14 +62,20 @@ const ModalPostComments = ({ postId }) => {
               alt="User profile picture "
               style={{ height: "60px", width: "60px", objectFit: "cover" }}
               onClick={() => {
-                dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
+                dispatch(getUserSelectedAction(post.autore.id));
+                handleClose();
+                navigate("/profile");
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             />
             <div className="ms-3">
               <Modal.Title
                 className="pointer"
                 onClick={() => {
-                  dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
+                  dispatch(getUserSelectedAction(post.autore.id));
+                  handleClose();
+                  navigate("/profile");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
                 {post.autore.nome} {post.autore.cognome}
@@ -117,7 +123,10 @@ const ModalPostComments = ({ postId }) => {
               <ModalCreateComment post={post} getPost={getPost} />
             </Modal.Footer>
           )}
-          {post && post.commentiPrincipali.sort((a, b) => new Date(b.ora) - new Date(a.ora)).map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} />)}
+          {post &&
+            post.commentiPrincipali
+              .sort((a, b) => new Date(b.ora) - new Date(a.ora))
+              .map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} handleClose={handleClose} />)}
         </Modal>
       </>
     )
