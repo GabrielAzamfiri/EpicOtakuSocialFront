@@ -205,8 +205,8 @@ const MyProfile = () => {
                   {listPosts.length > 0 ? (
                     <>
                       <Card.Title>List of personal Posts</Card.Title>
-                      {listPosts.map((post, index) => (
-                        <Post key={index} post={post} />
+                      {listPosts.reverse().map((post, index) => (
+                        <Post key={index} post={post} getAnimePosts={showPosts} />
                       ))}
                     </>
                   ) : (
@@ -217,8 +217,8 @@ const MyProfile = () => {
                   {listComments.length > 0 ? (
                     <>
                       <Card.Title>List of personal Comments</Card.Title>
-                      {listComments.map((comment, index) => (
-                        <Comment key={index} comment={comment} />
+                      {listComments.reverse().map((comment, index) => (
+                        <Comment key={index} comment={comment} showComments={showComments} />
                       ))}
                     </>
                   ) : (

@@ -57,7 +57,7 @@ const Post = ({ post, getAnimePosts }) => {
               {post.numeroLike}
             </Button>
             <ModalPostComments postId={post.id} />
-            {post.autore.id === profile.id && (
+            {profile && post.autore.id === profile.id && (
               <div className="ms-auto">
                 <NavDropdown title={<Gear className="fs-5" />} id="basic-nav-dropdown" align="end">
                   <ModalCreatePost text={post.text} post={post} file={post.file} getAnimePosts={getAnimePosts} />

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-const Comment = ({ post, comment, getPost }) => {
+const Comment = ({ post, comment, getPost, showComments }) => {
   const [text, setText] = useState(comment.text);
   const [show, setShow] = useState(false);
 
@@ -28,7 +28,7 @@ const Comment = ({ post, comment, getPost }) => {
       });
       if (resp.ok) {
         toast.success("Comment deleted successfuly! 👍");
-        getPost();
+        getPost ? getPost() : getComments();
       } else {
         console.error("deleteComment fetch error");
       }
@@ -38,9 +38,9 @@ const Comment = ({ post, comment, getPost }) => {
     }
   };
   const editComment = async commentId => {
-    const comment = {
+    const commentOBJ = {
       commento: text,
-      elementoCommentato: post.id,
+      elementoCommentato: post ? post.id : comment.postId,
     };
     try {
       const resp = await fetch(`http://localhost:3001/utenti/me/commenti/${commentId}`, {
@@ -49,11 +49,11 @@ const Comment = ({ post, comment, getPost }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-        body: JSON.stringify(comment),
+        body: JSON.stringify(commentOBJ),
       });
       if (resp.ok) {
         toast.success("Comment updated successfuly! 👍");
-        getPost();
+        getPost ? getPost() : showComments();
       } else {
         console.error("Comment updated fetch error");
       }
@@ -114,7 +114,7 @@ const Comment = ({ post, comment, getPost }) => {
               </Button>
             )}
 
-            {comment.autoreCommento.id === profile.id && (
+            {profile && comment.autoreCommento.id === profile.id && (
               <div className="ms-auto">
                 <NavDropdown title={<Gear className="fs-5" />} id="basic-nav-dropdown" align="end">
                   <NavDropdown.Item onClick={handleShow}>Edit</NavDropdown.Item>
@@ -123,37 +123,41 @@ const Comment = ({ post, comment, getPost }) => {
               </div>
             )}
           </div>
-          {comment.sottoCommenti.length > 0 && comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} />)}
+          {comment.sottoCommenti.length > 0 &&
+            comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} showComments={showComments} />)}
         </div>
       </div>
-      <Modal show={show} onHide={handleClose} size="lg" className="">
-        <Modal.Header closeButton>
-          <Modal.Title className="d-flex align-items-center gap-3">
-            <img src={profile.avatar} alt="profile image" className="rounded my-3 " style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-            <div>
-              <h4>
-                {profile.nome} {profile.cognome} <CaretDownFill />
-              </h4>
-              <p className="fs-6 opacity-75">
-                Publish: Anyone <EyeFill className="ms-2" />
-              </p>
-              <p className="fs-6 opacity-75 m-0 p-0">Create your own comment!</p>
-            </div>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={e => handleSubmit(e)}>
-            <Form.Group>
-              <Form.Control onChange={e => setText(e.target.value)} value={text} as="textarea" rows={5} placeholder="Text" />
-            </Form.Group>
-            <Modal.Footer className="d-flex mt-4 justify-content-between">
-              <Button variant="primary" className="rounded  px-4  fw-bold ms-auto" type="submit">
-                Send
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
-      </Modal>
+
+      {profile && (
+        <Modal show={show} onHide={handleClose} size="lg" className="">
+          <Modal.Header closeButton>
+            <Modal.Title className="d-flex align-items-center gap-3">
+              <img src={profile.avatar} alt="profile image" className="rounded my-3 " style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+              <div>
+                <h4>
+                  {profile.nome} {profile.cognome} <CaretDownFill />
+                </h4>
+                <p className="fs-6 opacity-75">
+                  Publish: Anyone <EyeFill className="ms-2" />
+                </p>
+                <p className="fs-6 opacity-75 m-0 p-0">Create your own comment!</p>
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={e => handleSubmit(e)}>
+              <Form.Group>
+                <Form.Control onChange={e => setText(e.target.value)} value={text} as="textarea" rows={5} placeholder="Text" />
+              </Form.Group>
+              <Modal.Footer className="d-flex mt-4 justify-content-between">
+                <Button variant="primary" className="rounded  px-4  fw-bold ms-auto" type="submit">
+                  Send
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      )}
     </>
   );
 };

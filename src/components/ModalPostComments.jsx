@@ -95,11 +95,13 @@ const ModalPostComments = ({ postId }) => {
           </Modal.Body>
 
           <h3 className="ms-3">Comments</h3>
-          <Modal.Footer className="d-flex justify-content-start">
-            <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
-            <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
-            <ModalCreateComment post={post} getPost={getPost} />
-          </Modal.Footer>
+          {profile && (
+            <Modal.Footer className="d-flex justify-content-start">
+              <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
+              <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
+              <ModalCreateComment post={post} getPost={getPost} />
+            </Modal.Footer>
+          )}
           {post && post.commentiPrincipali.map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} />)}
         </Modal>
       </>

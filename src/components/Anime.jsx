@@ -17,32 +17,11 @@ const Anime = () => {
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
   const [listAnimePosts, setListAnimePosts] = useState([]);
 
-  const getMyAnimeFavorite = async () => {
-    try {
-      const resp = await fetch(`http://localhost:3001/utenti/me/anime`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        setListFavoritAnime(data);
-      } else {
-        console.error("getMyAnimeFavorite fetch error");
-      }
-    } catch (error) {
-      console.error("Errore: ", error);
-      toast.warn("Error during get Anime Favorite fetch❌");
-    }
-  };
-
   const getAnimePosts = async () => {
     try {
       const resp = await fetch(`http://localhost:3001/posts/anime/${selectedAnime.data.mal_id}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
       if (resp.ok) {
@@ -54,6 +33,27 @@ const Anime = () => {
     } catch (error) {
       console.error("Errore: ", error);
       toast.warn("Error during get Anime Posts fetch❌");
+    }
+  };
+  const getMyAnimeFavorite = async () => {
+    if (localStorage.getItem("accessToken")) {
+      try {
+        const resp = await fetch(`http://localhost:3001/utenti/me/anime`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          setListFavoritAnime(data);
+        } else {
+          console.error("getMyAnimeFavorite fetch error");
+        }
+      } catch (error) {
+        console.error("Errore: ", error);
+        toast.warn("Error during get Anime Favorite fetch❌");
+      }
     }
   };
 
@@ -112,8 +112,8 @@ const Anime = () => {
 
   useEffect(() => {
     if (selectedAnime) {
-      getMyAnimeFavorite();
       getAnimePosts();
+      getMyAnimeFavorite();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAnime]);
@@ -219,9 +219,9 @@ const Anime = () => {
 
                     <ModalCreatePost getAnimePosts={getAnimePosts} />
                   </div>
-                  <div className="mt-3">{listAnimePosts && listAnimePosts.reverse().map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}</div>
                 </>
               )}
+              <div className="mt-3">{listAnimePosts && listAnimePosts.reverse().map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}</div>
             </Col>
             <Col xs={3} className=" py-2 rounded sezione">
               <SimilarAnime />
