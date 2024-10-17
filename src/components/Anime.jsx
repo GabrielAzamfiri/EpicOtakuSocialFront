@@ -12,7 +12,6 @@ import Post from "./Post";
 
 const Anime = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
   const [listFavoritAnime, setListFavoritAnime] = useState([]);
   const [listAnimePosts, setListAnimePosts] = useState([]);
@@ -66,6 +65,7 @@ const Anime = () => {
       image: anime.images.jpg.large_image_url,
       genres: genres,
       aired: anime.aired.string,
+      synopsis: anime.synopsis ? (anime.synopsis.length > 250 ? anime.synopsis.substring(0, 250) + "..." : anime.synopsis) : "",
     };
     try {
       const resp = await fetch(`http://localhost:3001/animeFavorite/crea`, {

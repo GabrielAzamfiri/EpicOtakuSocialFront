@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, Modal, Nav, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Image, Modal, Nav, Row } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfileAction, saveAnimeClickedAction } from "../redux/actions";
@@ -150,6 +150,7 @@ const MyProfile = () => {
   useEffect(() => {
     if (showUtente) {
       showPosts();
+      showAnime();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showUtente]);
@@ -190,7 +191,7 @@ const MyProfile = () => {
           </Row>
 
           <Row className="sezione rounded p-3 gap-3">
-            <Col xs={8} className="p-0">
+            <Col className="p-0">
               <Card className="bg-dark rounded">
                 <Card.Header>
                   <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
@@ -202,11 +203,6 @@ const MyProfile = () => {
                     <Nav.Item>
                       <Nav.Link href="#Comments" onClick={showComments}>
                         Comments
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link href="#Anime" onClick={showAnime}>
-                        Anime
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
@@ -243,35 +239,36 @@ const MyProfile = () => {
                     <p>No comments</p>
                   )}
                 </Card.Body>
-                {/* *********************** List of Favorite Anime******************************** */}
-                <Card.Body className={showA ? "" : "d-none"}>
-                  {listAnime.length > 0 ? (
-                    <>
-                      <Card.Title>List of Favorite Anime</Card.Title>
-                      <Row>
-                        {listAnime.map((anime, index) => (
-                          <Col
-                            onClick={() => {
-                              dispatch(saveAnimeClickedAction(anime.idAnime));
-                              navigate("/anime/" + anime.title);
-                            }}
-                            key={index}
-                            className="mb-3 p-0  text-center animeContainer"
-                          >
-                            <Card.Img className="animePoster" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
-                            <h6 className="truncate-2-lines  animeTitle">{anime.title}</h6>
-                            <h6 className="truncate-2-lines mt-2  d-md-none">{anime.title}</h6>
-                          </Col>
-                        ))}
-                      </Row>
-                    </>
-                  ) : (
-                    <p>No Favorite Anime</p>
-                  )}
-                </Card.Body>
               </Card>
             </Col>
-            <Col className="bg-dark rounded border"></Col>
+
+            <Col xs={4} className="bg-dark rounded border ">
+              <h3 className="text-center p-2">Favorite Anime 🧡</h3>
+              <Row className="justify-content-center">
+                {listAnime &&
+                  listAnime.map((anime, index) => (
+                    <Col
+                      xs={11}
+                      onClick={() => {
+                        dispatch(saveAnimeClickedAction(anime.idAnime));
+                        navigate("/anime/" + anime.title);
+                      }}
+                      key={index}
+                      className="pointer p-2 m-2 d-flex text-center sezione shadowScale border rounded"
+                    >
+                      <Image src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+
+                      <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
+                        <h4 className="text-start truncate-2-lines">{anime.title}</h4>
+                        <p className=" fs-7 text-start p-0">
+                          <b>Genres:</b> {anime.genres.map(genre => genre).join(", ")}
+                        </p>
+                        <p className="fs-7 text-start">{anime.synopsis}</p>
+                      </div>
+                    </Col>
+                  ))}
+              </Row>
+            </Col>
           </Row>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
