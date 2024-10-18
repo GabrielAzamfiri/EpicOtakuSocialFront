@@ -177,7 +177,7 @@ const MyProfile = () => {
             <Col className="ms-3 ps-0">
               <h1>
                 {showUtente.nome} {showUtente.cognome}{" "}
-                {showUtente.id === me.id && (
+                {me && showUtente.id === me.id && (
                   <Button variant="transparent" onClick={handleShow}>
                     <Pencil className="fs-5 " />
                   </Button>

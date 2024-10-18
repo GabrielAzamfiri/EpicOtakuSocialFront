@@ -51,8 +51,11 @@ const Post = ({ post, getAnimePosts }) => {
             Posted by:{" "}
             <a
               onClick={() => {
-                dispatch(getUserSelectedAction(post.autore.id)), navigate("/profile");
-                window.scrollTo({ top: 0 });
+                {
+                  profile && dispatch(getUserSelectedAction(post.autore.id));
+                  profile && navigate("/profile");
+                  profile && window.scrollTo({ top: 0 });
+                }
               }}
               className="pointer color-primary text-decoration-none fw-bold"
             >

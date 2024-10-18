@@ -62,20 +62,24 @@ const ModalPostComments = ({ postId }) => {
               alt="User profile picture "
               style={{ height: "60px", width: "60px", objectFit: "cover" }}
               onClick={() => {
-                dispatch(getUserSelectedAction(post.autore.id));
-                handleClose();
-                navigate("/profile");
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                {
+                  profile && dispatch(getUserSelectedAction(post.autore.id));
+                  profile && handleClose();
+                  profile && navigate("/profile");
+                  profile && window.scrollTo({ top: 0, behavior: "smooth" });
+                }
               }}
             />
             <div className="ms-3">
               <Modal.Title
                 className="pointer"
                 onClick={() => {
-                  dispatch(getUserSelectedAction(post.autore.id));
-                  handleClose();
-                  navigate("/profile");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  {
+                    profile && dispatch(getUserSelectedAction(post.autore.id));
+                    profile && handleClose();
+                    profile && navigate("/profile");
+                    profile && window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
                 }}
               >
                 {post.autore.nome} {post.autore.cognome}

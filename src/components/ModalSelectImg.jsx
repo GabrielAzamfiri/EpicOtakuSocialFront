@@ -64,34 +64,36 @@ function ModalSelectImg({ me, showUtente }) {
         />
       </Button>
 
-      <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Change picture</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="justify-content-center">
-            <Col xs={8} className="d-flex flex-column justify-content-center align-items-center">
-              <h4 className="my-3">Hello {profile.nome}, change your profile picture!</h4>
-              <Image rounded src={profile.avatar} alt="User profile picture " style={{ height: "200px", width: "200px", objectFit: "cover" }} onClick={handleShow} />
-            </Col>
-          </Row>
-        </Modal.Body>
+      {profile && (
+        <Modal show={show} onHide={handleClose} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>Change picture</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Row className="justify-content-center">
+              <Col xs={8} className="d-flex flex-column justify-content-center align-items-center">
+                <h4 className="my-3">Hello {profile.nome}, change your profile picture!</h4>
+                <Image rounded src={profile.avatar} alt="User profile picture " style={{ height: "200px", width: "200px", objectFit: "cover" }} onClick={handleShow} />
+              </Col>
+            </Row>
+          </Modal.Body>
 
-        <Modal.Footer className="d-flex justify-content-between">
-          <Form onSubmit={e => handleSubmit(e)}>
-            <Form.Group className="d-inline-block me-5" controlId="exampleForm.endDate">
-              <Form.Label className="pointer d-flex flex-column align-items-center">
-                <CameraFill className="fs-4" />
-                <p>Change Photo</p>
-              </Form.Label>
-              <Form.Control className="d-none" onChange={e => onFileChange(e)} name="profile" type="file" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
-          </Form>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Footer className="d-flex justify-content-between">
+            <Form onSubmit={e => handleSubmit(e)}>
+              <Form.Group className="d-inline-block me-5" controlId="exampleForm.endDate">
+                <Form.Label className="pointer d-flex flex-column align-items-center">
+                  <CameraFill className="fs-4" />
+                  <p>Change Photo</p>
+                </Form.Label>
+                <Form.Control className="d-none" onChange={e => onFileChange(e)} name="profile" type="file" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            </Form>
+          </Modal.Footer>
+        </Modal>
+      )}
     </>
   );
 }

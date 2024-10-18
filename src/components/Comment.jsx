@@ -86,20 +86,24 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
             style={{ width: "30px", height: "30px", objectFit: "cover" }}
             className="pointer"
             onClick={() => {
-              dispatch(getUserSelectedAction(comment.autoreCommento.id));
-              handleClose();
-              navigate("/profile");
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              {
+                profile && dispatch(getUserSelectedAction(comment.autoreCommento.id));
+                profile && handleClose();
+                profile && navigate("/profile");
+                profile && window.scrollTo({ top: 0, behavior: "smooth" });
+              }
             }}
           />
           <span className="fs-7 text-muted ms-2 mb-0 ">
             Posted by:{" "}
             <a
               onClick={() => {
-                dispatch(getUserSelectedAction(comment.autoreCommento.id));
-                handleClose();
-                navigate("/profile");
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                {
+                  profile && dispatch(getUserSelectedAction(comment.autoreCommento.id));
+                  profile && handleClose();
+                  profile && navigate("/profile");
+                  profile && window.scrollTo({ top: 0, behavior: "smooth" });
+                }
               }}
               className="pointer color-primary text-decoration-none fw-bold"
             >
