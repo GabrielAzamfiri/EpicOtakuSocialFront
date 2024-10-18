@@ -104,11 +104,11 @@ const ModalPostComments = ({ postId }) => {
                 <div className="d-flex justify-content-start">
                   <Button variant="transparent" className="d-flex">
                     <HandThumbsUpFill className="fs-5 me-2" />
-                    {post.numeroDislike}
+                    {post.numeroLike.length}
                   </Button>
                   <Button variant="transparent" className="d-flex">
                     <HandThumbsDownFill className="fs-5 me-2" />
-                    {post.numeroLike}
+                    {post.numeroDislike.length}
                   </Button>
                   <Button variant="transparent" className="d-flex">
                     <ChatLeftDotsFill className="fs-5 me-2" />

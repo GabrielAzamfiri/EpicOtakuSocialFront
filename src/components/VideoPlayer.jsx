@@ -1,4 +1,4 @@
-function VideoPlayer({ videoUrl }) {
+const VideoPlayer = ({ videoUrl }) => {
   return (
     <div className="d-flex align-items-center justify-content-center">
       {videoUrl ? (
@@ -34,6 +34,6 @@ function VideoPlayer({ videoUrl }) {
       )}
     </div>
   );
-}
+};
 
 export default VideoPlayer;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 import ModalCreatePost from "./ModalCreatePost";
@@ -80,7 +80,7 @@ const Anime = () => {
         getMyAnimeFavorite();
         toast.success("Added to favorite ✅", { autoClose: 1000 });
       } else {
-        toast.warn("Something went wrong! ⚠️ Please login...");
+        toast.warn("Something went wrong! ⚠️ Please ...");
       }
     } catch (error) {
       console.error("Errore: ", error);
@@ -146,11 +146,11 @@ const Anime = () => {
               </div>
 
               {listFavoritAnime.map(anime => anime.idAnime).includes(selectedAnime.data.mal_id) ? (
-                <Button className="" variant="transparent" onClick={() => removeFormListFavoritAnime(selectedAnime.data)}>
+                <Button className="" variant="transparent" onClick={() => profile && removeFormListFavoritAnime(selectedAnime.data)}>
                   <HeartFill className="fs-3" fill="red" />
                 </Button>
               ) : (
-                <Button className="" variant="transparent" onClick={() => addToListFavoritAnime(selectedAnime.data)}>
+                <Button className="" variant="transparent" onClick={() => profile && addToListFavoritAnime(selectedAnime.data)}>
                   <Heart className="fs-3" />
                 </Button>
               )}
