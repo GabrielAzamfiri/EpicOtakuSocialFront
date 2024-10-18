@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch } from "react-redux";
-import { logoutAction, saveInputSearchAction, saveUserInfoAction } from "../redux/actions";
+import { logoutAction, saveInputSearchAction, saveUserInfoAction, setGenreAnimeAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const TopBar = () => {
@@ -64,14 +64,101 @@ const TopBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
+            <Nav.Link
+              href="/"
+              onClick={() => {
+                dispatch(setGenreAnimeAction(""));
+              }}
+            >
+              Home
+            </Nav.Link>
 
             <NavDropdown title="Genres" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Adventure</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Fantasy</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("1"));
+                }}
+              >
+                Action
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("2"));
+                }}
+              >
+                Adventure
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("10"));
+                }}
+              >
+                Fantasy
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("8"));
+                }}
+              >
+                Drama
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("46"));
+                }}
+              >
+                Award Winning
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("22"));
+                }}
+              >
+                Romance
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("9"));
+                }}
+              >
+                Ecchi
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("62"));
+                }}
+              >
+                Isekai
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("17"));
+                }}
+              >
+                Martial Arts
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("38"));
+                }}
+              >
+                Military
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("27"));
+                }}
+              >
+                Shounen
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Kids</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(setGenreAnimeAction("15"));
+                }}
+              >
+                Kids
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Form onSubmit={handleSearch} className=" m-auto w-50 ">
@@ -88,12 +175,12 @@ const TopBar = () => {
           <Nav className="me-3">
             {token ? (
               <>
-                <Nav.Link href="/profile">
+                <Nav.Link>
                   <img src={utente.avatar} alt="avatar" className="rounded " style={{ height: "30px", width: "30px", objectFit: "cover" }} />
                   <span className="ms-2">{utente.nome}</span>
                 </Nav.Link>
                 <NavDropdown title="" id="basic-nav-dropdown" align="end">
-                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => navigate("/profile")}>Profile</NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => {
                       dispatch(logoutAction());

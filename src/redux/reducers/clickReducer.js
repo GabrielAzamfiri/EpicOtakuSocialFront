@@ -11,6 +11,7 @@ const clickReducer = (state = initialState, action) => {
         ...state,
         animeClicked: action.payload,
       };
+
     default:
       return state;
   }

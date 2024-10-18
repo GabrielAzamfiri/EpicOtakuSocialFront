@@ -8,12 +8,14 @@ export const LOGOUT = "LOGOUT";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
 export const SET_USER_SELECTED = "SET_USER_SELECTED";
+export const SET_GENRE_ANIME = "SET_GENRE_ANIME";
 
 export const saveUserInfoAction = userInfo => ({ type: SET_USER_INFO, payload: userInfo });
 export const saveInputSearchAction = inputSearch => ({ type: SET_INPUT_NAME, payload: inputSearch });
 export const logoutAction = () => ({ type: LOGOUT, payload: null });
 export const addToFavoritesAction = anime => ({ type: ADD_TO_FAVORITES, payload: anime });
 export const removeFromFavoritesAction = anime => ({ type: REMOVE_FROM_FAVORITES, payload: anime });
+export const setGenreAnimeAction = genreId => ({ type: SET_GENRE_ANIME, payload: genreId });
 
 export const saveAnimeClickedAction = animeId => {
   return async dispatch => {

@@ -33,11 +33,9 @@ const MyProfile = () => {
 
   const [showP, setShowP] = useState(true);
   const [showC, setShowC] = useState(false);
-  const [showA, setShowA] = useState(false);
 
   const showPosts = async () => {
     setShowP(true);
-    setShowA(false);
     setShowC(false);
     try {
       const resp = await fetch(`http://localhost:3001/utenti/${showUtente?.id}/posts`, {
@@ -71,7 +69,6 @@ const MyProfile = () => {
     }
     setShowC(true);
     setShowP(false);
-    setShowA(false);
   };
   const showAnime = async () => {
     try {
@@ -88,7 +85,6 @@ const MyProfile = () => {
       console.error(e);
       toast.error("Error fetching Anime! ��");
     }
-    setShowA(true);
     setShowP(false);
     setShowC(false);
   };

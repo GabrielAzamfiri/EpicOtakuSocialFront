@@ -80,7 +80,7 @@ const Anime = () => {
         getMyAnimeFavorite();
         toast.success("Added to favorite ✅", { autoClose: 1000 });
       } else {
-        toast.warn("Something went wrong! ⚠️ Please try again...");
+        toast.warn("Something went wrong! ⚠️ Please login...");
       }
     } catch (error) {
       console.error("Errore: ", error);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveAnimeClickedAction } from "../redux/actions";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,6 +11,9 @@ const Home = () => {
   const navigate = useNavigate();
   const [anime, setAnime] = useState([]);
   const [newAnime, setNewAnime] = useState([]);
+  const [genreName, setGenreName] = useState("");
+
+  const genre = useSelector(state => state.genreReducer.genreClicked);
 
   const [nrPage, setNrPage] = useState(1);
   const [pageOffset, setPageOffset] = useState(0);
@@ -25,7 +28,7 @@ const Home = () => {
 
   const fetchGetAnime = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/anime?nrPage=${nrPage}`, {
+      const resp = await fetch(`http://localhost:3001/anime?genres=${genre}&nrPage=${nrPage}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -36,11 +39,10 @@ const Home = () => {
         const data = await resp.json();
         setAnime(data.data);
       } else {
-        toast.warn("Error during Fetch anime! ⚠️ Please reload");
+        toast.warn("Too many request! ⚠️ Please reload");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      toast.warn("Error during Fetch anime! ⚠️ server error!");
     }
   };
 
@@ -57,20 +59,62 @@ const Home = () => {
         const data = await resp.json();
         setNewAnime(data.data);
       } else {
-        toast.warn("Error during Fetch anime! ⚠️ Please reload!");
+        toast.warn("Too many request! ⚠️ Please reload");
       }
     } catch (error) {
       console.error("Errore: ", error);
-      toast.warn("Error during Fetch anime! ⚠️ server error!");
+    }
+  };
+
+  const genreNames = () => {
+    switch (genre) {
+      case "1":
+        setGenreName("Action");
+        break;
+      case "2":
+        setGenreName("Adventure");
+        break;
+      case "10":
+        setGenreName("Fantasy");
+        break;
+      case "8":
+        setGenreName("Drama");
+        break;
+      case "46":
+        setGenreName("Award Winning");
+        break;
+      case "22":
+        setGenreName("Romance");
+        break;
+      case "9":
+        setGenreName("Ecchi");
+        break;
+      case "62":
+        setGenreName("Isekai");
+        break;
+      case "17":
+        setGenreName("Martial Arts");
+        break;
+      case "38":
+        setGenreName("Military");
+        break;
+      case "27":
+        setGenreName("Shounen");
+        break;
+      case "15":
+        setGenreName("Kids");
+        break;
+      default:
+        break;
     }
   };
 
   useEffect(() => {
     fetchGetAnime();
     fetchGetAnimeAsidebar();
-
+    genreNames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nrPage]);
+  }, [nrPage, genre]);
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -96,7 +140,7 @@ const Home = () => {
         {anime && (
           <Row className="sezione p-2  rounded ">
             <Col xs={12} lg={8} className="d-flex flex-column align-items-center">
-              <h2 className="mb-4">Anime</h2>
+              <h2 className="mb-4">Anime {genreName}</h2>
               <Row id="homeAnimeList">
                 {anime.map((anime, index) => (
                   <Col
