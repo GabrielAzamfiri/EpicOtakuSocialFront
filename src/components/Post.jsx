@@ -66,7 +66,7 @@ const Post = ({ post, getAnimePosts }) => {
       }
     } catch (e) {
       console.error(e);
-      toast.error("Error fetching addLike POST! ��");
+      toast.error("Error fetching addLikeDislike POST! ��");
     }
   };
 
@@ -112,12 +112,12 @@ const Post = ({ post, getAnimePosts }) => {
           <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
           <hr />
           <div className="d-flex justify-content-start">
-            <Button variant="transparent" className="d-flex" onClick={() => addLikeDislike(post, "like")}>
-              <HandThumbsUpFill className="fs-5 me-2" fill={post.numeroLike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+            <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(post, "like")}>
+              <HandThumbsUpFill className="fs-5 me-2" fill={profile && post.numeroLike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
               {post.numeroLike.length}
             </Button>
-            <Button variant="transparent" className="d-flex" onClick={() => addLikeDislike(post, "dislike")}>
-              <HandThumbsDownFill className="fs-5 me-2" fill={post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+            <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(post, "dislike")}>
+              <HandThumbsDownFill className="fs-5 me-2" fill={profile && post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
               {post.numeroDislike.length}
             </Button>
             <ModalPostComments postId={post.id} />

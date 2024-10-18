@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch } from "react-redux";
-import { logoutAction, saveInputSearchAction, saveUserInfoAction, setGenreAnimeAction } from "../redux/actions";
+import { getUserSelectedAction, logoutAction, saveInputSearchAction, saveUserInfoAction, setGenreAnimeAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const TopBar = () => {
@@ -180,7 +180,14 @@ const TopBar = () => {
                   <span className="ms-2">{utente.nome}</span>
                 </Nav.Link>
                 <NavDropdown title="" id="basic-nav-dropdown" align="end">
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>Profile</NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      utente && dispatch(getUserSelectedAction(utente.id));
+                      navigate("/profile");
+                    }}
+                  >
+                    Profile
+                  </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => {
                       dispatch(logoutAction());

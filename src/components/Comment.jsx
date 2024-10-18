@@ -65,6 +65,38 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
       toast.warn("Error during updated Comment fetch❌");
     }
   };
+  const addLikeDislike = async (comment, btn) => {
+    let url;
+
+    if (btn === "like") {
+      if (comment.numeroLike.includes(profile.id)) {
+        url = `http://localhost:3001/commenti/${comment.id}/likes/remove`;
+      } else {
+        url = `http://localhost:3001/commenti/${comment.id}/likes`;
+      }
+    } else if (btn === "dislike") {
+      if (comment.numeroDislike.includes(profile.id)) {
+        url = `http://localhost:3001/commenti/${comment.id}/dislikes/remove`;
+      } else {
+        url = `http://localhost:3001/commenti/${comment.id}/dislikes`;
+      }
+    }
+
+    try {
+      const resp = await fetch(url, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        getPost ? getPost() : showComments();
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching addLikeDislike POST! ��");
+    }
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -129,13 +161,13 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
           <p className="fs-6">{comment.text}</p>
           <hr />
           <div className="d-flex justify-content-start">
-            <Button variant="transparent" className="d-flex">
-              <HandThumbsUpFill className="fs-5 me-2" />
-              {comment.numeroLike}
+            <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(comment, "like")}>
+              <HandThumbsUpFill className="fs-5 me-2" fill={profile && comment.numeroLike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+              {comment.numeroLike.length}
             </Button>
-            <Button variant="transparent" className="d-flex">
-              <HandThumbsDownFill className="fs-5 me-2" />
-              {comment.numeroDislike}
+            <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(comment, "dislike")}>
+              <HandThumbsDownFill className="fs-5 me-2" fill={profile && comment.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+              {comment.numeroDislike.length}
             </Button>
             {post ? (
               <ModalCreateComment post={post} commentoPadre={comment} getPost={getPost} />
