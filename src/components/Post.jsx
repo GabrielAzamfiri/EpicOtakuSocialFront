@@ -37,6 +37,39 @@ const Post = ({ post, getAnimePosts }) => {
     }
   };
 
+  const addLikeDislike = async (post, btn) => {
+    let url;
+
+    if (btn === "like") {
+      if (post.numeroLike.includes(profile.id)) {
+        url = `http://localhost:3001/posts/${post.id}/likes/remove`;
+      } else {
+        url = `http://localhost:3001/posts/${post.id}/likes`;
+      }
+    } else if (btn === "dislike") {
+      if (post.numeroDislike.includes(profile.id)) {
+        url = `http://localhost:3001/posts/${post.id}/dislikes/remove`;
+      } else {
+        url = `http://localhost:3001/posts/${post.id}/dislikes`;
+      }
+    }
+
+    try {
+      const resp = await fetch(url, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        getAnimePosts();
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching addLike POST! ��");
+    }
+  };
+
   const profile = useSelector(state => state.user.userInfo);
 
   useEffect(() => {
@@ -79,13 +112,13 @@ const Post = ({ post, getAnimePosts }) => {
           <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
           <hr />
           <div className="d-flex justify-content-start">
-            <Button variant="transparent" className="d-flex">
-              <HandThumbsUpFill className="fs-5 me-2" />
-              {post.numeroDislike}
+            <Button variant="transparent" className="d-flex" onClick={() => addLikeDislike(post, "like")}>
+              <HandThumbsUpFill className="fs-5 me-2" fill={post.numeroLike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+              {post.numeroLike.length}
             </Button>
-            <Button variant="transparent" className="d-flex">
-              <HandThumbsDownFill className="fs-5 me-2" />
-              {post.numeroLike}
+            <Button variant="transparent" className="d-flex" onClick={() => addLikeDislike(post, "dislike")}>
+              <HandThumbsDownFill className="fs-5 me-2" fill={post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
+              {post.numeroDislike.length}
             </Button>
             <ModalPostComments postId={post.id} />
             {profile && post.autore.id === profile.id && (
