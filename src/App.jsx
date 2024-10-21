@@ -11,6 +11,7 @@ import Anime from "./components/Anime";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import MyProfile from "./components/MyProfile";
+import MyFooter from "./components/MyFooter";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/anime/:anime" element={<Anime />} />
             <Route path="/profile" element={<MyProfile />} />
           </Routes>
+          <MyFooter />
         </BrowserRouter>
       </Container>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />

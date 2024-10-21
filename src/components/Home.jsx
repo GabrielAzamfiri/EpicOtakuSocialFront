@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anime, setAnime] = useState([]);
+  const [totalPages, setTotalPages] = useState(1098);
   const [newAnime, setNewAnime] = useState([]);
   const [genreName, setGenreName] = useState("");
 
@@ -17,7 +18,7 @@ const Home = () => {
 
   const [nrPage, setNrPage] = useState(1);
   const [pageOffset, setPageOffset] = useState(0);
-  const totalPages = 1098;
+
   const pagesToShow = 6;
 
   const today = new Date();
@@ -37,7 +38,9 @@ const Home = () => {
 
       if (resp.ok) {
         const data = await resp.json();
+        console.log(data);
         setAnime(data.data);
+        setTotalPages(data.pagination.last_visible_page);
       } else {
         toast.warn("Too many request! ⚠️ Please reload");
       }
@@ -121,7 +124,7 @@ const Home = () => {
 
     for (let i = pageOffset + 1; i <= Math.min(pageOffset + pagesToShow, totalPages); i++) {
       pages.push(
-        <Button key={i} variant={nrPage === i ? "light" : "transparent"} onClick={() => handlePageClick(i)} className="mx-1">
+        <Button key={i} variant={nrPage === i ? "light" : "transparent"} onClick={() => handlePageClick(i)} className="mx-1 ">
           {i}
         </Button>
       );
@@ -140,7 +143,7 @@ const Home = () => {
         {anime && (
           <Row className="sezione p-2  rounded ">
             <Col xs={12} lg={8} className="d-flex flex-column align-items-center">
-              <h2 className="mb-4">Anime {genreName}</h2>
+              <h2 className="mb-4 goldColor">Anime {genreName}</h2>
               <Row id="homeAnimeList">
                 {anime.map((anime, index) => (
                   <Col
@@ -165,7 +168,7 @@ const Home = () => {
                     onClick={() => setPageOffset(Math.max(pageOffset - pagesToShow, 0))} //Math.max prende il valore piu grande tra quelli dati
                     //se va sotto 0 l'offset prendera sempre valore 0
                     disabled={pageOffset === 0}
-                    className="d-flex mt-1 border-0  fs-4"
+                    className="d-flex mt-1 border-0  fs-4 "
                   >
                     <ArrowLeft />
                   </Button>
@@ -190,7 +193,7 @@ const Home = () => {
             <Col xs={12} lg={4}>
               <Container fluid>
                 <Row id="asideScrollBar">
-                  <h2 className="mb-4 ">Latest Releases</h2>
+                  <h2 className="mb-4 goldColor">Latest Releases</h2>
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="mb-3 ">
                       <img
@@ -203,7 +206,7 @@ const Home = () => {
                         style={{ width: "100px", height: "120px", objectFit: "cover" }}
                       />
 
-                      <Col className="bg-dark p-2 border rounded shadowScale">
+                      <Col className="bg-dark p-2   rounded shadowScale">
                         <h6
                           onClick={() => {
                             dispatch(saveAnimeClickedAction(anime.mal_id));

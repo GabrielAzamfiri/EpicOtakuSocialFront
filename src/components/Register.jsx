@@ -50,9 +50,9 @@ const Register = () => {
 
   return (
     <Container fluid className=" sezione rounded">
-      <Row className="align-items-center justify-content-center" style={{ height: "calc(100vh - 80px)" }}>
-        <Col xs={12} md={8} lg={6}>
-          <Form noValidate validated={validated} onSubmit={handleSubmit} className="bg-dark p-3  rounded border">
+      <Row className="align-items-center justify-content-center " style={{ height: "calc(100vh - 80px)" }}>
+        <Col xs={12} md={8} lg={6} className="">
+          <Form noValidate validated={validated} onSubmit={handleSubmit} className="bg-dark p-3 shadowScale rounded border">
             <h1 className=" text-center">SIGN IN</h1>
 
             <Row className="mb-3 ">

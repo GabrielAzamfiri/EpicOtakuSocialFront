@@ -53,15 +53,8 @@ function ModalSelectImg({ me, showUtente }) {
   };
   return (
     <>
-      <Button className="pencilImg" variant="transparent" onClick={handleClick}>
-        <Image
-          id="profileImg"
-          className="pointer position-relative"
-          roundedCircle
-          src={showUtente ? showUtente.avatar : me.avatar}
-          alt="User profile picture"
-          style={{ height: "250px", width: "250px", objectFit: "cover" }}
-        />
+      <Button className="d-flex" variant="transparent" onClick={handleClick}>
+        <Image id="profileImg" className="pointer position-relative" roundedCircle src={showUtente ? showUtente.avatar : me.avatar} alt="User profile picture" />
       </Button>
 
       {profile && (

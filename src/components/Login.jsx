@@ -39,9 +39,9 @@ const Login = () => {
     <>
       <Container fluid>
         <Row className="justify-content-center  align-items-center sezione rounded" style={{ height: "calc(100vh - 60px)" }}>
-          <Col xs={11} md={6} className="bg-dark p-2 rounded border">
+          <Col xs={11} md={6} className="bg-dark shadowScale p-2 rounded border">
             <Form onSubmit={e => handleLogin(e)}>
-              <h1 className="mb-5 text-center">LOGIN</h1>
+              <h1 className="mb-5 text-center ">LOGIN</h1>
               <Row className="mb-4">
                 <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
                   <Form.Label>Email</Form.Label>

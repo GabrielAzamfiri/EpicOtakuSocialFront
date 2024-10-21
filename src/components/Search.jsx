@@ -53,7 +53,7 @@ const Search = () => {
                     navigate("/anime/" + anime.title);
                   }}
                   key={index}
-                  className="pointer m-3 p-2 d-flex text-center bg-dark border rounded"
+                  className="pointer m-3 p-2 d-flex text-center bg-dark border rounded shadowScale"
                 >
                   <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 

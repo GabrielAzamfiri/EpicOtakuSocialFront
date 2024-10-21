@@ -1,6 +1,8 @@
-body {
-  background: rgb(#1f1f1f);
-  /* background: linear-gradient(90deg, rgb(25, 26, 25) 0%, rgb(12, 12, 12) 42%, rgb(0, 0, 0) 100%); */
+.goldColor {
+  background: #b59562;
+  background: linear-gradient(to right, #b59562 0%, #e2cba5 50%, #b59562 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .shadowScale {
@@ -10,7 +12,10 @@ body {
 .shadowScale:hover {
   scale: 1.02;
 }
-
+.neonText {
+  color: white;
+  text-shadow: 0px 0px 20px #b59562, 0px 0px 20px #b59562, 0px 0px 20px #b59562, 0px 0px 20px #b59562;
+}
 .pointer {
   cursor: pointer;
 }
@@ -26,6 +31,9 @@ body {
 #profileImg {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9); /* Ombra */
   transition: scale 0.2s ease-in-out;
+  height: 250px;
+  width: 250px;
+  object-fit: cover;
 }
 #profileImg:hover {
   scale: 1.03;
@@ -108,7 +116,9 @@ body {
   width: 760px;
 }
 .episodeBTN {
-  background-color: #28a745;
+  background: #b59562;
+  background: linear-gradient(to right, #b59562 0%, #e2cba5 50%, #b59562 100%);
+  color: #251e12;
   border: none;
   font-size: 1.2rem;
   padding: 10px 20px;
@@ -130,9 +140,17 @@ iframe:hover {
   transform: scale(1.02);
 }
 
+@media screen and (min-width: 1200px) {
+  .logoProfile {
+    width: 120px;
+  }
+}
 @media screen and (max-width: 1200px) {
   #homeAnimeList {
     width: 600px;
+  }
+  .logoProfile {
+    width: 120px;
   }
 }
 @media screen and (max-width: 991px) {
@@ -142,10 +160,30 @@ iframe:hover {
   h2 {
     text-align: center;
   }
+  .logoProfile {
+    width: 80px;
+    margin-left: auto;
+  }
+  #profileImg {
+    width: 200px;
+    height: 200px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .mainContainer {
+    max-width: 100%;
+  }
+  .logoProfile {
+    width: 80px;
+    margin-left: auto;
+  }
 }
 @media screen and (max-width: 640px) {
   #homeAnimeList {
     width: 450px;
+  }
+  .logoProfile {
+    width: 60px;
   }
 }
 @media screen and (max-width: 500px) {
@@ -153,13 +191,9 @@ iframe:hover {
     width: 320px;
   }
 }
-@media screen and (max-width: 350px) {
+
+@media screen and (max-width: 375px) {
   #homeAnimeList {
     width: 200px;
-  }
-}
-@media screen and (max-width: 767px) {
-  .mainContainer {
-    max-width: 100%;
   }
 }

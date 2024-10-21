@@ -40,7 +40,7 @@ const SimilarAnime = () => {
   }, [selectedAnime]);
   return (
     <div>
-      <h3 className="text-center mb-3">Similar Anime</h3>
+      <h3 className="text-center mb-3 goldColor">Similar Anime</h3>
 
       <Row className="m-1">
         {similarAnime.length > 0 &&

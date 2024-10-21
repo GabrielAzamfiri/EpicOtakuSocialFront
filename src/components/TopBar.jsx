@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { getUserSelectedAction, logoutAction, saveInputSearchAction, saveUserInfoAction, setGenreAnimeAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import nameLogo from "../assets/nameLogo.png";
+
 const TopBar = () => {
   const [input, setInput] = useState("");
   const [utente, setUtente] = useState({});
@@ -58,9 +60,11 @@ const TopBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
   return (
-    <Navbar expand="lg" id="navbar " variant="dark" className=" py-2 rounded sezione mt-2 mb-3">
+    <Navbar expand="lg" id="navbar " variant="dark" className=" py-2 rounded sezione mt-2 mb-3 ">
       <Container fluid>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand>
+          <img src={nameLogo} className="logo" alt="logo" width={200} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
@@ -69,15 +73,17 @@ const TopBar = () => {
               onClick={() => {
                 dispatch(setGenreAnimeAction(""));
               }}
+              className="goldColor"
             >
               Home
             </Nav.Link>
 
-            <NavDropdown title="Genres" id="basic-nav-dropdown">
+            <NavDropdown title="Genres" id="basic-nav-dropdown" className="goldColor ">
               <NavDropdown.Item
                 onClick={() => {
                   dispatch(setGenreAnimeAction("1"));
                 }}
+                className="goldColor "
               >
                 Action
               </NavDropdown.Item>
@@ -85,6 +91,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("2"));
                 }}
+                className="goldColor"
               >
                 Adventure
               </NavDropdown.Item>
@@ -92,6 +99,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("10"));
                 }}
+                className="goldColor"
               >
                 Fantasy
               </NavDropdown.Item>
@@ -99,6 +107,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("8"));
                 }}
+                className="goldColor"
               >
                 Drama
               </NavDropdown.Item>
@@ -106,6 +115,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("46"));
                 }}
+                className="goldColor"
               >
                 Award Winning
               </NavDropdown.Item>
@@ -113,6 +123,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("22"));
                 }}
+                className="goldColor"
               >
                 Romance
               </NavDropdown.Item>
@@ -120,6 +131,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("9"));
                 }}
+                className="goldColor"
               >
                 Ecchi
               </NavDropdown.Item>
@@ -127,6 +139,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("62"));
                 }}
+                className="goldColor"
               >
                 Isekai
               </NavDropdown.Item>
@@ -134,6 +147,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("17"));
                 }}
+                className="goldColor"
               >
                 Martial Arts
               </NavDropdown.Item>
@@ -141,6 +155,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("38"));
                 }}
+                className="goldColor"
               >
                 Military
               </NavDropdown.Item>
@@ -148,6 +163,7 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("27"));
                 }}
+                className="goldColor"
               >
                 Shounen
               </NavDropdown.Item>
@@ -156,12 +172,13 @@ const TopBar = () => {
                 onClick={() => {
                   dispatch(setGenreAnimeAction("15"));
                 }}
+                className="goldColor"
               >
                 Kids
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form onSubmit={handleSearch} className=" m-auto w-50 ">
+          <Form onSubmit={handleSearch} className=" m-auto w-50  rounded" style={{ border: "1px solid #b59562" }}>
             <Form.Control
               onChange={e => {
                 setInput(e.target.value);
@@ -170,6 +187,7 @@ const TopBar = () => {
               type="search"
               placeholder="Search"
               aria-label="Search"
+              className="bg-transparent goldColor rounded "
             />
           </Form>
           <Nav className="me-3">
@@ -177,7 +195,7 @@ const TopBar = () => {
               <>
                 <Nav.Link>
                   <img src={utente.avatar} alt="avatar" className="rounded " style={{ height: "30px", width: "30px", objectFit: "cover" }} />
-                  <span className="ms-2">{utente.nome}</span>
+                  <span className="ms-2 goldColor">{utente.nome}</span>
                 </Nav.Link>
                 <NavDropdown title="" id="basic-nav-dropdown" align="end">
                   <NavDropdown.Item
@@ -185,6 +203,7 @@ const TopBar = () => {
                       utente && dispatch(getUserSelectedAction(utente.id));
                       navigate("/profile");
                     }}
+                    className="goldColor"
                   >
                     Profile
                   </NavDropdown.Item>
@@ -194,14 +213,16 @@ const TopBar = () => {
                       localStorage.removeItem("accessToken");
                       setUtente(null);
                     }}
-                    href="#"
+                    className="goldColor"
                   >
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               </>
             ) : (
-              <Nav.Link href="/auth/login">Login</Nav.Link>
+              <Nav.Link href="/auth/login" className="goldColor">
+                Login
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

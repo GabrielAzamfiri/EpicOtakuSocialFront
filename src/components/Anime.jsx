@@ -124,14 +124,7 @@ const Anime = () => {
         <>
           <Row className="sezione mb-3 rounded p-2">
             <Col className="d-flex flex-column justify-content-center align-items-center p-0">
-              <h1
-                className="fw-bold truncate-2-lines"
-                style={{
-                  color: "white",
-                }}
-              >
-                {selectedAnime.data.title}
-              </h1>
+              <h1 className="fw-bold truncate-2-lines text-center goldColor ">{selectedAnime.data.title}</h1>
 
               <div className="mt-3 text-center" style={{ color: "#cccccc" }}>
                 <p className="mb-1">
@@ -154,7 +147,7 @@ const Anime = () => {
                   <Heart className="fs-3" />
                 </Button>
               )}
-              <Button variant="success mt-3 w-50" className="episodeBTN">
+              <Button variant="success mt-3 w-50" className="episodeBTN ">
                 Start from EP-1
               </Button>
             </Col>
@@ -166,18 +159,18 @@ const Anime = () => {
           <Row className="rounded sezione p-2">
             <img className="" src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px", objectFit: "contain" }} />
             <Col className="d-flex flex-column justify-content-center">
-              <h2 className="me-3">{selectedAnime.data.title}</h2>
+              <h2 className="me-3 goldColor ">{selectedAnime.data.title}</h2>
 
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
           <Row className="mt-3 gap-3">
             <Col xs={3} className=" py-2 rounded sezione">
-              <h3 className="mx-2">Info</h3>
+              <h3 className="mx-2 goldColor">Info</h3>
 
               <div className="bg-dark p-2 mx-2 mt-3 border rounded shadowScale">
                 <h5>Alternative Titles:</h5>
-                <p className="fs-7 m-0">
+                <p className="fs-7 m-0 ">
                   Title english: <b>{selectedAnime.data.title_english}</b>{" "}
                 </p>
                 <p className="fs-7 m-0">
@@ -213,7 +206,7 @@ const Anime = () => {
             <Col className=" py-2 rounded sezione">
               {profile && (
                 <>
-                  <h3 className="text-center">Posts & Comments</h3>
+                  <h3 className="text-center goldColor">Posts & Comments</h3>
                   <div className="d-flex  align-items-end  ">
                     <img src={profile.avatar} alt="User Avatar" className="pointer rounded me-3" style={{ width: "40px", height: "40px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
 

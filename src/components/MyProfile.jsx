@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import ModalSelectImg from "./ModalSelectImg";
 import Comment from "./Comment";
 import Post from "./Post";
+import logo from "../assets/logo.png";
 
 const MyProfile = () => {
   const [nome, setNome] = useState("");
@@ -167,27 +168,33 @@ const MyProfile = () => {
       {showUtente ? (
         <Container fluid>
           <Row className="align-items-end mb-4 sezione rounded p-3 ">
-            <Col xs={3} className="  ">
+            <Col xs={12} sm={5} md={4} xl={3} className="d-flex justify-content-center">
               <ModalSelectImg me={me} showUtente={showUtente} />
             </Col>
-            <Col className="ms-3 ps-0">
-              <h1>
-                {showUtente.nome} {showUtente.cognome}{" "}
-                {me && showUtente.id === me.id && (
-                  <Button variant="transparent" onClick={handleShow}>
-                    <Pencil className="fs-5 " />
-                  </Button>
-                )}
-              </h1>
-              <div>
-                <p className="m-0">User: {showUtente.username}</p>
-                <p>{showUtente.email}</p>
+
+            <Col className="d-flex justify-content-between flex-sm-column text-sm-center text-md-start  flex-md-row">
+              <div className="mt-2 goldColor">
+                <h1>
+                  {showUtente.nome} {showUtente.cognome}{" "}
+                  {me && showUtente.id === me.id && (
+                    <Button variant="transparent" onClick={handleShow}>
+                      <Pencil className="fs-5 " fill="#b59562" />
+                    </Button>
+                  )}
+                </h1>
+                <div>
+                  <p className="m-0">User: {showUtente.username}</p>
+                  <p>{showUtente.email}</p>
+                </div>
+              </div>
+              <div className="d-flex align-items-end">
+                <img src={logo} alt="logo" className="logoProfile " />
               </div>
             </Col>
           </Row>
 
-          <Row className="sezione rounded p-3 gap-3">
-            <Col className="p-0">
+          <Row className="sezione rounded p-3 gap-3 ">
+            <Col className="p-0 ">
               <Card className="bg-dark rounded">
                 <Card.Header>
                   <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
@@ -238,7 +245,7 @@ const MyProfile = () => {
               </Card>
             </Col>
 
-            <Col xs={4} className="bg-dark rounded border ">
+            <Col xs={12} md={3} lg={4} className="bg-dark rounded border ">
               <h3 className="text-center p-2">Favorite Anime 🧡</h3>
               <Row className="justify-content-center">
                 {listAnime &&
@@ -252,14 +259,14 @@ const MyProfile = () => {
                       key={index}
                       className="pointer p-2 m-2 d-flex text-center sezione shadowScale border rounded"
                     >
-                      <Image src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                      <Image className="m-auto" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 
-                      <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
-                        <h4 className="text-start truncate-2-lines">{anime.title}</h4>
+                      <div className="ms-2 w-100 d-md-none d-lg-flex flex-column justify-content-center d-xl-block" style={{ maxHeight: "210px", overflowY: "scroll" }}>
+                        <h4 className="text-start  truncate-2-lines">{anime.title}</h4>
                         <p className=" fs-7 text-start p-0">
                           <b>Genres:</b> {anime.genres.map(genre => genre).join(", ")}
                         </p>
-                        <p className="fs-7 text-start">{anime.synopsis}</p>
+                        <p className="fs-7 text-start d-md-none d-xl-block">{anime.synopsis}</p>
                       </div>
                     </Col>
                   ))}
