@@ -5,6 +5,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+.blackGold {
+  background-color: #3f352d3b;
+}
+
 .shadowScale {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9);
   transition: scale 0.1s ease-in-out;
@@ -18,6 +22,11 @@
 }
 .pointer {
   cursor: pointer;
+}
+.imgCarousel {
+  width: 100%;
+  height: 45vh;
+  object-fit: cover;
 }
 #navbar {
   height: 60px;

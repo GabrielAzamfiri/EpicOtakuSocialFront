@@ -168,7 +168,7 @@ const Anime = () => {
             <Col xs={3} className=" py-2 rounded sezione">
               <h3 className="mx-2 goldColor">Info</h3>
 
-              <div className="bg-dark p-2 mx-2 mt-3 border rounded shadowScale">
+              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Alternative Titles:</h5>
                 <p className="fs-7 m-0 ">
                   Title english: <b>{selectedAnime.data.title_english}</b>{" "}
@@ -177,7 +177,7 @@ const Anime = () => {
                   Title japanese: <b>{selectedAnime.data.title_japanese}</b>{" "}
                 </p>
               </div>
-              <div className="bg-dark p-2 mx-2 mt-3 border rounded shadowScale">
+              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Genres:</h5>
                 {selectedAnime.data.genres.map(genre => (
                   <p className="m-0 fs-7 " key={genre.mal_id}>
@@ -186,14 +186,14 @@ const Anime = () => {
                   </p>
                 ))}
               </div>
-              <div className="bg-dark p-2 mx-2 mt-3 border rounded shadowScale">
+              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Stats:</h5>
                 <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
                 <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
                 <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity} 🔝</p>
                 <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites} 💓</p>
               </div>
-              <div className="bg-dark p-2 mx-2 mt-3 border rounded shadowScale">
+              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Episodes:</h5>
                 <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
                 <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>

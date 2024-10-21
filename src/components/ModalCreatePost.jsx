@@ -79,7 +79,7 @@ const ModalCreatePost = ({ text, post, file, getAnimePosts }) => {
       {text ? (
         <NavDropdown.Item onClick={handleShow}>Edit</NavDropdown.Item>
       ) : (
-        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded border bg-dark shadowScale">
+        <Button variant="transparent" onClick={handleShow} className="mt-2 py-2 w-100 rounded  blackGold shadowScale">
           Create a post
         </Button>
       )}

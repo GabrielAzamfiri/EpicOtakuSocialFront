@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { saveAnimeClickedAction } from "../redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import HomeCarousel from "./HomeCarousel";
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -140,8 +141,11 @@ const Home = () => {
   return (
     <>
       <Container fluid>
+        <Row className="sezione p-2 rounded">
+          <HomeCarousel />
+        </Row>
         {anime && (
-          <Row className="sezione p-2  rounded ">
+          <Row className="sezione p-2  rounded mt-3">
             <Col xs={12} lg={8} className="d-flex flex-column align-items-center">
               <h2 className="mb-4 goldColor">Anime {genreName}</h2>
               <Row id="homeAnimeList">
@@ -206,7 +210,7 @@ const Home = () => {
                         style={{ width: "100px", height: "120px", objectFit: "cover" }}
                       />
 
-                      <Col className="bg-dark p-2   rounded shadowScale">
+                      <Col className="blackGold p-2   rounded shadowScale">
                         <h6
                           onClick={() => {
                             dispatch(saveAnimeClickedAction(anime.mal_id));

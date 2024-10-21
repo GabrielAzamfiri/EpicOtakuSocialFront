@@ -107,7 +107,7 @@ const Post = ({ post, getAnimePosts }) => {
             })}
           </span>
         </div>
-        <div className="mb-3 border rounded p-2 bg-dark shadowScale">
+        <div className="mb-3  rounded p-2 blackGold shadowScale">
           <p className="fs-6">{post.text}</p>
           <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
           <hr />

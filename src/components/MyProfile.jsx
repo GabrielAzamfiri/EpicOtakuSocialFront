@@ -195,9 +195,9 @@ const MyProfile = () => {
 
           <Row className="sezione rounded p-3 gap-3 ">
             <Col className="p-0 ">
-              <Card className="bg-dark rounded">
+              <Card className="blackGold rounded">
                 <Card.Header>
-                  <Nav variant="tabs" defaultActiveKey="#first" className="sezione">
+                  <Nav variant="tabs" defaultActiveKey="#first" className="sezione ">
                     <Nav.Item>
                       <Nav.Link href="#Posts" onClick={showPosts}>
                         Posts
@@ -245,7 +245,7 @@ const MyProfile = () => {
               </Card>
             </Col>
 
-            <Col xs={12} md={3} lg={4} className="bg-dark rounded border ">
+            <Col xs={12} md={3} lg={4} className="blackGold rounded border ">
               <h3 className="text-center p-2">Favorite Anime 🧡</h3>
               <Row className="justify-content-center">
                 {listAnime &&
