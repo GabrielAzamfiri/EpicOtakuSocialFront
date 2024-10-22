@@ -43,23 +43,32 @@ const Search = () => {
       {inputResponse.data && (
         <Row className="sezione p-2 rounded">
           <Col xs={12}>
-            <h2 className="mb-4 text-center">{inputSearch}</h2>
+            <h2 className="mb-4 text-center goldColor">{inputSearch}</h2>
             <Row className=" justify-content-center">
               {inputResponse.data.map((anime, index) => (
                 <Col
-                  xs={5}
+                  xs={10}
+                  lg={5}
                   onClick={() => {
                     dispatch(saveAnimeClickedAction(anime.mal_id));
                     navigate("/anime/" + anime.title);
                   }}
                   key={index}
-                  className="pointer m-3 p-2 d-flex text-center bg-dark border rounded shadowScale"
+                  className="pointer m-3 p-2 d-flex text-center blackGold rounded shadowScale flex-column flex-sm-row"
                 >
-                  <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
+                  <Image src={anime.images.jpg.large_image_url} style={{ height: "210px", width: "140px", objectFit: "cover" }} className="m-auto" />
 
-                  <div className="ms-2 w-100" style={{ maxHeight: "210px", overflowY: "scroll" }}>
-                    <h4 className="text-start truncate-2-lines">{anime.title}</h4>
-                    <p className=" fs-7 text-start">{anime.synopsis}</p>
+                  <div className="ms-sm-2 w-100 " style={{ maxHeight: "210px", overflowY: "scroll" }}>
+                    <h4 className="text-center text-sm-start truncate-2-lines goldColor mt-3 mt-sm-0">
+                      <b>{anime.title}</b>
+                    </h4>
+                    <p className=" fs-7 text-start d-none d-sm-block">{anime.synopsis}</p>
+                    <p className=" fs-7 m-0 text-center d-sm-none">
+                      <b>Status:</b> {anime.status}
+                    </p>
+                    <p className=" fs-7 text-center d-sm-none">
+                      <b>Genres:</b> {anime.genres.map(genre => genre.name).join(", ")}
+                    </p>
                   </div>
                 </Col>
               ))}

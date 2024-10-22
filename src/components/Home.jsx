@@ -196,7 +196,7 @@ const Home = () => {
             </Col>
             <Col xs={12} lg={4}>
               <Container fluid>
-                <Row id="asideScrollBar">
+                <Row className="asideScrollBar">
                   <h2 className="mb-4 goldColor">Latest Releases</h2>
                   {newAnime.map((anime, index) => (
                     <Row key={index} className="mb-3 ">

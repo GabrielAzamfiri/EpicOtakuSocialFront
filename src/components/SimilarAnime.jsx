@@ -39,10 +39,10 @@ const SimilarAnime = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAnime]);
   return (
-    <div>
+    <div className="asideScrollBar">
       <h3 className="text-center mb-3 goldColor">Similar Anime</h3>
 
-      <Row className="m-1">
+      <Row className="m-1 ">
         {similarAnime.length > 0 &&
           similarAnime.map(anime => (
             <Col

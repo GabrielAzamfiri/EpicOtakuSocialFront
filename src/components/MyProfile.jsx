@@ -274,44 +274,54 @@ const MyProfile = () => {
             </Col>
           </Row>
           <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit profile</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group as={Col} md="7" controlId="validationCustom01" className="mb-3 m-auto">
-                  <Form.Label>First name</Form.Label>
-                  <Form.Control required type="text" placeholder="First name" value={nome} onChange={e => setNome(e.target.value)} />
-                </Form.Group>
-                <Form.Group as={Col} md="7" controlId="validationCustom02" className="mb-3 m-auto">
-                  <Form.Label>Last name</Form.Label>
-                  <Form.Control required type="text" placeholder="Last name" value={cognome} onChange={e => setCognome(e.target.value)} />
-                </Form.Group>
-                <Form.Group as={Col} md="7" controlId="validationCustomUsername" className="mb-3 m-auto">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" placeholder="Username" aria-describedby="inputGroupPrepend" required value={username} onChange={e => setUsername(e.target.value)} />
-                </Form.Group>
-                <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
-                </Form.Group>
-                <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
-                </Form.Group>
-                <Modal.Footer>
-                  <Button variant="danger" className="me-auto " onClick={() => handleDeleteProfile()}>
-                    <Trash className="fs-5" />
-                  </Button>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button variant="primary" type="submit">
-                    Save Changes
-                  </Button>
-                </Modal.Footer>
-              </Form>
-            </Modal.Body>
+            <div className="sezione ">
+              <Modal.Header closeButton>
+                <Modal.Title className="goldColor">Edit profile</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group as={Col} md="7" controlId="validationCustom01" className="mb-3 m-auto ">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control required type="text" className="blackGold " placeholder="First name" value={nome} onChange={e => setNome(e.target.value)} />
+                  </Form.Group>
+                  <Form.Group as={Col} md="7" controlId="validationCustom02" className="mb-3 m-auto">
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control required type="text" className="blackGold " placeholder="Last name" value={cognome} onChange={e => setCognome(e.target.value)} />
+                  </Form.Group>
+                  <Form.Group as={Col} md="7" controlId="validationCustomUsername" className="mb-3 m-auto">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      className="blackGold "
+                      placeholder="Username"
+                      aria-describedby="inputGroupPrepend"
+                      required
+                      value={username}
+                      onChange={e => setUsername(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" className="blackGold " placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
+                  </Form.Group>
+                  <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" className="blackGold " placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
+                  </Form.Group>
+                  <Modal.Footer>
+                    <Button variant="danger" className="me-auto " onClick={() => handleDeleteProfile()}>
+                      <Trash className="fs-5" />
+                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" type="submit">
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal.Body>
+            </div>
           </Modal>
         </Container>
       ) : (

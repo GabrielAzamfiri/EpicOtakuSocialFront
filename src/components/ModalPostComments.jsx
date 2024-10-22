@@ -53,26 +53,15 @@ const ModalPostComments = ({ postId }) => {
           {post.commentiPrincipali.length}
         </Button>
 
-        <Modal show={show} onHide={handleClose} size="lg">
-          <Modal.Header closeButton>
-            <Image
-              className="pointer"
-              rounded
-              src={post.autore.avatar}
-              alt="User profile picture "
-              style={{ height: "60px", width: "60px", objectFit: "cover" }}
-              onClick={() => {
-                {
-                  profile && dispatch(getUserSelectedAction(post.autore.id));
-                  profile && handleClose();
-                  profile && navigate("/profile");
-                  profile && window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-              }}
-            />
-            <div className="ms-3">
-              <Modal.Title
+        <Modal show={show} onHide={handleClose} size="lg" className="">
+          <div className="sezione">
+            <Modal.Header closeButton>
+              <Image
                 className="pointer"
+                rounded
+                src={post.autore.avatar}
+                alt="User profile picture "
+                style={{ height: "60px", width: "60px", objectFit: "cover" }}
                 onClick={() => {
                   {
                     profile && dispatch(getUserSelectedAction(post.autore.id));
@@ -81,56 +70,69 @@ const ModalPostComments = ({ postId }) => {
                     profile && window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-              >
-                {post.autore.nome} {post.autore.cognome}
-              </Modal.Title>
-              <p className="fs-7 text-muted mb-0 ">
-                {new Date(post.ora).toLocaleDateString("en-CA", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-            </div>
-          </Modal.Header>
-          <Modal.Body>
-            <Row className="justify-content-center">
-              <div key={post.id} className="mb-3 border rounded p-2 postModal">
-                <p className="fs-6">{post.text}</p>
-                <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
-                <hr />
-                <div className="d-flex justify-content-start">
-                  <Button variant="transparent" className="d-flex">
-                    <HandThumbsUpFill className="fs-5 me-2" />
-                    {post.numeroLike.length}
-                  </Button>
-                  <Button variant="transparent" className="d-flex">
-                    <HandThumbsDownFill className="fs-5 me-2" />
-                    {post.numeroDislike.length}
-                  </Button>
-                  <Button variant="transparent" className="d-flex">
-                    <ChatLeftDotsFill className="fs-5 me-2" />
-                    {post.commentiPrincipali.length}
-                  </Button>
-                </div>
+              />
+              <div className="ms-3">
+                <Modal.Title
+                  className="pointer goldColor"
+                  onClick={() => {
+                    {
+                      profile && dispatch(getUserSelectedAction(post.autore.id));
+                      profile && handleClose();
+                      profile && navigate("/profile");
+                      profile && window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
+                >
+                  {post.autore.nome} {post.autore.cognome}
+                </Modal.Title>
+                <p className="fs-7 text-muted mb-0 goldColor">
+                  {new Date(post.ora).toLocaleDateString("en-CA", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
               </div>
-            </Row>
-          </Modal.Body>
+            </Modal.Header>
+            <Modal.Body>
+              <Row className="justify-content-center p-3">
+                <div key={post.id} className="mb-3 border rounded p-2 blackGold shadowScale">
+                  <p className="fs-6">{post.text}</p>
+                  <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
+                  <hr />
+                  <div className="d-flex justify-content-start">
+                    <Button variant="transparent" className="d-flex">
+                      <HandThumbsUpFill className="fs-5 me-2" />
+                      {post.numeroLike.length}
+                    </Button>
+                    <Button variant="transparent" className="d-flex">
+                      <HandThumbsDownFill className="fs-5 me-2" />
+                      {post.numeroDislike.length}
+                    </Button>
+                    <Button variant="transparent" className="d-flex">
+                      <ChatLeftDotsFill className="fs-5 me-2" />
+                      {post.commentiPrincipali.length}
+                    </Button>
+                  </div>
+                </div>
+              </Row>
+            </Modal.Body>
 
-          <h3 className="ms-3">Comments</h3>
-          {profile && (
-            <Modal.Footer className="d-flex justify-content-start">
-              <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
-              <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
-              <ModalCreateComment post={post} getPost={getPost} />
-            </Modal.Footer>
-          )}
-          {post &&
-            post.commentiPrincipali
-              .sort((a, b) => new Date(b.ora) - new Date(a.ora))
-              .map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} handleClose={handleClose} />)}
+            <h3 className="ms-3 goldColor">Comments</h3>
+            {profile && (
+              <Modal.Footer className="d-flex justify-content-start">
+                <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
+                <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
+                <ModalCreateComment post={post} getPost={getPost} />
+              </Modal.Footer>
+            )}
+            {post &&
+              post.commentiPrincipali
+                .sort((a, b) => new Date(b.ora) - new Date(a.ora))
+                .map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} handleClose={handleClose} />)}
+          </div>
         </Modal>
       </>
     )

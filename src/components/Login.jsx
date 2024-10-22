@@ -39,23 +39,23 @@ const Login = () => {
     <>
       <Container fluid>
         <Row className="justify-content-center  align-items-center sezione rounded" style={{ height: "calc(100vh - 60px)" }}>
-          <Col xs={11} md={6} className="bg-dark shadowScale p-2 rounded border">
+          <Col xs={11} md={6} className="blackGold shadowScale p-2 rounded ">
             <Form onSubmit={e => handleLogin(e)}>
-              <h1 className="mb-5 text-center ">LOGIN</h1>
+              <h1 className="mb-5 text-center goldColor ">LOGIN</h1>
               <Row className="mb-4">
                 <Form.Group as={Col} md="7" controlId="validationCustom03" className="mb-3 m-auto">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control className="sezione" type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
+                  <Form.Control className="sezione border-0" type="email" placeholder="exemple@gmail.com" required value={email} onChange={e => setEmail(e.target.value)} />
                   <Form.Control.Feedback type="invalid">Please provide a valid Email.</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="7" controlId="validationCustom04" className="mb-3 m-auto">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control className="sezione" type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
+                  <Form.Control className="sezione border-0" type="password" placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)} />
                   <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
                 </Form.Group>
               </Row>
               <div className="text-center">
-                <Button type="submit" variant="dark" className="px-5 border sezione">
+                <Button type="submit" variant="dark" className="px-5 border-0 sezione">
                   LOG IN
                 </Button>
               </div>

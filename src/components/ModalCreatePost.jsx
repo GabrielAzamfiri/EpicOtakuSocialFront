@@ -85,40 +85,42 @@ const ModalCreatePost = ({ text, post, file, getAnimePosts }) => {
       )}
 
       <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title className="d-flex align-items-center gap-3">
-            <img src={profile.avatar} alt="profile image" className="rounded-circle my-3" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-            <div>
-              <h4>
-                {profile.nome} {profile.cognome} <CaretDownFill />
-              </h4>
-              <p className="fs-6 opacity-75">
-                Publish: Anyone <EyeFill className="ms-2" />
-              </p>
-              <p className="fs-6 opacity-75">Create your own post!</p>
-            </div>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={e => handleSubmit(e)}>
-            <Form.Group>
-              <Form.Control onChange={e => setTextPost(e.target.value)} value={textPost} as="textarea" rows={5} placeholder="Text" />
-            </Form.Group>
-            <Modal.Footer className="d-flex mt-4 justify-content-between">
-              <Form.Group className="d-inline-block mt-3" controlId="exampleForm.endDate">
-                <Form.Label className="pointer d-flex flex-column align-items-center">
-                  <CameraFill className="fs-4" />
-                  <p>Change Photo</p>
-                </Form.Label>
-                <Form.Control className="d-none" onChange={e => onFileChange(e)} name="profile" type="file" />
+        <div className="sezione">
+          <Modal.Header closeButton>
+            <Modal.Title className="d-flex align-items-center gap-3">
+              <img src={profile.avatar} alt="profile image" className="rounded-circle my-3" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+              <div>
+                <h4 className="goldColor">
+                  {profile.nome} {profile.cognome} <CaretDownFill fill="#b59562" />
+                </h4>
+                <p className="fs-6 opacity-75 goldColor">
+                  Publish: Anyone <EyeFill className="ms-2 " fill="#b59562" />
+                </p>
+                <p className="fs-6 opacity-75 goldColor">Create your own post!</p>
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={e => handleSubmit(e)}>
+              <Form.Group>
+                <Form.Control className="blackGold shadowScale" onChange={e => setTextPost(e.target.value)} value={textPost} as="textarea" rows={5} placeholder="Text" />
               </Form.Group>
-              <Clock className="fs-4 ms-auto me-3" />
-              <Button variant="primary" className="rounded-pill me-2 px-4  fw-bold" type="submit">
-                Send
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
+              <Modal.Footer className="d-flex mt-4 justify-content-between">
+                <Form.Group className="d-inline-block mt-3" controlId="exampleForm.endDate">
+                  <Form.Label className="pointer d-flex flex-column align-items-center">
+                    <CameraFill className="fs-4 " fill="#b59562" />
+                    <p className="goldColor">Change Photo</p>
+                  </Form.Label>
+                  <Form.Control className="d-none" onChange={e => onFileChange(e)} name="profile" type="file" />
+                </Form.Group>
+                <Clock className="fs-4 ms-auto me-3" fill="#b59562" />
+                <Button variant="primary" className="rounded-pill me-2 px-4  fw-bold" type="submit">
+                  Send
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal.Body>
+        </div>
       </Modal>
     </>
   );

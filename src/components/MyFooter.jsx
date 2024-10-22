@@ -1,9 +1,10 @@
 import { Col, Container, Row } from "react-bootstrap";
-
+import logo from "../assets/logo.png";
 const MyFooter = () => {
   return (
-    <Container fluid className="sezione my-3 rounded ">
-      <footer className="container py-5 opacity-50 text-start goldColor">
+    <Container fluid className="sezione my-3 rounded position-relative">
+      <img src={logo} alt="logo" width={"80px"} className="position-absolute mt-3 d-none d-sm-block" />
+      <footer className="container py-5  text-start goldColor">
         <Row>
           <Col sm={12} className=" m-auto">
             <div className="d-flex justify-content-center  gap-5">
@@ -58,36 +59,17 @@ const MyFooter = () => {
                 <ul className="navbar-nav" data-bs-theme="dark">
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Audio and Subtitles
+                      About
                     </a>
                   </li>
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Media Center
+                      Jobs
                     </a>
                   </li>
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Privacy
-                    </a>
-                  </li>
-                </ul>
-              </Col>
-              <Col xs={3} className="text-center">
-                <ul className="navbar-nav" data-bs-theme="dark">
-                  <li>
-                    <a className="nav-link" aria-current="page" href="#">
-                      Audio and Subtitles
-                    </a>
-                  </li>
-                  <li>
-                    <a className="nav-link" aria-current="page" href="#">
-                      Media Center
-                    </a>
-                  </li>
-                  <li>
-                    <a className="nav-link" aria-current="page" href="#">
-                      Privacy
+                      For the Record
                     </a>
                   </li>
                 </ul>
@@ -96,17 +78,36 @@ const MyFooter = () => {
                 <ul className="navbar-nav" data-bs-theme="dark">
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Audio and Subtitles
+                      For Artists
                     </a>
                   </li>
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Media Center
+                      Developers
                     </a>
                   </li>
                   <li>
                     <a className="nav-link" aria-current="page" href="#">
-                      Privacy
+                      Advertising
+                    </a>
+                  </li>
+                </ul>
+              </Col>
+              <Col xs={3} className="text-center">
+                <ul className="navbar-nav" data-bs-theme="dark">
+                  <li>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Support
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Web Player
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" aria-current="page" href="#">
+                      Free Mobile App
                     </a>
                   </li>
                 </ul>

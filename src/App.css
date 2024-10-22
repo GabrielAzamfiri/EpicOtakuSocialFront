@@ -27,6 +27,7 @@
   width: 100%;
   height: 45vh;
   object-fit: cover;
+  position: center;
 }
 #navbar {
   height: 60px;
@@ -52,10 +53,14 @@
   background-color: #131212;
 }
 .commenti:hover {
-  border: solid 1px #72acc7 !important;
+  border: solid 1px #b59562 !important;
 }
-.postModal {
+
+.dropdown-menu {
   background-color: #131212;
+}
+#basic-nav-dropdown {
+  color: #b59562;
 }
 
 /************* scrollbar******************** */
@@ -84,7 +89,7 @@
   text-wrap: wrap;
 }
 
-#asideScrollBar {
+.asideScrollBar {
   max-height: 1180px;
   overflow-y: scroll;
 }
@@ -126,7 +131,7 @@
 }
 .episodeBTN {
   background: #b59562;
-  background: linear-gradient(to right, #b59562 0%, #e2cba5 50%, #b59562 100%);
+  background: linear-gradient(to right, #aa824f 0%, #e2cba5 50%, #aa824f 100%);
   color: #251e12;
   border: none;
   font-size: 1.2rem;
