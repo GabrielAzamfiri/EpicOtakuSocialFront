@@ -1,6 +1,6 @@
 const VideoPlayer = ({ videoUrl }) => {
   return (
-    <div className="d-flex align-items-center justify-content-center ">
+    <div className="d-flex align-items-center  justify-content-center ">
       {videoUrl ? (
         <iframe
           className="border rounded "

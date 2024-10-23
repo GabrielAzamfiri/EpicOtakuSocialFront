@@ -89,7 +89,8 @@
   text-wrap: wrap;
 }
 
-.asideScrollBar {
+.asideScrollBar,
+.animePageScrollBar {
   max-height: 1180px;
   overflow-y: scroll;
 }
@@ -100,6 +101,13 @@
   overflow: hidden;
   text-overflow: ellipsis; /* come text-truncate */
   -webkit-line-clamp: 2; /* Imposta il limite a 2 righe */
+}
+.truncate-1-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
 }
 .animePoster {
   transition: opacity 0.3s ease;
@@ -154,6 +162,13 @@ iframe:hover {
   transform: scale(1.02);
 }
 
+.slick-arrow {
+  display: none !important;
+}
+.slick-dots {
+  display: none !important;
+}
+
 @media screen and (min-width: 1200px) {
   .logoProfile {
     width: 120px;
@@ -167,12 +182,20 @@ iframe:hover {
     width: 120px;
   }
 }
+@media screen and (max-width: 1100px) {
+  iframe {
+    width: 450px;
+    height: 235px;
+  }
+}
 @media screen and (max-width: 991px) {
   #homeAnimeList {
     margin: 0 auto;
   }
-  h2 {
-    text-align: center;
+  iframe {
+    margin-top: 1rem;
+    width: 550px;
+    height: 335px;
   }
   .logoProfile {
     width: 80px;
@@ -181,6 +204,9 @@ iframe:hover {
   #profileImg {
     width: 200px;
     height: 200px;
+  }
+  .animePageScrollBar {
+    overflow-y: visible;
   }
 }
 @media screen and (max-width: 767px) {
@@ -191,6 +217,9 @@ iframe:hover {
     width: 80px;
     margin-left: auto;
   }
+  .imgCarousel {
+    height: 30vh;
+  }
 }
 @media screen and (max-width: 640px) {
   #homeAnimeList {
@@ -199,15 +228,29 @@ iframe:hover {
   .logoProfile {
     width: 60px;
   }
+  iframe {
+    width: 450px;
+    height: 250px;
+  }
 }
 @media screen and (max-width: 500px) {
   #homeAnimeList {
     width: 320px;
+  }
+  iframe {
+    width: 350px;
+    height: 195px;
+  }
+  .imgCarousel {
+    height: 25vh;
   }
 }
 
 @media screen and (max-width: 375px) {
   #homeAnimeList {
     width: 200px;
+  }
+  iframe {
+    display: none;
   }
 }

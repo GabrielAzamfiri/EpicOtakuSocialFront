@@ -3,10 +3,68 @@ import { Col, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAnimeClickedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const SimilarAnime = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const settings = {
+    dots: true,
+    infinite: true,
+
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    autoplay: true,
+    pauseOnFocus: true,
+    autoplaySpeed: 4000,
+
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+          speed: 500,
+          infinite: true,
+          dots: true,
+        },
+      },
+
+      {
+        breakpoint: 778,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          speed: 500,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          speed: 500,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 410,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          speed: 500,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
+  };
 
   const selectedAnime = useSelector(state => state.animeClick.animeClicked);
 
@@ -38,38 +96,72 @@ const SimilarAnime = () => {
     getSimilarAnime();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAnime]);
+
   return (
-    <div className="asideScrollBar">
+    <div className="animePageScrollBar">
       <h3 className="text-center mb-3 goldColor">Similar Anime</h3>
 
-      <Row className="m-1 ">
+      <Row className="m-1 gap-sm-3 gap-lg-0 justify-content-center ">
         {similarAnime.length > 0 &&
           similarAnime.map(anime => (
             <Col
               key={anime.mal_id}
-              xs={12}
+              lg={12}
+              xs={3}
               onClick={() => {
                 dispatch(saveAnimeClickedAction(anime.mal_id));
                 navigate("/anime/" + anime.title);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="pointer d-flex blackGold  rounded p-2 mb-3 shadowScale"
+              className="pointer d-none d-lg-flex flex-column flex-xl-row  blackGold rounded p-2 mb-3 shadowScale "
             >
-              <Image src={anime.images.jpg.large_image_url} style={{ width: "100px", objectFit: "contain" }} />
+              <Image src={anime.images.jpg.large_image_url} style={{ width: "100px", objectFit: "contain" }} className="m-auto" />
 
-              <div className="ms-2 w-100">
-                <h4 className="text-start fs-5 mb-3 truncate-2-lines">{anime.title}</h4>
+              <div className="ms-xl-3 w-100 ">
+                <h4 className="text-center text-xl-start fs-5 mb-3 truncate-2-lines mt-3 mt-xl-0 goldColor">{anime.title}</h4>
 
-                <p className=" fs-8 m-0 text-start">
+                <p className=" fs-8 m-0 text-center text-xl-start">
                   <b className="fs-7">Status:</b> {anime.status}
                 </p>
 
-                <p className=" fs-8 text-start">
-                  <b className="fs-7">Genres:</b> {anime.genres.map(genre => genre.name).join(", ")}
+                <p className=" fs-8 text-center text-xl-start truncate-2-lines">
+                  <b className="fs-7 ">Genres:</b> {anime.genres.map(genre => genre.name).join(", ")}
                 </p>
               </div>
             </Col>
           ))}
+      </Row>
+      <Row>
+        <Slider {...settings} className="d-lg-none">
+          {similarAnime.length > 0 &&
+            similarAnime.map(anime => (
+              <Col
+                key={anime.mal_id}
+                onClick={() => {
+                  dispatch(saveAnimeClickedAction(anime.mal_id));
+                  navigate("/anime/" + anime.title);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="p-2"
+              >
+                <div className="p-3 blackGold shadowScale rounded pointer mb-3 ">
+                  <Image src={anime.images.jpg.large_image_url} style={{ width: "100px", height: "140px", objectFit: "cover" }} className="m-auto" />
+
+                  <div className=" ">
+                    <h4 className="text-center fs-5 mb-3 truncate-1-lines mt-3 goldColor">{anime.title}</h4>
+
+                    <p className=" fs-8 m-0 text-center ">
+                      <b className="fs-7">Status:</b> {anime.status}
+                    </p>
+
+                    <p className=" fs-8 text-center truncate-1-lines">
+                      <b className="fs-7 ">Genres:</b> {anime.genres.map(genre => genre.name).join(", ")}
+                    </p>
+                  </div>
+                </div>
+              </Col>
+            ))}
+        </Slider>
       </Row>
     </div>
   );

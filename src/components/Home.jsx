@@ -39,7 +39,7 @@ const Home = () => {
 
       if (resp.ok) {
         const data = await resp.json();
-        console.log(data);
+
         setAnime(data.data);
         setTotalPages(data.pagination.last_visible_page);
       } else {
@@ -115,8 +115,12 @@ const Home = () => {
 
   useEffect(() => {
     fetchGetAnime();
-    fetchGetAnimeAsidebar();
+    setTimeout(() => {
+      //to avoid too many requests on home page
+      fetchGetAnimeAsidebar();
+    }, 300);
     genreNames();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nrPage, genre]);
 

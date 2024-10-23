@@ -152,20 +152,20 @@ const Anime = () => {
               </Button>
             </Col>
 
-            <Col className="d-flex justify-content-center p-0">
+            <Col xs={12} lg={6} className="d-flex justify-content-center p-0">
               <VideoPlayer videoUrl={selectedAnime.data.trailer.embed_url} />
             </Col>
           </Row>
-          <Row className="rounded sezione p-2">
+          <Row className="rounded sezione p-2 align-items-start">
             <img className="" src={selectedAnime.data.images.jpg.large_image_url} alt={selectedAnime.data.title} style={{ width: "200px", objectFit: "contain" }} />
-            <Col className="d-flex flex-column justify-content-center">
-              <h2 className="me-3 goldColor ">{selectedAnime.data.title}</h2>
+            <Col xs={12} md={8} className="d-flex flex-column justify-content-center">
+              <h2 className="goldColor mt-3 mt-md-0">{selectedAnime.data.title}</h2>
 
               <p className="fs-7">{selectedAnime.data.synopsis}</p>
             </Col>
           </Row>
           <Row className="mt-3 gap-3">
-            <Col xs={3} className=" py-2 rounded sezione">
+            <Col xs={12} md={4} lg={3} className=" py-2 rounded sezione">
               <h3 className="mx-2 goldColor">Info</h3>
 
               <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
@@ -218,7 +218,7 @@ const Anime = () => {
                 {listAnimePosts && listAnimePosts.sort((a, b) => new Date(b.ora) - new Date(a.ora)).map(post => <Post key={post.id} post={post} getAnimePosts={getAnimePosts} />)}
               </div>
             </Col>
-            <Col xs={3} className=" py-2 rounded sezione">
+            <Col xs={12} lg={3} className=" py-2 rounded sezione">
               <SimilarAnime />
             </Col>
           </Row>

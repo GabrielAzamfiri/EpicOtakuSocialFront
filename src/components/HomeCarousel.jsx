@@ -25,7 +25,7 @@ const HomeCarousel = () => {
         <img src="src\assets\imgCarousel\pokemon.png" alt="foto-hero" className="rounded imgCarousel" style={{ objectPosition: "0% 70%" }} />
       </Carousel.Item>
       <Carousel.Item interval={5000}>
-        <img src="src\assets\imgCarousel\soloLeveling.jpg" alt="foto-hero" className="rounded imgCarousel" style={{ objectPosition: "0% 50%" }} />
+        <img src="src\assets\imgCarousel\soloLeveling.jpg" alt="foto-hero" className="rounded imgCarousel" style={{ objectPosition: "100% 50%" }} />
       </Carousel.Item>
       <Carousel.Item interval={5000}>
         <img src="src\assets\imgCarousel\Tghoul.jpg" alt="foto-hero" className="rounded imgCarousel" style={{ objectPosition: "0% 70%" }} />

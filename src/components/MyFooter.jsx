@@ -30,7 +30,7 @@ const MyFooter = () => {
               </a>
             </div>
 
-            <Row className="my-4 fs-7 ">
+            <Row className="my-4 fs-8 ">
               <Col xs={3} className="text-center">
                 <ul className="navbar-nav">
                   <li>
