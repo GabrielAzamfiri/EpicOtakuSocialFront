@@ -120,7 +120,7 @@ const Post = ({ post, getAnimePosts }) => {
               <HandThumbsDownFill className="fs-5 me-2" fill={profile && post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
               {post.numeroDislike.length}
             </Button>
-            <ModalPostComments postId={post.id} />
+            <ModalPostComments postId={post.id} getAnimePosts={getAnimePosts} />
             {profile && post.autore.id === profile.id && (
               <div className="ms-auto">
                 <NavDropdown title={<Gear className="fs-5" />} id="basic-nav-dropdown" align="end">

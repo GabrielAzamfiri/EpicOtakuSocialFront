@@ -9,10 +9,9 @@ import { toast } from "react-toastify";
 import Comment from "./Comment";
 import { getUserSelectedAction } from "../redux/actions";
 
-const ModalPostComments = ({ postId }) => {
+const ModalPostComments = ({ postId, getAnimePosts }) => {
   const [show, setShow] = useState(false);
   const [post, setPost] = useState(null);
-
   const handleClose = () => setShow(false);
   const handleShow = () => {
     getPost();
@@ -37,6 +36,39 @@ const ModalPostComments = ({ postId }) => {
     } catch (error) {
       console.error("Errore: ", error);
       toast.warn("Error during get Post  fetch❌");
+    }
+  };
+  const addLikeDislike = async (post, btn) => {
+    let url;
+
+    if (btn === "like") {
+      if (post.numeroLike.includes(profile.id)) {
+        url = `http://localhost:3001/posts/${post.id}/likes/remove`;
+      } else {
+        url = `http://localhost:3001/posts/${post.id}/likes`;
+      }
+    } else if (btn === "dislike") {
+      if (post.numeroDislike.includes(profile.id)) {
+        url = `http://localhost:3001/posts/${post.id}/dislikes/remove`;
+      } else {
+        url = `http://localhost:3001/posts/${post.id}/dislikes`;
+      }
+    }
+
+    try {
+      const resp = await fetch(url, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      if (resp.ok) {
+        getPost();
+        getAnimePosts();
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error fetching addLikeDislike POST! ��");
     }
   };
 
@@ -103,12 +135,12 @@ const ModalPostComments = ({ postId }) => {
                   <img src={post.file} alt="post file" style={{ width: "100%", objectFit: "cover" }} />
                   <hr />
                   <div className="d-flex justify-content-start">
-                    <Button variant="transparent" className="d-flex">
-                      <HandThumbsUpFill className="fs-5 me-2" />
+                    <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(post, "like")}>
+                      <HandThumbsUpFill className="fs-5 me-2" fill={profile && post.numeroLike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
                       {post.numeroLike.length}
                     </Button>
-                    <Button variant="transparent" className="d-flex">
-                      <HandThumbsDownFill className="fs-5 me-2" />
+                    <Button variant="transparent" className="d-flex" onClick={() => profile && addLikeDislike(post, "dislike")}>
+                      <HandThumbsDownFill className="fs-5 me-2" fill={profile && post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
                       {post.numeroDislike.length}
                     </Button>
                     <Button variant="transparent" className="d-flex">
