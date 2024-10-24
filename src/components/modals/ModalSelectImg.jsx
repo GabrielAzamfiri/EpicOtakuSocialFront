@@ -4,7 +4,7 @@ import { CameraFill } from "react-bootstrap-icons";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { getMyProfileAction } from "../redux/actions";
+import { getMyProfileAction } from "../../redux/actions";
 
 function ModalSelectImg({ me, showUtente }) {
   const [show, setShow] = useState(false);
@@ -25,26 +25,37 @@ function ModalSelectImg({ me, showUtente }) {
     }
   };
   const myImageAction = () => {
-    fetch(`http://localhost:3001/utenti/me/avatar`, {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then(resp => {
-        if (resp.ok) {
-          toast.success("Immagine caricata con successo! ✅");
-          dispatch(getMyProfileAction());
-        } else {
-          throw new Error("Errore nel reperimento dei dati");
-        }
-      })
-      .catch(Error => {
-        console.error(Error);
-      });
-  };
+    const uploadPromise = new Promise((resolve, reject) => {
+      const uploadImage = async () => {
+        try {
+          const response = await fetch(`http://localhost:3001/utenti/me/avatar`, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
 
+          if (response.ok) {
+            dispatch(getMyProfileAction());
+            resolve(); // Risolvi la Promise se tutto è andato bene
+          } else {
+            throw new Error("Error during upload of image! ");
+          }
+        } catch (error) {
+          reject(error); // Rifiuta la Promise in caso di errore
+        }
+      };
+      uploadImage();
+    });
+
+    // gestione dei messaggi di caricamento, successo o errore
+    toast.promise(uploadPromise, {
+      pending: "Uploading image...",
+      success: "Image uploaded successfully! ✅",
+      error: "Error loading image!  🤯",
+    });
+  };
   const profile = useSelector(state => state.user.userInfo);
   const handleSubmit = e => {
     e.preventDefault();

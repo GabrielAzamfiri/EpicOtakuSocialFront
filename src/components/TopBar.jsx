@@ -21,7 +21,7 @@ const TopBar = () => {
     e.preventDefault();
     dispatch(saveInputSearchAction(input));
     localStorage.setItem("inputSearch", input);
-    navigate("/" + input);
+    navigate("/anime/search/" + input);
   };
 
   const handleLogin = async () => {

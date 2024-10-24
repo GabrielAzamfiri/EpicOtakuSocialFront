@@ -1,13 +1,13 @@
 import { Button, Form, Modal, NavDropdown } from "react-bootstrap";
 import { CaretDownFill, ChatLeftDotsFill, EyeFill, Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
-import ModalCreateComment from "./ModalCreateComment";
+import ModalCreateComment from "./modals/ModalCreateComment";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { getUserSelectedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
-const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
+const Comment = ({ post, comment, getPost, showComments, handleClose, getAnimePosts }) => {
   const [text, setText] = useState(comment.text);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
       if (resp.ok) {
         toast.success("Comment deleted successfuly! 👍");
         getPost ? getPost() : showComments();
+        getAnimePosts();
       } else {
         console.error("deleteComment fetch error");
       }
@@ -127,7 +128,7 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
             }}
           />
           <span className="fs-7 text-muted ms-2 mb-0 ">
-            Posted by:{" "}
+            By:{" "}
             <a
               onClick={() => {
                 {
@@ -188,7 +189,9 @@ const Comment = ({ post, comment, getPost, showComments, handleClose }) => {
             )}
           </div>
           {comment.sottoCommenti.length > 0 &&
-            comment.sottoCommenti.map(sottoCommenti => <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} showComments={showComments} handleClose={handleClose} />)}
+            comment.sottoCommenti.map(sottoCommenti => (
+              <Comment key={sottoCommenti.id} post={post} comment={sottoCommenti} getPost={getPost} showComments={showComments} handleClose={handleClose} getAnimePosts={getAnimePosts} />
+            ))}
         </div>
       </div>
 

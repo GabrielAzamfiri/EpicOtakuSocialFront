@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfileAction, saveAnimeClickedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ModalSelectImg from "./ModalSelectImg";
+import ModalSelectImg from "./modals/ModalSelectImg";
 import Comment from "./Comment";
 import Post from "./Post";
 import logo from "../assets/logo.png";
@@ -21,7 +21,6 @@ const MyProfile = () => {
   const [listComments, setListComments] = useState([]);
   const [listAnime, setListAnime] = useState([]);
 
-  const [show, setShow] = useState(false);
   const me = useSelector(state => state.user.userInfo);
   const utente = useSelector(state => state.user.userSelected);
 
@@ -29,6 +28,7 @@ const MyProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -245,6 +245,8 @@ const MyProfile = () => {
               </Card>
             </Col>
 
+            {/* ******************************** List of Favorite Anime 🧡 ********************************** */}
+
             <Col xs={12} md={3} lg={4} className="blackGold rounded border ">
               <h3 className="text-center p-2">Favorite Anime 🧡</h3>
               <Row className="justify-content-center">
@@ -262,8 +264,8 @@ const MyProfile = () => {
                       <Image className="m-auto" src={anime.image} style={{ height: "210px", width: "140px", objectFit: "cover" }} />
 
                       <div className="ms-2 w-100 d-md-none d-lg-flex flex-column justify-content-center d-xl-block" style={{ maxHeight: "210px", overflowY: "scroll" }}>
-                        <h4 className="text-start  truncate-2-lines">{anime.title}</h4>
-                        <p className=" fs-7 text-start p-0">
+                        <h4 className="text-start pb-2 goldColor truncate-2-lines">{anime.title}</h4>
+                        <p className="fs-7 text-start p-0">
                           <b>Genres:</b> {anime.genres.map(genre => genre).join(", ")}
                         </p>
                         <p className="fs-7 text-start d-md-none d-xl-block">{anime.synopsis}</p>

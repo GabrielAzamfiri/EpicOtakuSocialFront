@@ -52,13 +52,13 @@ const ModalCreatePost = ({ text, post, file, getAnimePosts }) => {
       });
 
       if (resp.ok) {
+        getAnimePosts();
         if (text && file) {
           toast.success("Post updated successfully 👌");
         } else {
           toast.success("Post created successfully 👌");
           setTextPost("");
         }
-        getAnimePosts();
       } else {
         toast.warn("Something went wrong");
       }

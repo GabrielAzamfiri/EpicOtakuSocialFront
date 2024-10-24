@@ -1,9 +1,9 @@
 import { Button, NavDropdown } from "react-bootstrap";
 import { Gear, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
-import ModalPostComments from "./ModalPostComments";
+import ModalPostComments from "./modals/ModalPostComments";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import ModalCreatePost from "./ModalCreatePost";
+import ModalCreatePost from "./modals/ModalCreatePost";
 import { useEffect } from "react";
 import { getUserSelectedAction } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
@@ -120,7 +120,7 @@ const Post = ({ post, getAnimePosts }) => {
               <HandThumbsDownFill className="fs-5 me-2" fill={profile && post.numeroDislike.map(like => like).includes(profile.id) ? "yellow" : "white"} />
               {post.numeroDislike.length}
             </Button>
-            <ModalPostComments postId={post.id} getAnimePosts={getAnimePosts} />
+            <ModalPostComments thePost={post} getAnimePosts={getAnimePosts} />
             {profile && post.autore.id === profile.id && (
               <div className="ms-auto">
                 <NavDropdown title={<Gear className="fs-5" />} id="basic-nav-dropdown" align="end">

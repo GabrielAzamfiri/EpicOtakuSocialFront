@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import MyProfile from "./components/MyProfile";
 import MyFooter from "./components/MyFooter";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -24,9 +25,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth/register" element={<Register />} />
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/:search" element={<Search />} />
+            <Route path="/anime/search/:search" element={<Search />} />
             <Route path="/anime/:anime" element={<Anime />} />
             <Route path="/profile" element={<MyProfile />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <MyFooter />
         </BrowserRouter>

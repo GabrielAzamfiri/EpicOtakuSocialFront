@@ -4,7 +4,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
-import ModalCreatePost from "./ModalCreatePost";
+import ModalCreatePost from "./modals/ModalCreatePost";
 import { useNavigate } from "react-router-dom";
 import VideoPlayer from "./VideoPlayer";
 import SimilarAnime from "./SimilarAnime";
@@ -127,7 +127,7 @@ const Anime = () => {
               <h1 className="fw-bold truncate-2-lines text-center goldColor ">{selectedAnime.data.title}</h1>
 
               <div className="mt-3 text-center" style={{ color: "#cccccc" }}>
-                <p className="mb-1">
+                <p className="mb-1 ">
                   <b>Type:</b> {selectedAnime.data.type}
                 </p>
                 <p className="mb-1">
@@ -171,36 +171,56 @@ const Anime = () => {
               <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Alternative Titles:</h5>
                 <p className="fs-7 m-0 ">
-                  Title english: <b>{selectedAnime.data.title_english}</b>{" "}
+                  Title english: <b className="goldColor">{selectedAnime.data.title_english}</b>
                 </p>
                 <p className="fs-7 m-0">
-                  Title japanese: <b>{selectedAnime.data.title_japanese}</b>{" "}
+                  Title japanese: <b className="goldColor">{selectedAnime.data.title_japanese}</b>
                 </p>
               </div>
-              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
+              <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale ">
                 <h5>Genres:</h5>
                 {selectedAnime.data.genres.map(genre => (
-                  <p className="m-0 fs-7 " key={genre.mal_id}>
+                  <p className="m-0 fs-7  " key={genre.mal_id}>
                     {" "}
-                    - {genre.name}
+                    - <span className="goldColor fw-bold">{genre.name}</span>
                   </p>
                 ))}
               </div>
               <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Stats:</h5>
-                <p className="fs-7 m-0">Score: {selectedAnime.data.score}</p>
-                <p className="fs-7 m-0">Ranked: {selectedAnime.data.rank}</p>
-                <p className="fs-7 m-0">Popularity: {selectedAnime.data.popularity} 🔝</p>
-                <p className="fs-7 m-0">Favorites: {selectedAnime.data.favorites} 💓</p>
+                <p className="fs-7 m-0 ">
+                  Score: <span className="goldColor fw-bold">{selectedAnime.data.score}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Ranked: <span className="goldColor fw-bold">{selectedAnime.data.rank}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Popularity: <span className="goldColor fw-bold">{selectedAnime.data.popularity}</span> 🔝
+                </p>
+                <p className="fs-7 m-0">
+                  Favorites: <span className="goldColor fw-bold">{selectedAnime.data.favorites}</span> 💓
+                </p>
               </div>
               <div className="blackGold p-2 mx-2 mt-3  rounded shadowScale">
                 <h5>Episodes:</h5>
-                <p className="fs-7 m-0">Aired: {selectedAnime.data.aired.string}</p>
-                <p className="fs-7 m-0">Source: {selectedAnime.data.source}</p>
-                <p className="fs-7 m-0">Rating: {selectedAnime.data.rating}</p>
-                <p className="fs-7 m-0">Status: {selectedAnime.data.status}</p>
-                <p className="fs-7 m-0">Episodes: {selectedAnime.data.episodes}</p>
-                <p className="fs-7 m-0">Duration: {selectedAnime.data.duration}</p>
+                <p className="fs-7 m-0">
+                  Aired: <span className="goldColor fw-bold">{selectedAnime.data.aired.string}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Source: <span className="goldColor fw-bold">{selectedAnime.data.source}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Rating: <span className="goldColor fw-bold">{selectedAnime.data.rating}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Status: <span className="goldColor fw-bold">{selectedAnime.data.status}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Episodes: <span className="goldColor fw-bold">{selectedAnime.data.episodes}</span>
+                </p>
+                <p className="fs-7 m-0">
+                  Duration: <span className="goldColor fw-bold">{selectedAnime.data.duration}</span>
+                </p>
               </div>
             </Col>
             <Col className=" py-2 rounded sezione">

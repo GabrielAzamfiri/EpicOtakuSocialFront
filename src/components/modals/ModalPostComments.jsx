@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ModalCreateComment from "./ModalCreateComment";
 import { toast } from "react-toastify";
-import Comment from "./Comment";
-import { getUserSelectedAction } from "../redux/actions";
+import Comment from "../Comment";
+import { getUserSelectedAction } from "../../redux/actions";
 
-const ModalPostComments = ({ postId, getAnimePosts }) => {
+const ModalPostComments = ({ thePost, getAnimePosts }) => {
   const [show, setShow] = useState(false);
   const [post, setPost] = useState(null);
   const handleClose = () => setShow(false);
@@ -21,7 +21,7 @@ const ModalPostComments = ({ postId, getAnimePosts }) => {
   const dispatch = useDispatch();
   const getPost = async () => {
     try {
-      const resp = await fetch(`http://localhost:3001/posts/${postId}`, {
+      const resp = await fetch(`http://localhost:3001/posts/${thePost.id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -82,7 +82,7 @@ const ModalPostComments = ({ postId, getAnimePosts }) => {
       <>
         <Button variant="transparent" className="d-flex" onClick={handleShow}>
           <ChatLeftDotsFill className="fs-5 me-2" />
-          {post.commentiPrincipali.length}
+          {thePost.commentiPrincipali.length}
         </Button>
 
         <Modal show={show} onHide={handleClose} size="lg" className="">
@@ -157,13 +157,13 @@ const ModalPostComments = ({ postId, getAnimePosts }) => {
               <Modal.Footer className="d-flex justify-content-start">
                 <img src={profile.avatar} alt="User Avatar" className="pointer rounded " style={{ width: "30px", height: "30px", objectFit: "cover" }} onClick={() => navigate("/profile")} />
                 <h5 className="fs-6 text-muted mb-0">{profile.username}</h5>
-                <ModalCreateComment post={post} getPost={getPost} />
+                <ModalCreateComment post={post} getPost={getPost} getAnimePosts={getAnimePosts} />
               </Modal.Footer>
             )}
             {post &&
               post.commentiPrincipali
                 .sort((a, b) => new Date(b.ora) - new Date(a.ora))
-                .map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} handleClose={handleClose} />)}
+                .map(comment => <Comment key={comment.id} post={post} comment={comment} getPost={getPost} handleClose={handleClose} getAnimePosts={getAnimePosts} />)}
           </div>
         </Modal>
       </>

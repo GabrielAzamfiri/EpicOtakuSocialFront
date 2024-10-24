@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
+const ModalCreateComment = ({ post, commentoPadre, getPost, getAnimePosts }) => {
   const [show, setShow] = useState(false);
   const [textComment, setTextComment] = useState("");
 
@@ -36,6 +36,7 @@ const ModalCreateComment = ({ post, commentoPadre, getPost }) => {
       });
       if (resp.ok) {
         getPost();
+        getAnimePosts();
         toast.success("Comment created successfully 👌");
       } else {
         console.error("Something went wrong! ");

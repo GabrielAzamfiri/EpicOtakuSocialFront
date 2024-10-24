@@ -1,3 +1,4 @@
+/* ************************ Reusable classes *********************** */
 .goldColor {
   background: #b59562;
   background: linear-gradient(to right, #b59562 0%, #e2cba5 50%, #b59562 100%);
@@ -16,27 +17,43 @@
 .shadowScale:hover {
   scale: 1.02;
 }
-.neonText {
-  color: white;
-  text-shadow: 0px 0px 20px #b59562, 0px 0px 20px #b59562, 0px 0px 20px #b59562, 0px 0px 20px #b59562;
-}
+
 .pointer {
   cursor: pointer;
 }
-.imgCarousel {
-  width: 100%;
-  height: 45vh;
-  object-fit: cover;
-  position: center;
-}
-#navbar {
-  height: 60px;
-}
-
 .sezione {
   background-color: #131212;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
 }
+
+.truncate-2-lines {
+  display: -webkit-box; /* Imposta un contenitore flessibile */
+  -webkit-box-orient: vertical; /* Imposta l'orientamento verticale */
+  overflow: hidden;
+  text-overflow: ellipsis; /* come text-truncate */
+  -webkit-line-clamp: 2; /* Imposta il limite a 2 righe */
+}
+.truncate-1-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+}
+
+/* ************************ Topbar Page *********************** */
+
+#navbar {
+  height: 60px;
+}
+.dropdown-menu {
+  background-color: #131212;
+}
+#basic-nav-dropdown {
+  color: #b59562;
+}
+
+/* ************************ Profile Page *********************** */
 
 #profileImg {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9); /* Ombra */
@@ -49,6 +66,8 @@
   scale: 1.03;
 }
 
+/* ************************ Comments *********************** */
+
 .commenti {
   background-color: #131212;
 }
@@ -56,14 +75,8 @@
   border: solid 1px #b59562 !important;
 }
 
-.dropdown-menu {
-  background-color: #131212;
-}
-#basic-nav-dropdown {
-  color: #b59562;
-}
+/************************** scrollbar ************************* */
 
-/************* scrollbar******************** */
 /* Larghezza della scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -85,6 +98,8 @@
   background-color: #171616;
 }
 
+/* ************************ Home Page *********************** */
+
 .asideTitle {
   text-wrap: wrap;
 }
@@ -95,20 +110,6 @@
   overflow-y: scroll;
 }
 
-.truncate-2-lines {
-  display: -webkit-box; /* Imposta un contenitore flessibile */
-  -webkit-box-orient: vertical; /* Imposta l'orientamento verticale */
-  overflow: hidden;
-  text-overflow: ellipsis; /* come text-truncate */
-  -webkit-line-clamp: 2; /* Imposta il limite a 2 righe */
-}
-.truncate-1-lines {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
-}
 .animePoster {
   transition: opacity 0.3s ease;
 }
@@ -137,6 +138,16 @@
 #homeAnimeList {
   width: 760px;
 }
+
+/* ************************ Anime Page *********************** */
+
+.imgCarousel {
+  width: 100%;
+  height: 45vh;
+  object-fit: cover;
+  position: center;
+}
+
 .episodeBTN {
   background: #b59562;
   background: linear-gradient(to right, #aa824f 0%, #e2cba5 50%, #aa824f 100%);
@@ -168,6 +179,8 @@ iframe:hover {
 .slick-dots {
   display: none !important;
 }
+
+/* ************************ Media Query *********************** */
 
 @media screen and (min-width: 1200px) {
   .logoProfile {
