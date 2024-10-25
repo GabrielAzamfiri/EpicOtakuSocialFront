@@ -147,7 +147,7 @@ const Anime = () => {
                   <Heart className="fs-3" />
                 </Button>
               )}
-              <Button variant="success mt-3 w-50" className="episodeBTN ">
+              <Button variant="success mt-3 w-50" href="https://www.crunchyroll.com/it/" className="episodeBTN ">
                 Start from EP-1
               </Button>
             </Col>
