@@ -13,7 +13,7 @@ const Post = ({ post, getAnimePosts }) => {
   const navigate = useNavigate();
   const deletePost = async postId => {
     // Chiedi conferma all'utente
-    const confirmed = window.confirm("Are you sure you want to delete your comment? This action cannot be undone.");
+    const confirmed = window.confirm("Are you sure you want to delete your post? This action cannot be undone.");
     if (!confirmed) {
       return; // Se l'utente non conferma, non fare nulla
     }
