@@ -171,7 +171,7 @@ const Comment = ({ post, comment, getPost, showComments, handleClose, getAnimePo
               {comment.numeroDislike.length}
             </Button>
             {post ? (
-              <ModalCreateComment post={post} commentoPadre={comment} getPost={getPost} />
+              <ModalCreateComment post={post} commentoPadre={comment} getPost={getPost} getAnimePosts={getAnimePosts} />
             ) : (
               <Button variant="transparent" className="d-flex">
                 <ChatLeftDotsFill className="fs-5 me-2" />
